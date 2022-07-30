@@ -20,6 +20,7 @@ function InfoStock({ dataCallback, clearDataCallback }) {
         <div className={styles.containerflexInfo}> 
             <label htmlFor="first">Stock Symbol</label>
             <input type="text" id="stock" name="stock" value={stockName} onChange={(e) => {
+                console.log("value=", e.target.value)
                 setStockName(e.target.value)
             }}/>
             <button className={styles.formButton} type="button" 
