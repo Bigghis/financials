@@ -49,10 +49,10 @@ const Table = ({ columns, data }) => {
   // Render the UI for your table
   return (<table {...getTableProps()} className={styles.reactTable}>
       <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+        {headerGroups.map((headerGroup, i) => (
+          <tr key={`${tableType}_${i}header_group`} {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column, index) => (
-              <th {...column.getHeaderProps()} key={`${tableType}_header_${index}`} >{column.render('Header')}</th>
+              <th {...column.getHeaderProps()} key={`${tableType}_header_${i}_${index}`} >{column.render('Header')}</th>
             ))}
           </tr>
         ))}
