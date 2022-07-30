@@ -50,7 +50,7 @@ const Table = ({ columns, data }) => {
   return (<table {...getTableProps()} className={styles.reactTable}>
       <thead>
         {headerGroups.map((headerGroup, i) => (
-          <tr key={`${tableType}_${i}header_group`} {...headerGroup.getHeaderGroupProps()}>
+          <tr key={`${tableType}_${i}_header_group`} {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column, index) => (
               <th {...column.getHeaderProps()} key={`${tableType}_header_${i}_${index}`} >{column.render('Header')}</th>
             ))}
@@ -61,7 +61,7 @@ const Table = ({ columns, data }) => {
         {rows.map((row, i) => {
           prepareRow(row)
           return (
-            <tr {...row.getRowProps()}>
+            <tr key={`${tableType}_${i}_row`} {...row.getRowProps()}>
               {row.cells.map((cell, index) => {
                 return <td  key={`${tableType}_${i}_cell_${index}`} {...cell.getCellProps()}>{cell.render('Cell')}</td>
               })}
