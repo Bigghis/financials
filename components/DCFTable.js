@@ -112,7 +112,7 @@ const DCFTable = ({data}) => {
         ],
         []
       )
-    return (<Table columns={columns} data={data || []} />)
+    return (<Table tableType="DCF" columns={columns} data={data || []} />)
 }
 
 export default DCFTable;

@@ -37,6 +37,7 @@ const Table = ({ columns, data }) => {
   const {
     getTableProps,
     getTableBodyProps,
+    tableType,
     headerGroups,
     rows,
     prepareRow,
@@ -50,8 +51,8 @@ const Table = ({ columns, data }) => {
       <thead>
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+            {headerGroup.headers.map((column, index) => (
+              <th {...column.getHeaderProps()} key={`${tableType}_header_${index}`} >{column.render('Header')}</th>
             ))}
           </tr>
         ))}
@@ -61,8 +62,8 @@ const Table = ({ columns, data }) => {
           prepareRow(row)
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+              {row.cells.map((cell, index) => {
+                return <td  key={`${tableType}_${i}_cell_${index}`} {...cell.getCellProps()}>{cell.render('Cell')}</td>
               })}
             </tr>
           )
