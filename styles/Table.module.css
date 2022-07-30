@@ -1,0 +1,24 @@
+table.reactTable {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+}
+
+/* table.reactTable thead {
+    background: red;
+}  */ 
+
+table.reactTable thead th {
+    padding: 0.5em;
+    background: grey;
+}   
+
+table.reactTable tbody tr {
+    background: #ccc;
+}   
+
+table.reactTable tbody tr td{
+    text-align: center;
+    padding: 0.5em;
+}   
+

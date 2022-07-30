@@ -2,8 +2,15 @@ html,
 body {
   padding: 0;
   margin: 0;
+  height:100%;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
+}
+
+body > div {
+  position:relative;
+  min-height:100%;
 }
 
 a {
@@ -15,12 +22,61 @@ a {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+form {
+  display: flex;
+  flex-flow: column;
+  min-width: 95%;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+label {
+  display: table;
+  margin-bottom: 0.5rem;
+  color: #3b3b3b;
+}
+
+select,
+input {
+  display: table;
+  width: 40%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  margin-bottom: 2.5rem;
+  background-color: lemonchiffon;
+}
+
+select:focus,
+input:focus {
+  outline: none;
+  border-color: #0070f3;
+}
+
+button {
+  display: table;
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  margin-bottom: 2.5rem;
+  background-color: #0070f3;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0060e9;
+}
+
+.container {
+  min-height: 100vh;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
