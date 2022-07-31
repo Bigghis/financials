@@ -7,13 +7,18 @@ const handler = async (req, res) => {
     if (req.body && req.body.params.stock) {
         const { params } = req.body;
         // cache system data
-        console.log("API DCF ====", {...params})
-            let data = global.localStorage.getItem(`DCF_${params.stock}`);
+        // console.log("API DCF ====", {...params})
+            let data = null;
+            if (global.localStorage) {
+                data = global.localStorage.getItem(`DCF_${params.stock}`);
+            }
          //   console.log("cached DATA=", data)
             if (!data) {
                 data  = await yahooFinance.quoteSummary(params.stock, { modules: Object.keys(DCF.getQueryOptions())});
                 // cache data 
-                global.localStorage.setItem(`DCF_${params.stock}`, JSON.stringify(data));
+                if (global.localStorage) {
+                    global.localStorage.setItem(`DCF_${params.stock}`, JSON.stringify(data));
+                }
             } else {
                 data = JSON.parse(data);
             }

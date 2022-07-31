@@ -6,12 +6,17 @@ const handler = async (req, res) => {
   const { stock } = req.body;
   if (stock) { 
     // cache system data
-    let data = global.localStorage.getItem(`INFO_${stock}`);
+    let data = null;
+    if (global.localStorage) {
+      data = global.localStorage.getItem(`INFO_${stock}`);
+    }
     console.log("cached DATA=", data)
     if (!data) {
         data = await yahooFinance.quoteSummary(stock, { modules: ['defaultKeyStatistics', 'price', 'financialData']});
         // cache data 
-        global.localStorage.setItem(`INFO_${stock}`, JSON.stringify(data));
+        if (global.localStorage) {
+          global.localStorage.setItem(`INFO_${stock}`, JSON.stringify(data));
+        }
     } else {
       data = JSON.parse(data);
     }
