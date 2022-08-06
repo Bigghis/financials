@@ -1,6 +1,8 @@
 import React, { useState } from "react"
+import InfoCmp from "./Info";
 import DCF from './DCF';
 import DDM from './DDM';
+import NoData from "./NoData";
 
 import styles from '../styles/Tabs.module.css'
 
@@ -23,22 +25,27 @@ const Tab = ({ children, selected, onClick }) => {
 
 
 const Tabs = ({ data }) => {
-    const [ tab, setTab ] = useState(1);
+    const [ tab, setTab ] = useState(0);
 
     const getModule = () => {
       const hasData = Object.keys(data).length > 0;
-      console.log("DATAAAAAA=", data)
+      if (tab === 0) {
+        return hasData ? <InfoCmp data={data} /> : <NoData />
+      }
       if (tab === 1) {
-        return hasData ? <DCF data={data} /> : 'NO DATA'
+        return hasData ? <DCF data={data} /> : <NoData />
       }
       if (tab === 2) {
-        return hasData ? <DDM data={data} /> : 'NO DATA'
+        return hasData ? <DDM data={data} /> : <NoData />
       }
     }
 
     return (
       <TabContainer>
         <TabHead>
+        <Tab selected={tab === 0 } onClick={() => setTab(0)}>
+              INFO
+          </Tab>
           <Tab selected={tab === 1 } onClick={() => setTab(1)}>
               DCF
           </Tab>

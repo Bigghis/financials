@@ -11,3 +11,6 @@ export const getYear = (isoStringDate) => {
     return _date.getFullYear();
 }
 
+export const formatArrayString = (arr) => {
+    return arr.join(", ")
+}

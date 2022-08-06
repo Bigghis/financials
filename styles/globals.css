@@ -48,6 +48,11 @@ input {
   background-color: lemonchiffon;
 }
 
+::-webkit-input-placeholder { /* Edge */
+  color: #ccc;
+}
+
+
 select:focus,
 input:focus {
   outline: none;

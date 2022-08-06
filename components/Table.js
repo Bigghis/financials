@@ -24,7 +24,6 @@ import styles from '../styles/Table.module.css'
       padding: 0.5rem;
       border-bottom: 1px solid black;
       border-right: 1px solid black;
-
       :last-child {
         border-right: 0;
       }
@@ -32,7 +31,45 @@ import styles from '../styles/Table.module.css'
   }
 ` */
 
-const Table = ({ columns, data }) => {
+// https://codesandbox.io/s/nvndu?file=/src/App.js:1517-1530
+export const EditableCell = ({
+  value: initialValue,
+  row, // : { index },
+  column, //: { id },
+  updateMyData, // This is a custom function that we supplied to our table instance
+}) => {
+  if (initialValue !== undefined) {
+    return initialValue
+  }
+ 
+  else {
+    // We need to keep and update the state of the cell normally
+    const [value, setValue] = React.useState(initialValue)
+  
+    const onChange = e => {
+      setValue(e.target.value)
+    }
+  
+    // We'll only update the external data when the input is blurred
+    const onBlur = () => {
+      updateMyData(row.index, column.id, value)
+    }
+  
+    // If the initialValue is changed external, sync it up with our state
+    React.useEffect(() => {
+      setValue(initialValue)
+    }, [initialValue])
+  
+    return <input className={styles.cellEdit} value={value} onChange={onChange} onBlur={onBlur} />
+
+  }
+}
+
+const defaultColumn = {
+  Cell: EditableCell
+}
+
+const Table = ({ columns, data, updateMyData }) => {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -44,6 +81,8 @@ const Table = ({ columns, data }) => {
   } = useTable({
     columns,
     data,
+    defaultColumn,
+    updateMyData
   })
 
   // Render the UI for your table

@@ -1,12 +1,13 @@
 import React, { useMemo } from 'react'
 import Table from './Table'
 
-const DCFTable = ({data}) => {
+const InfoTable = ({columns, data}) => {
 
+  /*
     const columns = React.useMemo(
         () => [
           {
-            Header: 'Stock',
+            Header: '',
             accessor: 'stock'
           },
           {
@@ -71,46 +72,12 @@ const DCFTable = ({data}) => {
               </div>)
                }
           },
-/*   
-        {
-            Header: 'Future years',
-            columns: [
-              {
-                Header: 'First Name',
-                accessor: 'firstName',
-              },
-              {
-                Header: 'Last Name',
-                accessor: 'lastName',
-              },
-            ],
-          },
-          {
-            Header: 'Info',
-            columns: [
-              {
-                Header: 'Age',
-                accessor: 'age',
-              },
-              {
-                Header: 'Visits',
-                accessor: 'visits',
-              },
-              {
-                Header: 'Status',
-                accessor: 'status',
-              },
-              {
-                Header: 'Profile Progress',
-                accessor: 'progress',
-              },
-            ],
-          }, 
-          */
         ],
         []
       )
-    return (<Table tableType="DCF" columns={columns} data={data || []} />)
+      */
+
+    return (<Table tableType="Info" columns={columns} data={data || []} />)
 }
 
-export default DCFTable;
+export default InfoTable;

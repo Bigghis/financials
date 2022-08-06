@@ -36,6 +36,10 @@
     height: 100%;
 }
 
+.tabBody > div {
+    position: relative;
+}
+
 .tab {
     padding: 1em;
     color: white;

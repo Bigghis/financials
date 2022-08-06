@@ -22,6 +22,9 @@ import { toDecimal, toPercent, getYear } from '../utils.js';
 // https://studiofazzini.it/ricerche/il-terminal-value-valore-finale-nel-metodo-dcf/
 // https://github.com/gadicc/node-yahoo-finance2/blob/f27b9017fd5643932f4067c5d7b2a641f783a7ea/src/modules/quoteSummary-iface.ts
 
+// HOW TO EVALUATE A COMPANY WITH a negative FCFF ??
+// https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch22.pdf
+
 const QUERY_OPTIONS = {
   price: ['price'],
   summaryDetail: ['summaryDetail'],
@@ -151,19 +154,20 @@ class DCF {
       console.log("DCFS = ", this.futureDcfs);
 //      console.log("outst:   ", this.sharesOutstanding );
   //    console.log("out+float", this.sharesOutstanding +this.data.defaultKeyStatistics.floatShares   );
-      const pricesData = this.data.price
-      const shares = pricesData.marketCap / pricesData.regularMarketPrice
-      console.log("SHARES = ", shares.toFixed(0))
-
-      console.log("MARKET CAP =", pricesData.marketCap)
-      console.log("price= ", pricesData.regularMarketPrice)
+//   const pricesData = this.data.price
+ //  const shares = pricesData.marketCap / pricesData.regularMarketPrice
+ //     console.log("SHARES    = ", shares.toFixed(0))
+ //     console.log("OUT SHARE = ", this.sharesOutstanding)
+//
+//      console.log("MARKET CAP =", pricesData.marketCap)
+//      console.log("price= ", pricesData.regularMarketPrice)
       this.calculateTerminalValue();
       const dcfSum = this.futureDcfs.reduce((tmpSum, a) => tmpSum + a, 0);
       const targetEquityValue = this.terminalValue + dcfSum;
       console.log("TOTAL DEBT =",this.totalDebt)
       const targetValue = targetEquityValue - this.totalDebt;
      // const forecastPrice = targetValue / (this.data.defaultKeyStatistics.sharesOutstanding /*+ this.data.defaultKeyStatistics.floatShares */) ;
-     const forecastPrice = targetValue / shares;
+     const forecastPrice = targetValue / this.sharesOutstanding;
       console.log("targetEquityValue =", targetEquityValue)
       console.log("total debt = ", this.totalDebt);
       console.log("targetValue =", targetValue);
@@ -199,7 +203,7 @@ class DCF {
       console.log("terminal VALUE = ", this.terminalValue)
 
     }
-
+/*
     getPastGrowthRate(beginYear, endYear) {
       const beginFcff = this.calculateFCFF(beginYear);
       const endFcff = this.calculateFCFF(endYear);
@@ -220,7 +224,7 @@ class DCF {
       console.log("sum / count).toFixed(2)", (sum / count).toFixed(2));
       return (sum / count).toFixed(2);
     }
-
+*/
     getYearDataRange(modules) {
       if(modules.length === 2) {
           const data = this.data[modules[0]][modules[1]]

@@ -22,3 +22,9 @@ table.reactTable tbody tr td{
     padding: 0.5em;
 }   
 
+.cellEdit {
+    width: 100%;
+    display: block;
+    margin-bottom: 0;
+    padding: 0.3rem;
+}

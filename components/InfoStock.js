@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import styles from '../styles/Home.module.css'
 import axios from 'axios';
+import { SpinnerDotted } from 'spinners-react';
+import styles from '../styles/Home.module.css'
 
 function InfoStock({ dataCallback, clearDataCallback }) {
+    const [loading, setLoading] = useState(false);
     const [stockName, setStockName] = useState("");
     const [info, setInfo] = useState(null);
 
@@ -13,20 +15,26 @@ function InfoStock({ dataCallback, clearDataCallback }) {
     const fetcherInfo = async (stock) => { 
         return await axios.post('api/info', { stock }).then((res) => {
             return res.data
-        })
+        }).catch(
+             (error) => {
+             setLoading(false)
+             return []
+            });
     }
 
     return (<div className={styles.infoStock}>
         <div className={styles.containerflexInfo}> 
             <label htmlFor="first">Stock Symbol</label>
-            <input type="text" id="stock" name="stock" value={stockName} onChange={(e) => {
-                console.log("value=", e.target.value)
+            <input placeholder="e.g.: aapl" type="text" id="stock" name="stock" value={stockName} onChange={(e) => {
+                // console.log("value=", e.target.value)
                 setStockName(e.target.value)
             }}/>
             <button className={styles.formButton} type="button" 
                 onClick={async (e) => {
+                  setLoading(true)
                   const data = await fetcherInfo(stockName);
                   setInfo(data);
+                  setLoading(false)
                   if (dataCallback) {
                     dataCallback(data);
                 }}}
@@ -42,12 +50,17 @@ function InfoStock({ dataCallback, clearDataCallback }) {
                 type="button" 
             >Clear data</button>
             </div>
-        {info && (<div className={styles.infoStock}>
-            <div><span>Company Name: </span><span className={styles.bold}>{shortName}</span></div> 
-            <div><span>Price: </span><span className={styles.bold}>{`${regularMarketPrice}${currencySymbol}`}</span></div>
-        </div>)}
+        <div className={styles.infoStock}>
+            <SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} />
+            {info && info.summaryProfile && !loading && (<React.Fragment>
+                <div><span>Company Name: </span><span className={styles.bold}>{shortName}</span></div>
+                <div><span>Price: </span><span className={styles.bold}>{`${regularMarketPrice}${currencySymbol}`}</span></div>
+                <div><span>Sector: </span><span className={styles.bold}>{info.summaryProfile.sector}</span></div>
+                <div><span>Industry: </span><span className={styles.bold}>{info.summaryProfile.industry}</span></div>
+                <div>look at https://www.readyratios.com/ for median ratios</div>
+            </React.Fragment>)}
+        </div>
     </div>)
   }
   
-
   export default InfoStock
