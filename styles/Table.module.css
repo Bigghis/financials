@@ -2,6 +2,7 @@
     width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
+    padding-bottom: 3em;
 }
 
 table.reactTable {

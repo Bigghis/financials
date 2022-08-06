@@ -235,14 +235,25 @@
   min-width: 1000px;
 }
 
-/*
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
+.menuBar{
+  display: flex;
+  justify-content: flex-start;
+  background-color: black;
+  color: #fff;
+  height: 30px;
+  line-height: 30px;
+
+/* max-w-full h-12 flex justify-start items-center bg-black mb-4 text-white rounded-md */
 }
-*/
+
+.menuBar a {
+  padding: 0.5em;
+  width: 10em;
+}
+
+.hamburgerMenu {
+  display: none
+}
 
 @media (prefers-color-scheme: dark) {
   .card,
@@ -314,5 +325,17 @@
     justify-content: center;
     margin-bottom: 1.5rem;
     margin-top: 1.5rem;
+  }
+
+  .footerSubRow {
+    text-align: center;
+  }
+
+  .menuBar {
+    display: none;
+  }
+
+  .hamburgerMenu {
+    display: block;
   }
 }

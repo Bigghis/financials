@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import '../styles/burger.css'
 import { LocalStorage } from "node-localstorage";
 
 function MyApp({ Component, pageProps }) {
@@ -14,7 +15,9 @@ function MyApp({ Component, pageProps }) {
     console.log("initiate cache..")
   }
 
-  return <Component {...pageProps} />
+   const getLayout = Component.getLayout || ((page) => page)
+
+   return getLayout(<Component {...pageProps} />)
 }
 
 export default MyApp
