@@ -60,6 +60,7 @@ function DCF({ data, dataCallback }) {
                             setLoading(true)
                             const resData = await fetcherDCF(e.target.form);
                             setDcfData([...dcfData, ...resData])
+                            window.scroll(0, document.querySelector(`.${styles.container}`).scrollHeight);
                             setLoading(false)
                         }}>
                             calculate DCF
