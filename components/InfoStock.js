@@ -57,7 +57,7 @@ function InfoStock({ dataCallback, clearDataCallback }) {
                 <div><span>Price: </span><span className={styles.bold}>{`${regularMarketPrice}${currencySymbol}`}</span></div>
                 <div><span>Sector: </span><span className={styles.bold}>{info.summaryProfile.sector}</span></div>
                 <div><span>Industry: </span><span className={styles.bold}>{info.summaryProfile.industry}</span></div>
-                <div>look at https://www.readyratios.com/ for median ratios</div>
+               {/* <div>look at https://www.readyratios.com/ for median ratios</div> */} 
             </React.Fragment>)}
         </div>
     </div>)

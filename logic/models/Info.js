@@ -59,7 +59,8 @@ export const getAverageAgeOfInventory = (inventory, cogs) => {
   // https://www.readyratios.com/sec/ratio/inventory-turnover/
 
   const res =  parseInt( (inventory / cogs) * 365 );
-  return isNaN(res) ? null : res;
+  const resString = res.toString();
+  return isNaN(res) ? null : resString;
 }
 
 export const getBookValue = (totalAssets, totalLiabilities) => {

@@ -27,16 +27,20 @@ export const EditableCell = ({
     if (typeof initialValue === 'string' ) {
       return initialValue
     }
+    let retValue = initialValue
     if (unit === 'k') {
-      return initialValue / 1000
+      retValue = parseFloat((initialValue / 1000).toFixed(2))
     }
     if (unit === 'm') {
-      return initialValue / 1000000;
+      retValue = parseFloat((initialValue / 1000000).toFixed(2));
     }
     if (unit === 'b') {
-      return initialValue / 1000000000;
+      retValue = parseFloat((initialValue / 1000000000).toFixed(2));
     } 
-    return initialValue;
+    if (retValue < 0) {
+      return (<div style={{color: '#e74c3c'}}>{`(${Math.abs(retValue)})`}</div>)
+    }
+    return retValue;
   }
  
   else {
