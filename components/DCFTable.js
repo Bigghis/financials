@@ -23,7 +23,8 @@ const DCFTable = ({data}) => {
           },
           {
             Header: 'Future Years',
-            accessor: 'futureYears'
+            accessor: 'futureYears',
+            Cell: props => `${props.value}`
           },
           {
             Header: 'Discount Rate',

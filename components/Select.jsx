@@ -1,12 +1,19 @@
 import React from 'react';
 import styles from '../styles/Home.module.css';
 
-function Select({min, max, name, label, tooltip, percentage, defaultValue, onChange}) {
+function Select({min, max, name, label, tooltip, percentage, defaultValue, onChange, items}) {
 
     const options = [];
-    for (let i = min; i <= max; i++) {
-        const elem = percentage ? `${i}%` : i;
-        options.push(<option key={`${name}-${i}`} value={i}>{elem}</option>)
+    if (items) {
+        for (let i = 0; i < items.length; i++) {
+            const elem = items[i];
+            options.push(<option key={`${elem.name}-${i}`} value={elem.value}>{elem.name}</option>)
+        }
+    } else {
+        for (let i = min; i <= max; i++) {
+            const elem = percentage ? `${i}%` : i;
+            options.push(<option key={`${name}-${i}`} value={i}>{elem}</option>)
+        }
     }
 
     // title

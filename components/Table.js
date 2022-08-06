@@ -1,35 +1,9 @@
-import React from 'react'
+import {useContext} from 'react'
+import React from 'react';
 import { useTable } from 'react-table'
+import { SettingsContext } from '../context/SettingsContext';
 
 import styles from '../styles/Table.module.css'
-
-/* const Styles = styled.div`
-  padding: 1rem;
-
-  table {
-    border-spacing: 0;
-    border: 1px solid black;
-
-    tr {
-      :last-child {
-        td {
-          border-bottom: 0;
-        }
-      }
-    }
-
-    th,
-    td {
-      margin: 0;
-      padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
-      :last-child {
-        border-right: 0;
-      }
-    }
-  }
-` */
 
 // https://codesandbox.io/s/nvndu?file=/src/App.js:1517-1530
 export const EditableCell = ({
@@ -46,8 +20,23 @@ export const EditableCell = ({
     setValue(initialValue)
   }, [initialValue])
 
+  const settingsContext = useContext(SettingsContext);
+  const { unit } = settingsContext;
+
   if (initialValue !== undefined) {
-    return initialValue
+    if (typeof initialValue === 'string' ) {
+      return initialValue
+    }
+    if (unit === 'k') {
+      return initialValue / 1000
+    }
+    if (unit === 'm') {
+      return initialValue / 1000000;
+    }
+    if (unit === 'b') {
+      return initialValue / 1000000000;
+    } 
+    return initialValue;
   }
  
   else {
@@ -96,6 +85,18 @@ const Table = ({ columns, data, updateMyData, className}) => {
     _className.push(className)
   }
 
+ /* // console.log("COLS COLS=", columns)
+ const renderValue = (value) => {
+  if (typeof value === 'string' ) {
+      return value
+  }
+  if (unit === 'k') {
+    return value / 1000
+  }
+  return value;
+ }
+ */
+
   // Render the UI for your table
   return (<div className={styles.tableContainer}>
             <table {...getTableProps()} className={_className.join(" ")} style={{width: '100%'}}>
@@ -123,55 +124,5 @@ const Table = ({ columns, data, updateMyData, className}) => {
               </table>
           </div>)
 }
-
-/* function App() {
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: 'Name',
-        columns: [
-          {
-            Header: 'First Name',
-            accessor: 'firstName',
-          },
-          {
-            Header: 'Last Name',
-            accessor: 'lastName',
-          },
-        ],
-      },
-      {
-        Header: 'Info',
-        columns: [
-          {
-            Header: 'Age',
-            accessor: 'age',
-          },
-          {
-            Header: 'Visits',
-            accessor: 'visits',
-          },
-          {
-            Header: 'Status',
-            accessor: 'status',
-          },
-          {
-            Header: 'Profile Progress',
-            accessor: 'progress',
-          },
-        ],
-      },
-    ],
-    []
-  )
-
-  const data = React.useMemo(() => makeData(20), [])
-
-  return (
-   
-      <Table columns={columns} data={data} />
- 
-  )
-} */
 
 export default Table

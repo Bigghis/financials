@@ -1,11 +1,14 @@
 import React from 'react';
 import Layout from '../components/Layout';
 
+import styles from '../styles/Home.module.css'
 
 export default function About({}) {
 
   return (<div>
-            ABOUT
+    <h3 className={styles.title}>
+      About
+    </h3>
   </div>)
 }
 
