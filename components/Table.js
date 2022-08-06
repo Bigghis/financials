@@ -38,13 +38,21 @@ export const EditableCell = ({
   column, //: { id },
   updateMyData, // This is a custom function that we supplied to our table instance
 }) => {
+
+  const [value, setValue] = React.useState(initialValue);
+
+  // If the initialValue is changed external, sync it up with our state
+  React.useEffect(() => {
+    setValue(initialValue)
+  }, [initialValue])
+
   if (initialValue !== undefined) {
     return initialValue
   }
  
   else {
     // We need to keep and update the state of the cell normally
-    const [value, setValue] = React.useState(initialValue)
+    
   
     const onChange = e => {
       setValue(e.target.value)
@@ -55,10 +63,7 @@ export const EditableCell = ({
       updateMyData(row.index, column.id, value)
     }
   
-    // If the initialValue is changed external, sync it up with our state
-    React.useEffect(() => {
-      setValue(initialValue)
-    }, [initialValue])
+
   
     return <input className={styles.cellEdit} value={value} onChange={onChange} onBlur={onBlur} />
 

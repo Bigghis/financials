@@ -51,7 +51,7 @@ export default function Home({}) {
           </div>
       </div>
       <div className={styles.footerSubRow}>
-        Data taken from <a target="_blank" href="https://finance.yahoo.com/">Yahoo! Finance</a> and elaborated by <a target="_blank" href="https://www.linkedin.com/in/pasquale-casciano-376018a5/" >Bigghis</a>.
+        Data taken from <a target="_blank" rel="noreferrer" href="https://finance.yahoo.com/">Yahoo! Finance</a> and elaborated by Bigghis.
       </div>
       </footer>
     </div>
