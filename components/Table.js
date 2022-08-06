@@ -74,7 +74,7 @@ const defaultColumn = {
   Cell: EditableCell
 }
 
-const Table = ({ columns, data, updateMyData }) => {
+const Table = ({ columns, data, updateMyData, className}) => {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -87,33 +87,41 @@ const Table = ({ columns, data, updateMyData }) => {
     columns,
     data,
     defaultColumn,
-    updateMyData
+    updateMyData,
+    className
   })
 
+  let _className = [styles.reactTable];
+  if (className) {
+    _className.push(className)
+  }
+
   // Render the UI for your table
-  return (<table {...getTableProps()} className={styles.reactTable}>
-      <thead>
-        {headerGroups.map((headerGroup, i) => (
-          <tr key={`${tableType}_${i}_header_group`} {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column, index) => (
-              <th {...column.getHeaderProps()} key={`${tableType}_header_${i}_${index}`} >{column.render('Header')}</th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row)
-          return (
-            <tr key={`${tableType}_${i}_row`} {...row.getRowProps()}>
-              {row.cells.map((cell, index) => {
-                return <td  key={`${tableType}_${i}_cell_${index}`} {...cell.getCellProps()}>{cell.render('Cell')}</td>
-              })}
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>)
+  return (<div className={styles.tableContainer}>
+            <table {...getTableProps()} className={_className.join(" ")} style={{width: '100%'}}>
+                <thead>
+                  {headerGroups.map((headerGroup, i) => (
+                    <tr key={`${tableType}_${i}_header_group`} {...headerGroup.getHeaderGroupProps()}>
+                      {headerGroup.headers.map((column, index) => (
+                        <th {...column.getHeaderProps()} key={`${tableType}_header_${i}_${index}`} >{column.render('Header')}</th>
+                      ))}
+                    </tr>
+                  ))}
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                  {rows.map((row, i) => {
+                    prepareRow(row)
+                    return (
+                      <tr key={`${tableType}_${i}_row`} {...row.getRowProps()}>
+                        {row.cells.map((cell, index) => {
+                          return <td  key={`${tableType}_${i}_cell_${index}`} {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                        })}
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+          </div>)
 }
 
 /* function App() {

@@ -33,8 +33,9 @@
   display: flex;
   padding: 2rem 0;
   border-top: 1px solid #eaeaea;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  padding: 0 2rem;
 }
 
 .footerSubRow {
@@ -230,12 +231,18 @@
   top: 50%;
 }
 
+.infoTable {
+  min-width: 1000px;
+}
+
+/*
 @media (max-width: 600px) {
   .grid {
     width: 100%;
     flex-direction: column;
   }
 }
+*/
 
 @media (prefers-color-scheme: dark) {
   .card,
@@ -251,6 +258,32 @@
 }
 
 @media (max-width: 600px) {
+
+  .container {
+    padding: 0;
+    overflow-y: auto;
+    min-height: 100vh;
+  }
+
+  .title {
+    margin: 0;
+    margin-bottom:1em;
+    line-height: 1.15;
+    font-size: 1.5rem;
+  }
+
+  .infoStock {
+    font-size: 0.8em;
+  }
+  
+  
+  .subtitle {
+   line-height: 0;
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 1.2em 0;
+  }
+
 .containerTabFlex,
 .containerflexInfo {
     display: flex;
@@ -276,4 +309,10 @@
     max-width: unset;
     width: 100%;
   } 
+
+  .footerRow {
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+  }
 }

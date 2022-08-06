@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Head from 'next/head'
 import Image from 'next/image'
@@ -22,7 +22,7 @@ export default function Home({}) {
     setData([])
   }
 
-  return (
+  return (<React.Fragment>
     <div className={styles.container}>
       <Head>
         <title>Stock Valuation</title>
@@ -35,25 +35,25 @@ export default function Home({}) {
           Stock Valuation
         </h3>
           <InfoStock dataCallback={(data)=>setData(data)} clearDataCallback={clearData} />
-          <Tabs data={data} />          
+            <Tabs data={data} />     
       </main>
-
-      <footer className={styles.footer}>
-      <div className={styles.footerRow}>
-        {global.localStorage && (<button className={styles.formButton} type="button" 
-          onClick={clearCache} >Clear cache</button>)}
-          <div className={styles.infoClaudio}
-          >
-            <div className={styles.infoClaudioText}>Powered by a value investor{' '}</div>
-            <div className={styles.logo}>
-              <Image src="/a.jpg" alt="Don" width={38} height={60} />
-            </div>
-          </div>
-      </div>
-      <div className={styles.footerSubRow}>
-        Data taken from <a target="_blank" rel="noreferrer" href="https://finance.yahoo.com/">Yahoo! Finance</a> and elaborated by Bigghis.
-      </div>
-      </footer>
     </div>
+                <footer className={styles.footer}>
+                <div className={styles.footerRow}>
+                 {/*  {global.localStorage && (<button className={styles.formButton} type="button" 
+                    onClick={clearCache} >Clear cache</button>)} */}
+                    <div className={styles.infoClaudio}
+                    >
+                      <div className={styles.infoClaudioText}>Powered by a value investor{' '}</div>
+                      <div className={styles.logo}>
+                        <Image src="/a.jpg" alt="Don" width={38} height={60} />
+                      </div>
+                    </div>
+                </div>
+                <div className={styles.footerSubRow}>
+                  Data taken from <a target="_blank" rel="noreferrer" href="https://finance.yahoo.com/">Yahoo! Finance</a> and elaborated by Bigghis.
+                </div>
+                </footer>
+                </React.Fragment>
   )
 }

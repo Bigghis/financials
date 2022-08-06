@@ -191,7 +191,6 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
         
             cols = [{ Header: '', accessor: 'metricName', Cell: (props) => <b>{props.value}</b> }, ..._cols];
         }
-       // console.log("COLZ=", cols)
         return cols;
     }
 
@@ -243,6 +242,7 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                             get Metrics
                         </button> 
                         <Table 
+                            className={styles.infoTable}
                             data={info} 
                             columns={getColumns()} 
                             updateMyData={updateMyData} 
