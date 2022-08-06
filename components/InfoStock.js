@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { SpinnerDotted } from 'spinners-react';
+import { DataContext } from '../context/DataContext';
 import styles from '../styles/Home.module.css'
 
 function InfoStock({ dataCallback, clearDataCallback }) {
     const [loading, setLoading] = useState(false);
     const [stockName, setStockName] = useState("");
     const [info, setInfo] = useState(null);
+
+    //initiaData..
+    const dataContext = useContext(DataContext);
+    const { commonData, setCommonData } = dataContext; 
 
     const shortName = info && info.price ? info.price.shortName : ''; 
     const regularMarketPrice = info && info.price ? info.price.regularMarketPrice : ''; 
@@ -26,13 +31,19 @@ function InfoStock({ dataCallback, clearDataCallback }) {
         <div className={styles.containerflexInfo}> 
             <label htmlFor="first">Stock Symbol</label>
             <input placeholder="e.g.: aapl" type="text" id="stock" name="stock" value={stockName} onChange={(e) => {
-                // console.log("value=", e.target.value)
                 setStockName(e.target.value)
             }}/>
             <button className={styles.formButton} type="button" 
                 onClick={async (e) => {
                   setLoading(true)
-                  const data = await fetcherInfo(stockName);
+                  let data = await fetcherInfo(stockName);
+                  setCommonData(data);
+                 /*  if (commonData && Object.keys(commonData).length > 0) {
+                    data = commonData;
+                  } else { 
+                     data = await fetcherInfo(stockName);
+                     setCommonData(data)
+                  } */
                   setInfo(data);
                   setLoading(false)
                   if (dataCallback) {
