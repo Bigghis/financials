@@ -231,37 +231,12 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
 
                 {info && (<div className={styles.containerTabFlexUl}>
                     <div>Last metrics:</div>
-
-{/*                     <div className={styles.containerTabFlex}>
-                        needed inputs: 
-                        <Input label="Revenue" name="revenue" initialValue={info.financials.revenue} onChange={()=> {}} />
-                        <Input label="Last Inventory" name="last_inventory" initialValue={info.balance.lastInventory} onChange={()=> {}} />
-                        <Input label="Gross Profits" name="gross_profits" initialValue={info.financials.grossProfits} onChange={()=> {}} />
-                </div> */ }
-                    <button className={styles.formButton} type="button" onClick={async (e) => {
-                            setLoading(true)
-                          //  const resData = await fetcherDCF(e.target.form);
-                            setInfo(getData(info));
-                            setLoading(false)
-                        }}>
-                            get Metrics
-                        </button> 
                         <Table 
                             className={styles.infoTable}
                             data={info} 
                             columns={getColumns()} 
                             updateMyData={updateMyData} 
                         />
-                        
-                   {/*  <div className={styles.containerTabFlex}>
-                        metrics: 
-                            COGS = {}
-                    </div> 
-
-                    <div><ul>
-                        <li><span>Last Free Cash Flow {"  ="}</span><span className={styles.bold}>({formatArrayString(info.availableYears.incomeStatementHistory)})</span></li>
-                        <li><span>Median Free Cash Flow {"  ="}</span><span className={styles.bold}>({formatArrayString(info.availableYears.cashflowStatementHistory)})</span></li>
-                    </ul></div> */}
                 </div>)}
 
     </div>)

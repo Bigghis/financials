@@ -55,9 +55,6 @@ export const EditableCell = ({
     const onBlur = () => {
       updateMyData(row.index, column.id, value)
     }
-  
-
-  
     return <input className={styles.cellEdit} value={value} onChange={onChange} onBlur={onBlur} />
 
   }
@@ -88,18 +85,6 @@ const Table = ({ columns, data, updateMyData, className}) => {
   if (className) {
     _className.push(className)
   }
-
- /* // console.log("COLS COLS=", columns)
- const renderValue = (value) => {
-  if (typeof value === 'string' ) {
-      return value
-  }
-  if (unit === 'k') {
-    return value / 1000
-  }
-  return value;
- }
- */
 
   // Render the UI for your table
   return (<div className={styles.tableContainer}>

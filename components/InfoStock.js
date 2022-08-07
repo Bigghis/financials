@@ -35,24 +35,20 @@ function InfoStock({ dataCallback, clearDataCallback }) {
             }}/>
             <button className={styles.formButton} type="button" 
                 onClick={async (e) => {
+                  setCommonData([])
                   setLoading(true)
                   let data = await fetcherInfo(stockName);
                   setCommonData(data);
-                 /*  if (commonData && Object.keys(commonData).length > 0) {
-                    data = commonData;
-                  } else { 
-                     data = await fetcherInfo(stockName);
-                     setCommonData(data)
-                  } */
                   setInfo(data);
                   setLoading(false)
                   if (dataCallback) {
                     dataCallback(data);
                 }}}
-                >get Info</button>
+                >Get Info</button>
             <button className={styles.formButton} 
                 onClick={()=> {
                     setInfo([]);
+                    setCommonData([]);
                     setStockName("");
                     if (clearDataCallback) {
                         clearDataCallback();
