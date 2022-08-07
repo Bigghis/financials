@@ -233,10 +233,6 @@
   top: 50%;
 }
 
-.infoTable {
-  min-width: 1000px;
-}
-
 .menuBar{
   display: flex;
   justify-content: flex-start;

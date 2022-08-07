@@ -17,6 +17,7 @@ import  {
 } from '../logic/models/Info';
 
 import styles from '../styles/Home.module.css'
+import tableStyles from '../styles/Table.module.css';
 
 
 export default function InfoCmp({ data, infoData, dataCallback }) {
@@ -196,13 +197,22 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                 const yearString = year.toString();
                 return {        
                     Header: yearString,
-                    accessor: yearString                 
+                    className: tableStyles.infoCol,            
+                  //  width: 140,
+                    accessor: yearString
                   };
             });
 
             _cols = _cols.reverse();
         
-            cols = [{ Header: '', accessor: 'metricName', Cell: (props) => <b>{props.value}</b> }, ..._cols];
+            cols = [{ 
+                        Header: '', 
+                        accessor: 'metricName', 
+                        className: tableStyles.sticky,
+                        headerClassName: tableStyles.sticky,
+                        Cell: (props) => <b>{props.value}</b>
+                    },
+                    ..._cols];
         }
         return cols;
     }
@@ -237,7 +247,7 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                 {info && (<div className={styles.containerTabFlexUl}>
                     <Table 
                         tableType="INFO"
-                        className={styles.infoTable}
+                        className={tableStyles.infoTable}
                         data={info} 
                         columns={getColumns()} 
                         updateMyData={updateMyData} 

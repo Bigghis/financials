@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
 import Table from './Table'
+import styles from '../styles/Table.module.css';
 
 const DCFTable = ({data, clearCallback}) => {
 
@@ -7,7 +8,9 @@ const DCFTable = ({data, clearCallback}) => {
         () => [
           {
             Header: 'Stock',
-            accessor: 'stock'
+            accessor: 'stock',
+            className: styles.sticky,
+            headerClassName: styles.sticky
           },
           {
             Header: 'Free Cash Flow',

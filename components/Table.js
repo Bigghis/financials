@@ -85,16 +85,21 @@ const Table = ({ columns, data, updateMyData, className, useTableButtons, clearC
     _className.push(className)
   }
 
+  console.log("columns=", getTableProps())
+
   // Render the UI for your table
-  return (<div className={styles.tableContainer}>
+  return (<>
             {useTableButtons && <TableButtons dataType={tableType} data={data} clearCallback={clearCallback} />}
-            <table {...getTableProps()} className={_className.join(" ")} style={{width: '100%'}}>
+  <div className={styles.tableContainer}>
+            <table {...getTableProps()} className={_className.join(" ")} >
                 <thead>
                   {headerGroups.map((headerGroup, i) => (
                     <tr key={`${tableType}_${i}_header_group`} {...headerGroup.getHeaderGroupProps()}>
-                      {headerGroup.headers.map((column, index) => (
-                        <th {...column.getHeaderProps()} key={`${tableType}_header_${i}_${index}`} >{column.render('Header')}</th>
-                      ))}
+                      {headerGroup.headers.map((column, index) => {
+                        console.log(column.getHeaderProps())
+                        const e = column.render('Header')
+                        return (<th {...column.getHeaderProps()} key={`${tableType}_header_${i}_${index}`} className={column.className}>{column.render('Header')}</th>)
+                      })}
                     </tr>
                   ))}
                 </thead>
@@ -104,14 +109,16 @@ const Table = ({ columns, data, updateMyData, className, useTableButtons, clearC
                     return (
                       <tr key={`${tableType}_${i}_row`} {...row.getRowProps()}>
                         {row.cells.map((cell, index) => {
-                          return <td  key={`${tableType}_${i}_cell_${index}`} {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                          return <td key={`${tableType}_${i}_cell_${index}`} {...cell.getCellProps()}  className={cell.column.className}>{cell.render('Cell')}</td>
                         })}
                       </tr>
                     )
                   })}
                 </tbody>
               </table>
-          </div>)
+          </div>
+  </>
+  )
 }
 
 export default Table
