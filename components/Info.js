@@ -236,6 +236,7 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                 </h4> 
                 {info && (<div className={styles.containerTabFlexUl}>
                     <Table 
+                        tableType="INFO"
                         className={styles.infoTable}
                         data={info} 
                         columns={getColumns()} 

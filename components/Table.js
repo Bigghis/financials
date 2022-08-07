@@ -65,12 +65,10 @@ const defaultColumn = {
   Cell: EditableCell
 }
 
-const Table = ({ columns, data, updateMyData, className, useTableButtons, clearCallback}) => {
-  // Use the state and functions returned from useTable to build your UI
+const Table = ({ columns, data, updateMyData, className, useTableButtons, clearCallback, tableType}) => {
   const {
     getTableProps,
     getTableBodyProps,
-    tableType,
     headerGroups,
     rows,
     prepareRow,
@@ -89,7 +87,7 @@ const Table = ({ columns, data, updateMyData, className, useTableButtons, clearC
 
   // Render the UI for your table
   return (<div className={styles.tableContainer}>
-            {useTableButtons && <TableButtons data={data} clearCallback={clearCallback} />}
+            {useTableButtons && <TableButtons dataType={tableType} data={data} clearCallback={clearCallback} />}
             <table {...getTableProps()} className={_className.join(" ")} style={{width: '100%'}}>
                 <thead>
                   {headerGroups.map((headerGroup, i) => (

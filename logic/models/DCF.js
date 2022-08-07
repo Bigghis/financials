@@ -184,10 +184,13 @@ class DCF {
 
       return [{
         ...this.params, 
+        longTermGrowthRate: toPercent(this.longTermGrowthRate),
+        growthRate: toPercent(this.growthRate),
+        discountRate: toPercent(this.discountRate),
         price: this.data.financialData.currentPrice,
         forecastPrice: forecastPrice.toFixed(2),
         currency: this.data.price.currencySymbol ,
-        safetyMargin: safetyMarginPercentage,
+        safetyMargin: safetyMarginPercentage + "%"
       }]
     }
 

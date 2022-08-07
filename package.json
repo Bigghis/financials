@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "export-to-csv": "^0.2.1",
     "irr-npv": "^1.0.1",
     "next": "12.2.3",
     "node-localstorage": "^2.2.1",
