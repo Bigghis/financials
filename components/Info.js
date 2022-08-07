@@ -1,12 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { SpinnerDotted } from 'spinners-react';
-import Input from './Input';
-import Select from './Select';
-import { getYear, toDecimal, toPercent } from '../logic/utils';
-import Info, { showAllYearsDataRange, getYearDataRange, getFreeCashFlowNextYear, getGrowthRate, getReinvestementRate, getCOGS, getAverageAgeOfInventory, getGrossMargin, getBookValue, getEffectiveTaxRate, getReturnOnCapital } from '../logic/models/Info';
 import Table from './Table';
-// import { DataContext } from '../context/DataContext';
+import { getYear, toDecimal, toPercent } from '../logic/utils';
+import  { 
+    showAllYearsDataRange, 
+    getYearDataRange, 
+    getFreeCashFlowNextYear, 
+    getGrowthRate, 
+    getReinvestementRate, 
+    getCOGS, 
+    getAverageAgeOfInventory, 
+    getGrossMargin, 
+    getBookValue, 
+    getEffectiveTaxRate, 
+    getReturnOnCapital 
+} from '../logic/models/Info';
 
 import styles from '../styles/Home.module.css'
 
@@ -221,23 +229,19 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
     )
   }
 
-
     return (<div>
                 {loading && <div className={styles.spinner}><SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} /></div>}
                 <h4 className={styles.subtitle}>
                     Info
                 </h4> 
-               
-
                 {info && (<div className={styles.containerTabFlexUl}>
-                    <div>Last metrics:</div>
-                        <Table 
-                            className={styles.infoTable}
-                            data={info} 
-                            columns={getColumns()} 
-                            updateMyData={updateMyData} 
-                        />
+                    <Table 
+                        className={styles.infoTable}
+                        data={info} 
+                        columns={getColumns()} 
+                        updateMyData={updateMyData} 
+                        useTableButtons
+                    />
                 </div>)}
-
-    </div>)
+            </div>)
 }

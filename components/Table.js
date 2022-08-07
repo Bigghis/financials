@@ -4,6 +4,7 @@ import { useTable } from 'react-table'
 import { SettingsContext } from '../context/SettingsContext';
 
 import styles from '../styles/Table.module.css'
+import TableButtons from './TableButtons';
 
 // https://codesandbox.io/s/nvndu?file=/src/App.js:1517-1530
 export const EditableCell = ({
@@ -64,7 +65,7 @@ const defaultColumn = {
   Cell: EditableCell
 }
 
-const Table = ({ columns, data, updateMyData, className}) => {
+const Table = ({ columns, data, updateMyData, className, useTableButtons, clearCallback}) => {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -88,6 +89,7 @@ const Table = ({ columns, data, updateMyData, className}) => {
 
   // Render the UI for your table
   return (<div className={styles.tableContainer}>
+            {useTableButtons && <TableButtons data={data} clearCallback={clearCallback} />}
             <table {...getTableProps()} className={_className.join(" ")} style={{width: '100%'}}>
                 <thead>
                   {headerGroups.map((headerGroup, i) => (

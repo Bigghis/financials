@@ -6,6 +6,7 @@ import Select from './Select';
 import DCFTable from './DCFTable';
 
 import styles from '../styles/Home.module.css'
+import TableButtons from './TableButtons';
 
 
 function DCF({ data, dataCallback }) {
@@ -66,17 +67,7 @@ function DCF({ data, dataCallback }) {
                             calculate DCF
                         </button>
                     </div>
-                <div className={styles.tableButtons}>
-                    {dcfData.length >0 && (<button className={styles.tableButton} type="button" onClick={(e) => {
-                        console.log("export dat!") }}>
-                            export data
-                    </button>)}
-                    {dcfData.length > 0 && (<button className={styles.tableButton} type="button" onClick={(e) => {
-                            setDcfData([]) }}>
-                                clear results
-                        </button>)}
-                </div>
-                <DCFTable data={dcfData} />
+                <DCFTable data={dcfData} clearCallback={() => setDcfData([])} />
     </div>)
 }
   

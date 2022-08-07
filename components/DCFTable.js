@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import Table from './Table'
 
-const DCFTable = ({data}) => {
+const DCFTable = ({data, clearCallback}) => {
 
     const columns = React.useMemo(
         () => [
@@ -111,7 +111,7 @@ const DCFTable = ({data}) => {
         ],
         []
       )
-    return (<Table tableType="DCF" columns={columns} data={data || []} />)
+    return (<Table tableType="DCF" columns={columns} data={data || []} useTableButtons clearCallback={clearCallback} />)
 }
 
 export default DCFTable;
