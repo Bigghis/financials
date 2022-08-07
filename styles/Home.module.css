@@ -195,13 +195,15 @@
   display: flex;
   justify-content: flex-end;
   height: 36px;
+  margin-bottom: 0.5em;
 }
 
 .tableButtons button {
-  width: 10em;
-  margin-bottom: 0.4em;
-  margin-left: 1.2em;
+  width: 36px;
+  height: 36px;
+  margin-right: 0.5em;
 }
+
 .infoStock {
   margin-bottom: 1.5em;;
 }
