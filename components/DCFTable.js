@@ -31,18 +31,15 @@ const DCFTable = ({data, clearCallback}) => {
           },
           {
             Header: 'Discount Rate',
-            accessor: 'discountRate',
-            Cell: props => `${props.value}%`
+            accessor: 'discountRate'
           },
           {
             Header: 'Growth Rate',
-            accessor: 'growthRate',
-            Cell: props => `${props.value}%`
+            accessor: 'growthRate'
           },
           {
             Header: 'TV Growth Rate',
-            accessor: 'longTermGrowthRate',
-            Cell: props => `${props.value}%`
+            accessor: 'longTermGrowthRate'
           },
           {
             Header: 'Price',
@@ -71,7 +68,7 @@ const DCFTable = ({data, clearCallback}) => {
                 color ='#28cd53';
               }
               return (<div style={{ color}}>
-                  {`${props.value}%`}
+                  {props.value}
               </div>)
                }
           },
