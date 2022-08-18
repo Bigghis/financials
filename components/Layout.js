@@ -1,25 +1,20 @@
 import Head from 'next/head'
 import HamburgerMenu, {Links} from '../components/HamburgerMenu';
 import Image from 'next/image'
+import{ SettingsContextProvider } from '../context/SettingsContext'
+
 import styles from '../styles/Home.module.css'
 
 export default function Layout({ children }) {
   return (
-    <>
+    <SettingsContextProvider>
     <div className={styles.container}>
       <Head>
-        <title>Stock Valuation</title>
-        <meta name="description" content="Stock Valuation next app" />
+        <meta name="description" content="Stock Valuation" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-
-      <div className={styles.menuBar}>
-            <div className={styles.menuLinks}>
-                <Links />
-            </div>
-        </div>
-      <div className={styles.hamburgerMenu}><HamburgerMenu /></div>
+        <HamburgerMenu />
         {children}  
       </main>
     </div>
@@ -39,6 +34,6 @@ export default function Layout({ children }) {
             Data taken from <a target="_blank" rel="noreferrer" href="https://finance.yahoo.com/">Yahoo! Finance</a> and elaborated by Bigghis.
         </div>
     </footer>
-    </>
+    </SettingsContextProvider>
   )
 }

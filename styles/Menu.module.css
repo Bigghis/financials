@@ -1,0 +1,64 @@
+
+.menuBar{
+    display: flex;
+    justify-content: space-between;
+    background-color: #0070F3;
+    color: #fff;
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 3em;
+  }
+  
+  .appTitle {
+    font-size: 1.5em;
+    margin-left: 1em;
+  }
+
+  .menuBar a {
+    padding: 0.5em;
+    width: 10em;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+  
+  .menuIcon {
+      width: 40px;
+      height: 40px;
+      margin-right: 1em;
+      cursor: pointer;
+  }
+  .menuList {
+      border: 1px solid blue;
+      border-radius: 10px;
+      color: blue;
+      opacity: 0;
+      transition: opacity 0.5s ease-out;
+      position: absolute;
+      right: 0;
+      margin: 1em 3.5em 0 0;
+      display: flex;
+      flex-flow: column;
+      z-index: 1;
+      background-color: white;
+  }
+
+  .menuList.open {
+      opacity: 1;
+  }
+
+  .menuList.closed {
+    display: none;
+  }
+
+@media (max-width: 600px) {
+  .menuBar { 
+    margin-bottom: 1em;
+  }
+
+  .menuList {
+    margin-right: 1.5em;
+    width: 60%;
+  }
+}

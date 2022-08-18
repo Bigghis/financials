@@ -59,13 +59,14 @@ function InfoStock({ dataCallback, clearDataCallback }) {
             </div>
         <div className={styles.infoStock}>
             <SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} />
-            {info && info.summaryProfile && !loading && (<React.Fragment>
+            {info && info.summaryProfile && !loading && (<>
                 <div><span>Company Name: </span><span className={styles.bold}>{shortName}</span></div>
                 <div><span>Price: </span><span className={styles.bold}>{`${regularMarketPrice}${currencySymbol}`}</span></div>
                 <div><span>Sector: </span><span className={styles.bold}>{info.summaryProfile.sector}</span></div>
                 <div><span>Industry: </span><span className={styles.bold}>{info.summaryProfile.industry}</span></div>
-               {/* <div>look at https://www.readyratios.com/ for median ratios</div> */} 
-            </React.Fragment>)}
+
+               {/* <div>look at https://www.readyratios.com/sec/industry/ for median ratios</div> */} 
+            </>)}
         </div>
     </div>)
   }

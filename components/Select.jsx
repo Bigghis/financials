@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../styles/Home.module.css';
 
-function Select({min, max, name, label, tooltip, percentage, defaultValue, onChange, items}) {
+function Select({min, max, name, label, tooltip, percentage, subtitle, defaultValue, onChange, items}) {
 
     const options = [];
     if (items) {
@@ -18,9 +18,11 @@ function Select({min, max, name, label, tooltip, percentage, defaultValue, onCha
 
     // title
 
+    let _clsName = subtitle ? styles.inputContainerWithSubtitle : styles.inputContainer;
 
-    return (<div className={styles.inputContainer}>
+    return (<div className={_clsName}>
                 <label title={tooltip || label} htmlFor={name}>{label}</label>
+                {subtitle && <div className={styles.subtitle}>{subtitle}</div>}
                 <select 
                     id={name} 
                     name={name} 

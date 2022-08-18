@@ -1,7 +1,5 @@
 import '../styles/globals.css'
-import '../styles/burger.css'
 import { LocalStorage } from "node-localstorage";
-import{ SettingsContextProvider } from '../context/SettingsContext'
 import {DataContextProvider} from '../context/DataContext'
 
 function MyApp({ Component, pageProps }) {
@@ -19,11 +17,9 @@ function MyApp({ Component, pageProps }) {
 
    const getLayout = Component.getLayout || ((page) => page)
 
-   return getLayout(<SettingsContextProvider>
-                      <DataContextProvider>
+   return getLayout(<DataContextProvider>
                               <Component {...pageProps} />
-                      </DataContextProvider>
-     </SettingsContextProvider>)
+                      </DataContextProvider>)
 }
 
 export default MyApp

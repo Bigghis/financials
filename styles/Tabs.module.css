@@ -28,9 +28,9 @@
 .tabContainer {
     position: relative;
     height: 90%;
-  /*  webkit-box-shadow: -1px 0px 5px 0px rgba(184, 184, 184, 1);
-    -moz-box-shadow: -1px 0px 5px 0px rgba(184, 184, 184, 1);
-    box-shadow: -1px 0px 5px 0px rgba(184, 184, 184, 1);*/
+    border-radius: 10px;
+    border: 1px solid rgba(184, 184, 184, 1);
+    padding: 0 0.7em;
 }
 
 .tabBody {
@@ -43,17 +43,15 @@
 
 .tab {
     padding: 1em;
-    color: white;
+    color: rgba(184, 184, 184, 1);
     cursor: pointer;
-    background: black;
-    opacity: 0.129;
 }
 
 .tabSelected{
     padding: 1em;
-    color: white;
     cursor: pointer;
-    background: #0070F3;
+    color: #0070F3;
+    border-bottom: 2px solid #0070F3;
 }
 
 @media (max-width: 600px) { 
@@ -66,4 +64,7 @@
         padding: 0;
     }
 
+    .tabContainer {
+        border: none;
+    }
 }

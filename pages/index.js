@@ -1,14 +1,10 @@
 import React, { useState, useContext } from 'react';
-import axios from 'axios';
 import Layout from '../components/Layout';
 import Tabs from "../components/Tabs"
 import InfoStock from '../components/InfoStock'
-import styles from '../styles/Home.module.css'
 import { DataContext } from '../context/DataContext';
 
 export default function Home({}) {
-  //const [shouldFetchInfo, setShouldFetchInfo,] = useState(false);
-  // const [info, setInfo] = useState(null);
   const [data, setData] = useState([]);
 
   const dataContext = useContext(DataContext);
@@ -31,9 +27,6 @@ export default function Home({}) {
   }
 
   return (<div>
-            <h3 className={styles.title}>
-              Stock Valuation
-            </h3>
             <InfoStock dataCallback={(data)=>setDataCallback(data)} clearDataCallback={clearData} />
             <Tabs data={commonData || []} /> 
   </div>)

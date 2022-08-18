@@ -27,16 +27,29 @@ const Tab = ({ children, selected, onClick }) => {
 const Tabs = ({ data }) => {
     const [ tab, setTab ] = useState(0);
 
-    const getModule = () => {
-      const hasData = Object.keys(data).length > 0;
+    const getTitle = () => {
       if (tab === 0) {
-        return hasData ? <InfoCmp data={data} /> : <NoData />
+        return 'Info'
       }
       if (tab === 1) {
-        return hasData ? <DCF data={data} /> : <NoData />
+        return 'Discounted Cash Flow method'
       }
       if (tab === 2) {
-        return hasData ? <DDM data={data} /> : <NoData />
+        return 'Dividend Discount Model method (three stages)'
+      }
+    }
+
+    const getModule = () => {
+      const title = getTitle();
+      const hasData = Object.keys(data).length > 0;
+      if (tab === 0) {
+       return hasData ? <InfoCmp title={title} data={data} /> : <NoData title={title}  />
+      }
+      if (tab === 1) {
+        return hasData ? <DCF  title={title} data={data} /> : <NoData title={title}  />
+      }
+      if (tab === 2) {
+        return hasData ? <DDM  title={title} data={data} /> : <NoData title={title}  />
       }
     }
 

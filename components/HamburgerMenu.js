@@ -1,17 +1,43 @@
+import React, { useContext, useState } from "react"
 import Link from 'next/link'
-import { slide as Menu } from 'react-burger-menu'
-const HamburgerMenu = () => (<div className='relative p-2'>
-    <Menu customBurgerIcon={<HamburgerIcon />} width={'auto'} className='left-0 top-12' >
-        <Links />
-    </Menu>
-</div>)
+import styles from '../styles/Menu.module.css'
+import Settings from "./Settings"
+import { SettingsContext } from '../context/SettingsContext';
 
-const HamburgerIcon = () => (<div className='p-1/2'><svg className="w-8 h-8 text-gray-500" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></div>)
+const HamburgerIcon = ({ onClick }) => (<div onClick={onClick} className={styles.menuIcon}><svg className="w-8 h-8 text-gray-500" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></div>)
 
-export const Links = () => (<>
-    <Link href="/"><a className='font-bold p-4'>Home</a></Link>
-    <Link href="/settings"><a className='font-bold p-4'>Settings</a></Link>
-    <Link href="/about"><a className='font-bold p-4'>About</a></Link>
-</>)
+export const Links = ({ setUnit, unit }) => {
+
+
+    return (<>
+                {/* <Link href="/"><a className='font-bold p-4'>Home</a></Link> */}
+                <Settings
+                    setUnit={setUnit}
+                    unit={unit} 
+                />
+                <Link href="/about"><a className='font-bold p-4'>About</a></Link>
+            </>)
+    } 
+
+const HamburgerMenu = () => {
+    const [navbarOpen, setNavbarOpen] = useState(false);
+
+    const settingsContext = useContext(SettingsContext);
+    const { unit, setUnit } = settingsContext;
+
+    const handleToggle = () => {
+        setNavbarOpen(!navbarOpen)
+    }
+
+    const _clsName = navbarOpen ? `${styles.menuList} ${styles.open}` : `${styles.menuList} ${styles.closed}`;
+    return (<div className={styles.menuBar} >
+        <div>
+            <div className={`${styles.bold} ${styles.appTitle}`}>Stock Valuation</div>
+            <div className={_clsName}>
+                <Links unit={unit} setUnit={setUnit} />
+            </div>
+        </div>
+        <HamburgerIcon onClick={handleToggle}/>
+</div>)}
 
 export default HamburgerMenu

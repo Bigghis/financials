@@ -25,7 +25,7 @@ import { toDecimal, toPercent, getYear } from '../utils.js';
 // HOW TO EVALUATE A COMPANY WITH a negative FCFF ??
 // https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch22.pdf
 
-const QUERY_OPTIONS = {
+const QUERY_OPTIONS = {  // TODO:: remove this part
   price: ['price'],
   summaryDetail: ['summaryDetail'],
   defaultKeyStatistics: ['defaultKeyStatistics'],
@@ -58,7 +58,7 @@ class DCF {
       this.terminalValue = 0;
     }
 
-    static getQueryOptions = () => {
+    static getQueryOptions = () => {  // TODO:: remove this!
       return QUERY_OPTIONS;
     }
 

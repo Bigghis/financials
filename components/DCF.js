@@ -6,10 +6,9 @@ import Select from './Select';
 import DCFTable from './DCFTable';
 
 import styles from '../styles/Home.module.css'
-import TableButtons from './TableButtons';
 
 
-function DCF({ data, dataCallback }) {
+function DCF({ data, title }) {
     const { price, financialData, defaultKeyStatistics } = data;
 
     const [loading, setLoading] = useState(false);
@@ -40,7 +39,7 @@ function DCF({ data, dataCallback }) {
     return (<div>
                 {loading && <div className={styles.spinner}><SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} /></div>}
                 <h4 className={styles.subtitle}>
-                    Discounted Cash Flow method
+                    {title}
                 </h4>
                     <div className={styles.containerTabFlex}>
                             <Input label="Free Cash Flow" name="free_cash_flow" initialValue={params.freeCashFlow} onChange={(v)=> {
@@ -61,7 +60,7 @@ function DCF({ data, dataCallback }) {
                             setLoading(true)
                             const resData = await fetcherDCF(e.target.form);
                             setDcfData([...dcfData, ...resData])
-                            window.scroll(0, document.querySelector(`.${styles.container}`).scrollHeight);
+                           // window.scroll(0, document.querySelector(`.${styles.container}`).scrollHeight);
                             setLoading(false)
                         }}>
                             calculate DCF

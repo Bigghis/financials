@@ -11,8 +11,8 @@ export const QUERY_OPTIONS = {
     balanceSheetHistory: ['balanceSheetHistory', 'balanceSheetStatements' ],
     incomeStatementHistory: ['incomeStatementHistory', 'incomeStatementHistory'],
     cashflowStatementHistory: ['cashflowStatementHistory', 'cashflowStatements'],
-    financialData: ['financialData']
- //   earningsHistory: ['earningsHistory', 'history']
+    financialData: ['financialData'],
+    earningsHistory: ['earningsHistory', 'history']
 };
 
 export const getYearDataRange = (data, modules) => {

@@ -1,5 +1,4 @@
 .container {
-
   padding: 0 2rem;
   min-height: 100vh;
   position: relative;
@@ -186,9 +185,21 @@
   justify-content: right;
 }
 
-.inputContainer {
+.inputContainer,
+.inputContainerWithSubtitle
+ {
   display: flex;
   flex-flow: column;
+}
+
+.inputContainerWithSubtitle .subtitle {
+  margin-bottom: 0.3em;
+  font-size: 0.70em;
+  text-align: left;
+}
+
+.inputContainerWithSubtitle label {
+  margin-bottom: 0.2em;
 }
 
 .tableButtons {
@@ -233,26 +244,20 @@
   top: 50%;
 }
 
-.menuBar{
-  display: flex;
-  justify-content: flex-start;
-  background-color: black;
-  color: #fff;
-  height: 30px;
-  line-height: 30px;
-
-/* max-w-full h-12 flex justify-start items-center bg-black mb-4 text-white rounded-md */
+.containerSettings .inputContainer {
+  width: 100%;
+  flex-flow: row;
+  justify-content: space-around;
 }
 
-.menuBar a {
-  padding: 0.5em;
-  width: 10em;
+.containerSettings .inputContainer select{
+  width: 60%;
 }
 
-.hamburgerMenu {
-  display: none
+.settingsTitle {
+  text-align: center;
 }
-
+/*
 @media (prefers-color-scheme: dark) {
   .card,
   .footer {
@@ -265,6 +270,7 @@
     filter: invert(1);
   }
 }
+*/
 
 @media (max-width: 600px) {
 
@@ -287,12 +293,12 @@
   
   
   .subtitle {
-   line-height: 0;
     font-size: 1.2rem;
     text-align: center;
     margin: 1.2em 0;
   }
 
+.containerSettings,
 .containerTabFlex,
 .containerflexInfo {
     display: flex;
@@ -329,11 +335,8 @@
     text-align: center;
   }
 
-  .menuBar {
-    display: none;
-  }
-
-  .hamburgerMenu {
-    display: block;
+  .inputContainerWithSubtitle .subtitle {
+    margin-bottom: 0;
+    font-size: 0.6em;
   }
 }
