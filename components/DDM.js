@@ -9,9 +9,9 @@ function DDM({ data, title }) {
     
     const [loading, setLoading] = useState(false);
     const [ params, setParams ] = useState({
-        lastDividend: defaultKeyStatistics && defaultKeyStatistics.lastDividendValue,
-        lastEPS: earningsHistory && earningsHistory.history[0].epsActual, // last year...
-        price: financialData.currentPrice,
+        lastDividend: defaultKeyStatistics && defaultKeyStatistics.lastDividendValue || 0,
+        lastEPS: earningsHistory && earningsHistory.history[0].epsActual || 0, // last year...
+        price: financialData && financialData.currentPrice || 0,
         stock: price && price.symbol || 'NO_NAME!',
 
         discountRate: 10,

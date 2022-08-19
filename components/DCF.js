@@ -43,7 +43,6 @@ function DCF({ data, title }) {
                 </h4>
                     <div className={styles.containerTabFlex}>
                             <Input label="Free Cash Flow" name="free_cash_flow" initialValue={params.freeCashFlow} onChange={(v)=> {
-                                console.log("E==", v)
                                 setParam("freeCashFlow", v);
                             }} />
                             <Input label="Total Debt" name="total_debt" initialValue={params.totalDebt} onChange={(v)=> setParam("totalDebt", v)}/>

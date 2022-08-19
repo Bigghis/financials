@@ -3,16 +3,13 @@ import yahooFinance from 'yahoo-finance2';
 import DCF from '../../logic/models/DCF'
 
 const handler = async (req, res) => {
-   // console.log("req b=", req.body)
     if (req.body && req.body.params.stock) {
         const { params } = req.body;
         // cache system data
-        // console.log("API DCF ====", {...params})
             let data = null;
             if (global.localStorage) {
                 data = global.localStorage.getItem(`DCF_${params.stock}`);
             }
-         //   console.log("cached DATA=", data)
             if (!data) {
                 data  = await yahooFinance.quoteSummary(params.stock, { modules: Object.keys(DCF.getQueryOptions())});
                 // cache data 
@@ -25,7 +22,6 @@ const handler = async (req, res) => {
 
             const dcf = new DCF(data, {...params});
             const resData = dcf.calculateDCF();
-            console.log("RES DATA =   ", resData)
             res.status(200).json(resData);
     } else {
         res.status(500).json({ error: 'failed to load data' });

@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { SpinnerDotted } from 'spinners-react';
 import { DataContext } from '../context/DataContext';
+
 import styles from '../styles/Home.module.css'
 
 function InfoStock({ dataCallback, clearDataCallback }) {
@@ -25,6 +26,18 @@ function InfoStock({ dataCallback, clearDataCallback }) {
              setLoading(false)
              return []
             });
+    }
+
+    let _clsPegRatio = styles.bold;
+    if (commonData && commonData.defaultKeyStatistics && commonData.defaultKeyStatistics.pegRatio) {
+        const pegRatio = commonData.defaultKeyStatistics.pegRatio;
+        if (pegRatio <=1) {
+            _clsPegRatio = `${styles.bold} ${styles.green}`;
+        } else if (pegRatio > 1 && pegRatio <=2) {
+            _clsPegRatio = `${styles.bold} ${styles.yellow}`;
+        } else if (pegRatio > 2) {
+            _clsPegRatio = `${styles.bold} ${styles.red}`;
+        }
     }
 
     return (<div className={styles.infoStock}>
@@ -64,6 +77,9 @@ function InfoStock({ dataCallback, clearDataCallback }) {
                 <div><span>Price: </span><span className={styles.bold}>{`${regularMarketPrice}${currencySymbol}`}</span></div>
                 <div><span>Sector: </span><span className={styles.bold}>{info.summaryProfile.sector}</span></div>
                 <div><span>Industry: </span><span className={styles.bold}>{info.summaryProfile.industry}</span></div>
+                <div><span>Beta: </span><span className={styles.bold}>{(commonData.defaultKeyStatistics.beta).toFixed(2)}</span></div>
+
+                <div><span>PEG Ratio: </span><span className={_clsPegRatio}>{commonData.defaultKeyStatistics.pegRatio}</span></div>
 
                {/* <div>look at https://www.readyratios.com/sec/industry/ for median ratios</div> */} 
             </>)}

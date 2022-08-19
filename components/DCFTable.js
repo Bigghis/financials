@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
 import Table from './Table'
+
 import styles from '../styles/Table.module.css';
 
 const DCFTable = ({data, clearCallback}) => {
@@ -60,14 +61,14 @@ const DCFTable = ({data, clearCallback}) => {
             },
             Cell: props => { 
               const _v = parseInt(props.value);
-              let color = '#e74c3c';
+              let color = '#e74c3c'; // red
               if (_v > 30  && _v < 45) {
-                color ='#f0ad4e';
+                color = '#f0ad4e'; // yellow
               } 
               if (_v >= 45) {
-                color ='#28cd53';
+                color = '#28cd53'; // green
               }
-              return (<div style={{ color}}>
+              return (<div style={{ color }}>
                   {props.value}
               </div>)
                }

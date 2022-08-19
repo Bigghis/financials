@@ -38,7 +38,6 @@ const QUERY_OPTIONS = {  // TODO:: remove this part
 
 class DCF {
     constructor(data, params) {
-      console.log("INIT DCF FREECASH FLOW  params =", params)
       this.params = params;
       this.data = data;
 

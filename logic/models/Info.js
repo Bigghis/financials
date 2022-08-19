@@ -17,11 +17,13 @@ export const QUERY_OPTIONS = {
 
 export const getYearDataRange = (data, modules) => {
   if(modules.length === 2) {
-      const _data = data[modules[0]][modules[1]]
-      const years = _data.map(elem => parseInt(getYear(elem.endDate)))
-      return years
-  }
-  return ' - '
+      if (modules[0] in data && modules[1] in data[modules[0]]) {
+        const _data = data[modules[0]][modules[1]]
+        const years = _data.map(elem => parseInt(getYear(elem.endDate)))
+        return years
+      }
+    }
+  return null;
 }
 
 export const showAllYearsDataRange = (data) => {
@@ -105,7 +107,6 @@ class Info {
     constructor(data) { 
         this.data = data;
 
-        console.log("D=", data)
 
         this.cogs = this.getCOGS()
     }
@@ -146,7 +147,6 @@ class Info {
   
       getMediumPastFcffGrowthRate() {
         const years = this.getYearDataRange(QUERY_OPTIONS.cashflowStatementHistory).sort((a1,b1) => a1-b1);
-        console.log("getMediumPastFcffGrowthRate years", years)
         let sum = 0;
         let i=0;
         let count = 0;
@@ -155,7 +155,6 @@ class Info {
           i++;
           count++;
         }
-        console.log("sum / count).toFixed(2)", (sum / count).toFixed(2));
         return (sum / count).toFixed(2);
       }
   
@@ -172,7 +171,6 @@ class Info {
         const res = {};
           for (const key in QUERY_OPTIONS) {
             res[key] = this.getYearDataRange(QUERY_OPTIONS[key]);
-           // console.log(`data range for ${key} = [ ${this.getYearDataRange(QUERY_OPTIONS[key])} ]`)
           }
           return res;
       }

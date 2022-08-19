@@ -18,10 +18,11 @@ import  {
 
 import styles from '../styles/Home.module.css'
 import tableStyles from '../styles/Table.module.css';
+import NoData from './NoData';
 
 
 export default function InfoCmp({ data, infoData, dataCallback }) {
-    const { price, financialData, defaultKeyStatistics, incomeStatementHistory, cashflowStatementHistory} = data;
+   // const { price, financialData, defaultKeyStatistics, incomeStatementHistory, cashflowStatementHistory} = data;
 
 /*     const dataContext = useContext(DataContext);
     const { commonData, setCommonData } = dataContext; */
@@ -29,13 +30,15 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
     const getInitialData = (data) => {
         let _data = [];
         // create rows
-        console.log("GET DATA=", data);
     
     
         // use years as reference
-        const years = getYearDataRange(data, ['incomeStatementHistory', 'incomeStatementHistory']).reverse();
+        let years = getYearDataRange(data, ['incomeStatementHistory', 'incomeStatementHistory']);
+        if (years && years.length > 0) {
+            years = years.reverse();
+        }
     
-        if (data) {
+        if (data && years) {
             const _revenues = {}
             for (let i = 0; i < data.incomeStatementHistory.incomeStatementHistory.length; i++) {
                 const element = data.incomeStatementHistory.incomeStatementHistory[i];
@@ -171,11 +174,11 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
         return _data
     }
     
-    const getData = (data) => {
+/*     const getData = (data) => {
         let _data = [];
             //TODO:: implementare!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             return null
-    }
+    } */
 
 
     const [loading, setLoading] = useState(false);
@@ -192,18 +195,20 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
         let cols = [];
         if (data) {
             const years = showAllYearsDataRange(data).incomeStatementHistory;
-            
-            let _cols = years.map(year => {
+            let _cols = [];
+            if (years && years.length > 0) {
+                _cols = years.map(year => {
                 const yearString = year.toString();
                 return {        
-                    Header: yearString,
-                    className: tableStyles.infoCol,            
-                  //  width: 140,
-                    accessor: yearString
-                  };
-            });
+                        Header: yearString,
+                        className: tableStyles.infoCol,            
+                    //  width: 140,
+                        accessor: yearString
+                    };
+                });
 
-            _cols = _cols.reverse();
+                _cols = _cols.reverse();
+            }
         
             cols = [{ 
                         Header: '', 
@@ -239,12 +244,9 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
     )
   }
 
-    return (<div>
-                {loading && <div className={styles.spinner}><SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} /></div>}
-                <h4 className={styles.subtitle}>
-                    Info
-                </h4> 
-                {info && (<div className={styles.containerTabFlexUl}>
+  const _renderData = () =>  {
+    if (info && info.length > 0) {
+        return (<div className={styles.containerTabFlexUl}>
                     <Table 
                         tableType="INFO"
                         className={tableStyles.infoTable}
@@ -253,6 +255,15 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                         updateMyData={updateMyData} 
                         useTableButtons
                     />
-                </div>)}
+                </div>);
+    } 
+    return (<NoData />);
+  }
+    return (<div>
+                {loading && <div className={styles.spinner}><SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} /></div>}
+                <h4 className={styles.subtitle}>
+                    Info
+                </h4> 
+                {_renderData()}
             </div>)
 }

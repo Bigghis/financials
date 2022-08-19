@@ -85,7 +85,6 @@ const Table = ({ columns, data, updateMyData, className, useTableButtons, clearC
     _className.push(className)
   }
 
-  console.log("columns=", getTableProps())
 
   // Render the UI for your table
   return (<>
@@ -96,7 +95,6 @@ const Table = ({ columns, data, updateMyData, className, useTableButtons, clearC
                   {headerGroups.map((headerGroup, i) => (
                     <tr key={`${tableType}_${i}_header_group`} {...headerGroup.getHeaderGroupProps()}>
                       {headerGroup.headers.map((column, index) => {
-                        console.log(column.getHeaderProps())
                         const e = column.render('Header')
                         return (<th {...column.getHeaderProps()} key={`${tableType}_header_${i}_${index}`} className={column.className}>{column.render('Header')}</th>)
                       })}

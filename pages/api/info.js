@@ -2,7 +2,6 @@ import yahooFinance from 'yahoo-finance2';
 import Info, { QUERY_OPTIONS } from '../../logic/models/Info';
 
 const handler = async (req, res) => {
-  console.log(req.body)
   const { stock } = req.body;
   if (stock) { 
     let data = null;
