@@ -194,7 +194,7 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
     const getColumns = () => {
         let cols = [];
         if (data) {
-            const years = showAllYearsDataRange(data).incomeStatementHistory;
+            const years = [...new Set(showAllYearsDataRange(data).incomeStatementHistory)];
             let _cols = [];
             if (years && years.length > 0) {
                 _cols = years.map(year => {
@@ -209,10 +209,10 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
 
                 _cols = _cols.reverse();
             }
-        
+            
             cols = [{ 
-                        Header: '', 
-                        accessor: 'metricName', 
+                Header: '', 
+                accessor: 'metricName', 
                         className: tableStyles.sticky,
                         headerClassName: tableStyles.sticky,
                         Cell: (props) => <b>{props.value}</b>

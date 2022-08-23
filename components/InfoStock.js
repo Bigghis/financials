@@ -38,7 +38,9 @@ function InfoStock({ dataCallback, clearDataCallback }) {
         } else if (pegRatio > 2) {
             _clsPegRatio = `${styles.bold} ${styles.red}`;
         }
-    }
+    } 
+
+    const beta = commonData && commonData.defaultKeyStatistics && commonData.defaultKeyStatistics.beta ? (commonData.defaultKeyStatistics.beta).toFixed(2) : null;
 
     return (<div className={styles.infoStock}>
         <div className={styles.containerflexInfo}> 
@@ -77,7 +79,7 @@ function InfoStock({ dataCallback, clearDataCallback }) {
                 <div><span>Price: </span><span className={styles.bold}>{`${regularMarketPrice}${currencySymbol}`}</span></div>
                 <div><span>Sector: </span><span className={styles.bold}>{info.summaryProfile.sector}</span></div>
                 <div><span>Industry: </span><span className={styles.bold}>{info.summaryProfile.industry}</span></div>
-                <div><span>Beta: </span><span className={styles.bold}>{(commonData.defaultKeyStatistics.beta).toFixed(2)}</span></div>
+                <div><span>Beta: </span><span className={styles.bold}>{beta}</span></div>
 
                 <div><span>PEG Ratio: </span><span className={_clsPegRatio}>{commonData.defaultKeyStatistics.pegRatio}</span></div>
 
