@@ -19,6 +19,7 @@ import { toDecimal, toPercent, getYear } from '../utils.js';
 // https://www.youtube.com/watch?v=-WppjJhv83k
 
 //TERMINAL VALUE:
+
 // https://studiofazzini.it/ricerche/il-terminal-value-valore-finale-nel-metodo-dcf/
 // https://github.com/gadicc/node-yahoo-finance2/blob/f27b9017fd5643932f4067c5d7b2a641f783a7ea/src/modules/quoteSummary-iface.ts
 

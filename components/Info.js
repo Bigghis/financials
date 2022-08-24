@@ -73,16 +73,7 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                 _grossProfits[getYear(element.endDate)] = element.grossProfit        
             }
             _data.push({  metricName: 'Gross Profits', ..._grossProfits });
-        
-            // inventory
-            const _inventory = {}
-            for (let i = 0; i < data.balanceSheetHistory.balanceSheetStatements.length; i++) {
-                const element = data.balanceSheetHistory.balanceSheetStatements[i];
-                const year = getYear(element.endDate);
-                _inventory[year] = element.inventory;
-            }
-            _data.push({  metricName: 'Inventory', ..._inventory });
-    
+
             const _ebit = {}
             for (let i = 0; i < data.incomeStatementHistory.incomeStatementHistory.length; i++) {
                 const element = data.incomeStatementHistory.incomeStatementHistory[i];
@@ -110,19 +101,21 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
         
             // getAverageAgeOfInventory [days]
             const _ageOfInventory = {}
-            for (let i = 0; i < data.balanceSheetHistory.balanceSheetStatements.length; i++) {
-                const element = data.balanceSheetHistory.balanceSheetStatements[i];
-                const year = getYear(element.endDate);
-                _ageOfInventory[year] = getAverageAgeOfInventory(element.inventory, _cogs[year])  
-            }
-            _data.push({  metricName: 'Age Of Inventory (days)', ..._ageOfInventory });
-    
             const _bookValue = {}
+            const _inventory = {}
+            const _retainedEarnings = {}
+            const _commonStock = {}
             for (let i = 0; i < data.balanceSheetHistory.balanceSheetStatements.length; i++) {
                 const element = data.balanceSheetHistory.balanceSheetStatements[i];
                 const year = getYear(element.endDate);
-                _bookValue[year] = getBookValue(element.totalAssets, element.totalLiab)  
+                _ageOfInventory[year] = getAverageAgeOfInventory(element.inventory, _cogs[year]);
+                _bookValue[year] = getBookValue(element.totalAssets, element.totalLiab);  
+                _inventory[year] = element.inventory;
+                _commonStock[year] = element.commonStock || null;
+                _retainedEarnings[year] = element.retainedEarnings || null;
             }
+            _data.push({  metricName: 'Inventory', ..._inventory });
+            _data.push({  metricName: 'Age Of Inventory (days)', ..._ageOfInventory });
             _data.push({  metricName: 'Book Value', ..._bookValue });
     
             const _taxRate = {}
@@ -151,7 +144,7 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                 const year = getYear(element.endDate);
                 _reinvestmentRate[year] = toPercent( getReinvestementRate(toDecimal(_revenueGrowthRate[year]), toDecimal(_roc[year])) )
             }
-            _data.push({  metricName: 'Reinvestment rate', ..._reinvestmentRate });
+            _data.push({  metricName: 'Reinvestment Rate', ..._reinvestmentRate });
     
             const _fcf = {}
             let averageFcf = 0;
@@ -170,6 +163,23 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
            // averageFcf = isNaN(parseInt(averageFcf / years.length)) ?  null : parseInt(averageFcf / years.length);
             averageFcf = parseInt(averageFcf / years.length)
             _data.push({  metricName: `FCFF (year+1) (average: ${averageFcf})`, ..._fcf });
+            
+            const _repurchaseOfStock = {}
+            // const _issuanceOfStock = {}
+            const _dividendsPaid = {}
+            for (let i = 0; i < data.cashflowStatementHistory.cashflowStatements.length; i++) {
+                const element = data.cashflowStatementHistory.cashflowStatements[i];
+                const y = getYear(element.endDate);
+                _repurchaseOfStock[y] = element.repurchaseOfStock  || null    
+                // _issuanceOfStock[y] = element.issuanceOfStock || null
+                _dividendsPaid[y] = element.dividendsPaid || null
+            }
+            _data.push({ metricName: 'Common Stocks', ..._commonStock });
+            _data.push({ metricName: 'Retained Earnings', ..._retainedEarnings });
+            _data.push({ metricName: 'Dividends Paid', ..._dividendsPaid });
+            _data.push({ metricName: 'Repurchase Of Stocks', ..._repurchaseOfStock });
+            // _data.push({ metricName: 'Emission Of Stocks', ..._issuanceOfStock });
+            
         }
         return _data
     }

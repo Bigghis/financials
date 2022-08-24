@@ -270,6 +270,9 @@
   font-weight: bold;
 }
 
+.leftMargin {
+  margin-left: 0.8em;
+}
 /*
 @media (prefers-color-scheme: dark) {
   .card,
