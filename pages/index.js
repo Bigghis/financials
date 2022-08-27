@@ -10,12 +10,6 @@ export default function Home({}) {
   const dataContext = useContext(DataContext);
   const { commonData, setCommonData } = dataContext; 
 
-/*   const clearCache = async () => {
-    return await axios.post('api/clear').then((res) => {
-      return res.data
-    })
-  } */
-
   const clearData = () => {
     setData([])
     setCommonData([])

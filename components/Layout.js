@@ -8,7 +8,7 @@ import styles from '../styles/Home.module.css'
 export default function Layout({ children }) {
   return (
     <SettingsContextProvider>
-    <div className={styles.container}>
+    <div className={styles.container} >
       <Head>
         <meta name="description" content="Stock Valuation" />
         <link rel="icon" href="/favicon.ico" />
@@ -20,8 +20,6 @@ export default function Layout({ children }) {
     </div>
     <footer className={styles.footer}>
         <div className={styles.footerRow}>
-            {/*  {global.localStorage && (<button className={styles.formButton} type="button" 
-            onClick={clearCache} >Clear cache</button>)} */}
             <div className={styles.infoClaudio}
             >
                 <div className={styles.infoClaudioText}>Powered by a value investor{' '}</div>

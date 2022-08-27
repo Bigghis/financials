@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import axios from 'axios';
 import { SpinnerDotted } from 'spinners-react';
 import { DataContext } from '../context/DataContext';
@@ -7,16 +7,31 @@ import styles from '../styles/Home.module.css'
 
 function InfoStock({ dataCallback, clearDataCallback }) {
     const [loading, setLoading] = useState(false);
-    const [stockName, setStockName] = useState("");
     const [info, setInfo] = useState(null);
 
+    const stockName = useRef("");
     //initiaData..
     const dataContext = useContext(DataContext);
     const { commonData, setCommonData } = dataContext; 
 
     const shortName = info && info.price ? info.price.shortName : ''; 
     const regularMarketPrice = info && info.price ? info.price.regularMarketPrice : ''; 
-    const currencySymbol = info && info.price ? info.price.currencySymbol : ''; 
+    const currencySymbol = info && info.price ? info.price.currencySymbol : '';
+
+    useEffect(() => {
+        const keypressEnter = (e) => {
+            if (e.keyCode === 13) {  // Enter
+                getData();
+            }
+        };
+        document.addEventListener("keypress", keypressEnter);
+    
+        // clean up
+        return () => {
+          document.removeEventListener("keypress", keypressEnter);
+        };
+      }, []);
+
 
     const fetcherInfo = async (stock) => { 
         return await axios.post('api/info', { stock }).then((res) => {
@@ -28,10 +43,26 @@ function InfoStock({ dataCallback, clearDataCallback }) {
             });
     }
 
+
+    const getData = async () => {
+        const v = stockName.current && stockName.current.value ? stockName.current.value : '';
+        setCommonData([])
+        setLoading(true)
+        let data = await fetcherInfo(v);
+        setCommonData(data);
+        setInfo(data);
+        setLoading(false)
+        if (dataCallback) {
+          dataCallback(data);
+    }}
+
     let _clsPegRatio = styles.bold;
     if (commonData && commonData.defaultKeyStatistics && commonData.defaultKeyStatistics.pegRatio) {
         const pegRatio = commonData.defaultKeyStatistics.pegRatio;
-        if (pegRatio <=1) {
+        if (pegRatio <0) {
+            _clsPegRatio = `${styles.bold} ${styles.red}`;
+        }
+        else if (pegRatio >= 0 && pegRatio <=1) {
             _clsPegRatio = `${styles.bold} ${styles.green}`;
         } else if (pegRatio > 1 && pegRatio <=2) {
             _clsPegRatio = `${styles.bold} ${styles.yellow}`;
@@ -47,32 +78,21 @@ function InfoStock({ dataCallback, clearDataCallback }) {
     return (<div className={styles.infoStock}>
         <div className={styles.containerflexInfo}> 
             <label htmlFor="first">Stock Symbol</label>
-            <input placeholder="e.g.: aapl" type="text" id="stock" name="stock" value={stockName} onChange={(e) => {
-                setStockName(e.target.value)
-            }}/>
+            <input ref={stockName} placeholder="e.g.: aapl" type="text" id="stock" name="stock" />
             <button className={styles.formButton} type="button" 
-                onClick={async (e) => {
-                  setCommonData([])
-                  setLoading(true)
-                  let data = await fetcherInfo(stockName);
-                  setCommonData(data);
-                  setInfo(data);
-                  setLoading(false)
-                  if (dataCallback) {
-                    dataCallback(data);
-                }}}
+                onClick={getData}
                 >Get Info</button>
             <button className={styles.formButton} 
                 onClick={()=> {
                     setInfo([]);
                     setCommonData([]);
-                    setStockName("");
+                    stockName.current.value = "";
                     if (clearDataCallback) {
                         clearDataCallback();
                     }
                 }} 
                 type="button" 
-            >Clear data</button>
+            >Clear Data</button>
             </div>
         <div className={styles.infoStock}>
             <SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} />

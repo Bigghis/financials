@@ -172,6 +172,10 @@
   width: 30%;
   max-width: 10em;
 }
+
+.formButtonSettings {
+  width: 100%;
+}
 /*
 .containerflex label {
   text-align: right;
