@@ -44,7 +44,7 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                 const element = data.incomeStatementHistory.incomeStatementHistory[i];
                 _revenues[getYear(element.endDate)] = element.totalRevenue        
             }
-            _data.push({  metricName: 'Total Revenue', ..._revenues });
+            
         
             const _revenueGrowthRate = {}
             let averageValue = 0;
@@ -64,7 +64,6 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
             // get median value 
     
             
-            _data.push({  metricName: `Revenue Growth Rate (average: ${averageValue})`, ..._revenueGrowthRate });
     
             // gross profits
             const _grossProfits =  {};
@@ -72,7 +71,7 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                 const element = data.incomeStatementHistory.incomeStatementHistory[i];
                 _grossProfits[getYear(element.endDate)] = element.grossProfit        
             }
-            _data.push({  metricName: 'Gross Profits', ..._grossProfits });
+            
 
             const _ebit = {}
             for (let i = 0; i < data.incomeStatementHistory.incomeStatementHistory.length; i++) {
@@ -80,7 +79,6 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                 const year = getYear(element.endDate);
                 _ebit[year] = element.ebit; 
             }
-            _data.push({  metricName: 'EBIT', ..._ebit });
         
             //COGS 
             const _cogs = {}
@@ -88,7 +86,6 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                 const element = data.incomeStatementHistory.incomeStatementHistory[i];
                 _cogs[getYear(element.endDate)] = getCOGS(element.totalRevenue, element.grossProfit)        
             }
-            _data.push({  metricName: 'COGS', ..._cogs });
         
             //gross margin
             const _grossMargin = {}
@@ -97,7 +94,6 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                 const year = getYear(element.endDate);
                 _grossMargin[year] = toPercent(getGrossMargin(element.totalRevenue, _cogs[year]))  
             }
-            _data.push({  metricName: 'Gross Margin', ..._grossMargin });
         
             // getAverageAgeOfInventory [days]
             const _ageOfInventory = {}
@@ -105,18 +101,18 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
             const _inventory = {}
             const _retainedEarnings = {}
             const _commonStock = {}
+            const _totalAssets = {} //used in roa formula
             for (let i = 0; i < data.balanceSheetHistory.balanceSheetStatements.length; i++) {
                 const element = data.balanceSheetHistory.balanceSheetStatements[i];
                 const year = getYear(element.endDate);
                 _ageOfInventory[year] = getAverageAgeOfInventory(element.inventory, _cogs[year]);
+                _totalAssets[year] = element.totalAssets;
                 _bookValue[year] = getBookValue(element.totalAssets, element.totalLiab);  
                 _inventory[year] = element.inventory;
                 _commonStock[year] = element.commonStock || null;
                 _retainedEarnings[year] = element.retainedEarnings || null;
             }
-            _data.push({  metricName: 'Inventory', ..._inventory });
-            _data.push({  metricName: 'Age Of Inventory (days)', ..._ageOfInventory });
-            _data.push({  metricName: 'Book Value', ..._bookValue });
+
     
             const _taxRate = {}
             let averageTaxRate = 0;
@@ -128,7 +124,6 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                 averageTaxRate += tRate;
             }
             averageTaxRate = toPercent(averageTaxRate/years.length);
-            _data.push({  metricName: `Tax Rate (average: ${averageTaxRate})`, ..._taxRate });
     
             const _roc = {}
             for (let i = 0; i < data.incomeStatementHistory.incomeStatementHistory.length; i++) {
@@ -136,7 +131,7 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                 const year = getYear(element.endDate);
                 _roc[year] = toPercent(getReturnOnCapital(_ebit[year], toDecimal(_taxRate[year]), _bookValue[year]))
             }
-            _data.push({  metricName: 'Return On Capital', ..._roc });
+            
     
             const _reinvestmentRate = {}
             for (let i = 0; i < data.incomeStatementHistory.incomeStatementHistory.length; i++) {
@@ -144,7 +139,6 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                 const year = getYear(element.endDate);
                 _reinvestmentRate[year] = toPercent( getReinvestementRate(toDecimal(_revenueGrowthRate[year]), toDecimal(_roc[year])) )
             }
-            _data.push({  metricName: 'Reinvestment Rate', ..._reinvestmentRate });
     
             const _fcf = {}
             let averageFcf = 0;
@@ -162,9 +156,12 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
             }
            // averageFcf = isNaN(parseInt(averageFcf / years.length)) ?  null : parseInt(averageFcf / years.length);
             averageFcf = parseInt(averageFcf / years.length)
-            _data.push({  metricName: `FCFF (year+1) (average: ${averageFcf})`, ..._fcf });
             
             const _repurchaseOfStock = {}
+            const _roe = {}
+            const _roa = {}
+            let averageRoe = 0
+            let averageRoa = 0
             // const _issuanceOfStock = {}
             const _dividendsPaid = {}
             for (let i = 0; i < data.cashflowStatementHistory.cashflowStatements.length; i++) {
@@ -173,12 +170,45 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                 _repurchaseOfStock[y] = element.repurchaseOfStock  || null    
                 // _issuanceOfStock[y] = element.issuanceOfStock || null
                 _dividendsPaid[y] = element.dividendsPaid || null
+
+                _roe[y] = toPercent(element.netIncome / _bookValue[y])
+                averageRoe += toDecimal(_roe[y])
+
+                _roa[y] = toPercent(element.netIncome / _totalAssets[y])
+                averageRoa += toDecimal(_roa[y])
             }
+            averageRoa = toPercent(averageRoa / years.length)
+            averageRoe = toPercent(averageRoe / years.length)
+
+
+            ////////////// compose data /////////////////////
+
+            _data.push({  metricName: 'Total Revenue', ..._revenues });
+            _data.push({  metricName: `Revenue Growth Rate (average: ${averageValue})`, ..._revenueGrowthRate });
+
+            _data.push({  metricName: 'Gross Margin', ..._grossMargin });
+            _data.push({  metricName: 'Gross Profits', ..._grossProfits });
+
+            _data.push({ metricName: `ROE (average: ${averageRoe})`, ..._roe });
+            _data.push({ metricName: `ROA (average: ${averageRoa})`, ..._roa });
+            _data.push({  metricName: 'Return On Capital', ..._roc });
+            _data.push({  metricName: 'Reinvestment Rate', ..._reinvestmentRate });
+            _data.push({  metricName: `FCFF (year+1) (average: ${averageFcf})`, ..._fcf });
+
+
+            _data.push({  metricName: 'Inventory', ..._inventory });
+            _data.push({  metricName: 'Age Of Inventory (days)', ..._ageOfInventory });
+            _data.push({  metricName: 'Book Value', ..._bookValue });
+
+            _data.push({  metricName: 'EBIT', ..._ebit });
+            _data.push({  metricName: 'COGS', ..._cogs });
+
+            _data.push({  metricName: `Tax Rate (average: ${averageTaxRate})`, ..._taxRate });
             _data.push({ metricName: 'Common Stocks', ..._commonStock });
             _data.push({ metricName: 'Retained Earnings', ..._retainedEarnings });
             _data.push({ metricName: 'Dividends Paid', ..._dividendsPaid });
             _data.push({ metricName: 'Repurchase Of Stocks', ..._repurchaseOfStock });
-            // _data.push({ metricName: 'Emission Of Stocks', ..._issuanceOfStock });
+
             
         }
         return _data
