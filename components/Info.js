@@ -126,13 +126,17 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
             averageTaxRate = toPercent(averageTaxRate/years.length);
     
             const _roc = {}
+            let averageRoc = 0
             for (let i = 0; i < data.incomeStatementHistory.incomeStatementHistory.length; i++) {
                 const element = data.incomeStatementHistory.incomeStatementHistory[i];
                 const year = getYear(element.endDate);
-                _roc[year] = toPercent(getReturnOnCapital(_ebit[year], toDecimal(_taxRate[year]), _bookValue[year]))
+                const _numRoc = getReturnOnCapital(_ebit[year], toDecimal(_taxRate[year]), _bookValue[year])
+                _roc[year] = toPercent(_numRoc)
+                averageRoc += _numRoc
             }
-            
-    
+            averageRoc = toPercent(averageRoc / years.length)
+
+
             const _reinvestmentRate = {}
             for (let i = 0; i < data.incomeStatementHistory.incomeStatementHistory.length; i++) {
                 const element = data.incomeStatementHistory.incomeStatementHistory[i];
@@ -191,7 +195,7 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
 
             _data.push({ metricName: `ROE (average: ${averageRoe})`, ..._roe });
             _data.push({ metricName: `ROA (average: ${averageRoa})`, ..._roa });
-            _data.push({  metricName: 'Return On Capital', ..._roc });
+            _data.push({  metricName: `Return On Capital (average: ${averageRoc})`, ..._roc });
             _data.push({  metricName: 'Reinvestment Rate', ..._reinvestmentRate });
             _data.push({  metricName: `FCFF (year+1) (average: ${averageFcf})`, ..._fcf });
 
