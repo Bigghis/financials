@@ -1,4 +1,5 @@
 import { toDecimal, toPercent, getYear } from '../utils.js';
+import { queryOptions } from '../info.js';
 
 // https://www.affaridiborsa.com/articoli/172-discounted-cash-flow-cos-e-e-come-calcolare-il-metodo-dei-flussi-di-cassa-attualizzati.html#a_5
 
@@ -26,17 +27,6 @@ import { toDecimal, toPercent, getYear } from '../utils.js';
 // HOW TO EVALUATE A COMPANY WITH a negative FCFF ??
 // https://pages.stern.nyu.edu/~adamodar/pdfiles/valn2ed/ch22.pdf
 
-const QUERY_OPTIONS = {  // TODO:: remove this part
-  price: ['price'],
-  summaryDetail: ['summaryDetail'],
-  defaultKeyStatistics: ['defaultKeyStatistics'],
-  balanceSheetHistory: ['balanceSheetHistory', 'balanceSheetStatements' ],
-  incomeStatementHistory: ['incomeStatementHistory', 'incomeStatementHistory'],
-  cashflowStatementHistory: ['cashflowStatementHistory', 'cashflowStatements'],
-  financialData: ['financialData']
-//  earningsHistory: ['earningsHistory', 'history']
-};
-
 class DCF {
     constructor(data, params) {
       this.params = params;
@@ -58,8 +48,16 @@ class DCF {
       this.terminalValue = 0;
     }
 
-    static getQueryOptions = () => {  // TODO:: remove this!
-      return QUERY_OPTIONS;
+    static getQueryOptions = () => {
+        return queryOptions([
+          'price',
+          'summaryDetail',
+          'defaultKeyStatistics',
+          'balanceSheetHistory',
+          'incomeStatementHistory',
+          'cashflowStatementHistory',
+          'financialData'
+      ])
     }
 
     getDataYear(year, modules) {
@@ -93,12 +91,12 @@ class DCF {
       // inventory
       // totalCurrentLiabilities
 
-      const allYears = this.getYearDataRange(QUERY_OPTIONS.balanceSheetHistory);
+      const allYears = this.getYearDataRange(queryOptions().balanceSheetHistory);
       console.log("getChangesInWorkingCapital year=", year)
       if (allYears.indexOf(year -1) === -1) {
         return 0;
       } else {
-        const balanceSheetDataPreviousYear = this.getDataYear((year - 1), QUERY_OPTIONS.balanceSheetHistory)
+        const balanceSheetDataPreviousYear = this.getDataYear((year - 1), queryOptions().balanceSheetHistory)
         
         let changeInWorkingCapital = (balanceSheetData.totalCurrentAssets - balanceSheetDataPreviousYear.totalCurrentAssets)
                                       + (balanceSheetData.inventory - balanceSheetDataPreviousYear.inventory)
@@ -116,14 +114,14 @@ class DCF {
       console.log("-----------------------------------------------------------------------")
       // calculate FCFF (free cash flow to the firms) for the year year
 
-    //  const cashFlowData = this.getDataYear(year, QUERY_OPTIONS.cashflowStatementHistory);
+    //  const cashFlowData = this.getDataYear(year, queryOptions().cashflowStatementHistory);
     //  const fcff = cashFlowData.totalCashFromOperatingActivities - cashFlowData.capitalExpenditures;
 
 
       // FCFF Formula =  EBIT x (1-tax rate) + Dep & Amort + Changes in Working Capital – Capital Expenditure
-      const balanceSheetData = this.getDataYear(year, QUERY_OPTIONS.balanceSheetHistory);
-      const incomesData = this.getDataYear(year, QUERY_OPTIONS.incomeStatementHistory);
-      const cashFlowData = this.getDataYear(year, QUERY_OPTIONS.cashflowStatementHistory);
+      const balanceSheetData = this.getDataYear(year, queryOptions().balanceSheetHistory);
+      const incomesData = this.getDataYear(year, queryOptions().incomeStatementHistory);
+      const cashFlowData = this.getDataYear(year, queryOptions().cashflowStatementHistory);
       const fcff = (incomesData.ebit * (1 - this.getTaxrate(incomesData.incomeBeforeTax, incomesData.incomeTaxExpense)))
                     + cashFlowData.depreciation
                     + this.getChangesInWorkingCapital(balanceSheetData, year)
@@ -214,7 +212,7 @@ class DCF {
     }
 
     getMediumPastFcffGrowthRate() {
-      const years = this.getYearDataRange(QUERY_OPTIONS.cashflowStatementHistory).sort((a1,b1) => a1-b1);
+      const years = this.getYearDataRange(queryOptions().cashflowStatementHistory).sort((a1,b1) => a1-b1);
       console.log("getMediumPastFcffGrowthRate years", years)
       let sum = 0;
       let i=0;
@@ -238,8 +236,9 @@ class DCF {
     }
 
     showAllYearsDataRange() {
-        for (const key in QUERY_OPTIONS) {
-          console.log(`data range for ${key} = [ ${this.getYearDataRange(QUERY_OPTIONS[key])} ]`)
+        const _queryOptions = queryOptions()
+        for (const key in _queryOptions) {
+          console.log(`data range for ${key} = [ ${this.getYearDataRange(_queryOptions[key])} ]`)
         }
     }
 
@@ -248,11 +247,11 @@ class DCF {
     }
 
     showCashFlowData(year) {
-      return this.getDataYear(year, QUERY_OPTIONS.cashflowStatementHistory);
+      return this.getDataYear(year, queryOptions().cashflowStatementHistory);
     }
 
     showIncomeData(year) {
-      return this.getDataYear(year, QUERY_OPTIONS.incomeStatementHistory);
+      return this.getDataYear(year, queryOptions().incomeStatementHistory);
     }
 }
 

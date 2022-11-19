@@ -1,19 +1,7 @@
 import { toDecimal, toPercent, getYear } from '../utils.js';
-
+import { queryOptions } from '../info.js';
 
 // https://github.com/gadicc/node-yahoo-finance2/blob/f27b9017fd5643932f4067c5d7b2a641f783a7ea/src/modules/quoteSummary-iface.ts
-
-export const QUERY_OPTIONS = {
-    price: ['price'],
-    summaryProfile: ['summaryProfile'],
-    summaryDetail: ['summaryDetail'],
-    defaultKeyStatistics: ['defaultKeyStatistics'],
-    balanceSheetHistory: ['balanceSheetHistory', 'balanceSheetStatements' ],
-    incomeStatementHistory: ['incomeStatementHistory', 'incomeStatementHistory'],
-    cashflowStatementHistory: ['cashflowStatementHistory', 'cashflowStatements'],
-    financialData: ['financialData'],
-    earningsHistory: ['earningsHistory', 'history']
-};
 
 export const getYearDataRange = (data, modules) => {
   if(modules.length === 2) {
@@ -27,9 +15,10 @@ export const getYearDataRange = (data, modules) => {
 }
 
 export const showAllYearsDataRange = (data) => {
-  const res = {};
-    for (const key in QUERY_OPTIONS) {
-      res[key] = getYearDataRange(data, QUERY_OPTIONS[key]);
+    const res = {};
+    const _queryOptions = queryOptions()
+    for (const key in _queryOptions) {
+      res[key] = getYearDataRange(data, _queryOptions[key]);
     }
     return res;
 }
@@ -112,7 +101,7 @@ class Info {
     }
 
     static getQueryOptions = () => {
-        return QUERY_OPTIONS;
+      return queryOptions();
     }
 
     getCOGS() {
@@ -146,7 +135,7 @@ class Info {
       }
   
       getMediumPastFcffGrowthRate() {
-        const years = this.getYearDataRange(QUERY_OPTIONS.cashflowStatementHistory).sort((a1,b1) => a1-b1);
+        const years = this.getYearDataRange(queryOptions().cashflowStatementHistory).sort((a1,b1) => a1-b1);
         let sum = 0;
         let i=0;
         let count = 0;
@@ -168,9 +157,10 @@ class Info {
       }
   
       showAllYearsDataRange() {
-        const res = {};
-          for (const key in QUERY_OPTIONS) {
-            res[key] = this.getYearDataRange(QUERY_OPTIONS[key]);
+          const res = {};
+          const _queryOptions = queryOptions()
+          for (const key in _queryOptions) {
+            res[key] = this.getYearDataRange(_queryOptions[key]);
           }
           return res;
       }
