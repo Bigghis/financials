@@ -28,7 +28,9 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
     const { commonData, setCommonData } = dataContext; */
 
     const getInitialData = (data) => {
-        let _data = [];
+        let _income = [];
+        let _returns = [];
+        let _balance = [];
         // create rows
     
     
@@ -186,44 +188,36 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
 
 
             ////////////// compose data /////////////////////
+            _income.push({  metricName: 'Total Revenue', ..._revenues });
+            _income.push({  metricName: `Revenue Growth Rate (avg: ${averageValue})`, ..._revenueGrowthRate });
+            _income.push({  metricName: 'Gross Margin', ..._grossMargin });
+            _income.push({  metricName: 'Gross Profits', ..._grossProfits });
+            _income.push({  metricName: 'EBIT', ..._ebit });
+            _income.push({  metricName: 'COGS', ..._cogs });
+            _income.push({  metricName: `Tax Rate (avg: ${averageTaxRate})`, ..._taxRate });
 
-            _data.push({  metricName: 'Total Revenue', ..._revenues });
-            _data.push({  metricName: `Revenue Growth Rate (average: ${averageValue})`, ..._revenueGrowthRate });
+            _returns.push({ metricName: `ROE (avg: ${averageRoe})`, ..._roe });
+            _returns.push({ metricName: `ROA (avg: ${averageRoa})`, ..._roa });
+            _returns.push({  metricName: `Return On Capital (avg: ${averageRoc})`, ..._roc });
+            _returns.push({  metricName: 'Reinvestment Rate', ..._reinvestmentRate });
+            _returns.push({  metricName: `FCFF (year+1) (avg: ${averageFcf})`, ..._fcf });
 
-            _data.push({  metricName: 'Gross Margin', ..._grossMargin });
-            _data.push({  metricName: 'Gross Profits', ..._grossProfits });
-
-            _data.push({ metricName: `ROE (average: ${averageRoe})`, ..._roe });
-            _data.push({ metricName: `ROA (average: ${averageRoa})`, ..._roa });
-            _data.push({  metricName: `Return On Capital (average: ${averageRoc})`, ..._roc });
-            _data.push({  metricName: 'Reinvestment Rate', ..._reinvestmentRate });
-            _data.push({  metricName: `FCFF (year+1) (average: ${averageFcf})`, ..._fcf });
-
-
-            _data.push({  metricName: 'Inventory', ..._inventory });
-            _data.push({  metricName: 'Age Of Inventory (days)', ..._ageOfInventory });
-            _data.push({  metricName: 'Book Value', ..._bookValue });
-
-            _data.push({  metricName: 'EBIT', ..._ebit });
-            _data.push({  metricName: 'COGS', ..._cogs });
-
-            _data.push({  metricName: `Tax Rate (average: ${averageTaxRate})`, ..._taxRate });
-            _data.push({ metricName: 'Common Stocks', ..._commonStock });
-            _data.push({ metricName: 'Retained Earnings', ..._retainedEarnings });
-            _data.push({ metricName: 'Dividends Paid', ..._dividendsPaid });
-            _data.push({ metricName: 'Repurchase Of Stocks', ..._repurchaseOfStock });
+            _balance.push({  metricName: 'Inventory', ..._inventory });
+            _balance.push({  metricName: 'Age Of Inventory (days)', ..._ageOfInventory });
+            _balance.push({  metricName: 'Book Value', ..._bookValue });
+            _balance.push({ metricName: 'Common Stocks', ..._commonStock });
+            _balance.push({ metricName: 'Retained Earnings', ..._retainedEarnings });
+            _balance.push({ metricName: 'Dividends Paid', ..._dividendsPaid });
+            _balance.push({ metricName: 'Repurchase Of Stocks', ..._repurchaseOfStock });
 
             
         }
-        return _data
+        return {
+            _income,
+            _returns,
+            _balance
+        }
     }
-    
-/*     const getData = (data) => {
-        let _data = [];
-            //TODO:: implementare!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            return null
-    } */
-
 
     const [loading, setLoading] = useState(false);
     const [info, setInfo] = useState(getInitialData(data));
@@ -289,12 +283,31 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
   }
 
   const _renderData = () =>  {
-    if (info && info.length > 0) {
+    if (info && Object.keys(info).length > 0) {
         return (<div className={styles.containerTabFlexUl}>
                     <Table 
+                        title="Income"
                         tableType="INFO"
                         className={tableStyles.infoTable}
-                        data={info} 
+                        data={info._income} 
+                        columns={getColumns()} 
+                        updateMyData={updateMyData} 
+                        useTableButtons
+                    />
+                     <Table
+                        title="Returns"
+                        tableType="INFO"
+                        className={tableStyles.infoTable}
+                        data={info._returns} 
+                        columns={getColumns()} 
+                        updateMyData={updateMyData} 
+                        useTableButtons
+                    />
+                     <Table
+                        title="from Balance Sheet"
+                        tableType="INFO"
+                        className={tableStyles.infoTable}
+                        data={info._balance} 
                         columns={getColumns()} 
                         updateMyData={updateMyData} 
                         useTableButtons

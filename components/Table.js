@@ -65,7 +65,7 @@ const defaultColumn = {
   Cell: EditableCell
 }
 
-const Table = ({ columns, data, updateMyData, className, useTableButtons, clearCallback, tableType}) => {
+const Table = ({ columns, data, updateMyData, className, useTableButtons, clearCallback, tableType, title}) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -85,10 +85,19 @@ const Table = ({ columns, data, updateMyData, className, useTableButtons, clearC
     _className.push(className)
   }
 
+  const renderTop = () => {
+    if (title || useTableButtons) {
+      return (<div className={styles.tableTopContainer}>
+          {title && <div className={styles.tableTitle}>{title}</div>}
+          {useTableButtons && <TableButtons dataType={tableType} data={data} clearCallback={clearCallback} />}
+      </div>)
+    }
+    return null;
+  }
 
   // Render the UI for your table
   return (<>
-            {useTableButtons && <TableButtons dataType={tableType} data={data} clearCallback={clearCallback} />}
+  {renderTop()}
   <div className={styles.tableContainer}>
             <table {...getTableProps()} className={_className.join(" ")} >
                 <thead>
