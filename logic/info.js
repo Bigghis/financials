@@ -1,4 +1,3 @@
-import yahooFinance from 'yahoo-finance2';
 const QUERY_OPTIONS = {
     price: ['price'],
     summaryProfile: ['summaryProfile'],
@@ -10,10 +9,6 @@ const QUERY_OPTIONS = {
     financialData: ['financialData'],
     earningsHistory: ['earningsHistory', 'history']
 };
-
-export const getInfo = async (stock) => {
-    return await yahooFinance.quoteSummary(stock, { modules: ['defaultKeyStatistics', 'summaryDetail', 'financialData'] });
-}
 
 export const queryOptions = (filterCategories) => {
     if (filterCategories) {
