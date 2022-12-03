@@ -67,7 +67,7 @@ table.reactTable tbody tr td{
 
 @media (max-width: 600px) { 
     .tableTitle {
-        line-height: 5;
+        line-height: 1.2;
         font-size: 0.8rem;
         height: 1rem;
     }
