@@ -19,6 +19,7 @@ import  {
 import styles from '../styles/Home.module.css'
 import tableStyles from '../styles/Table.module.css';
 import NoData from './NoData';
+import TableButtons from './TableButtons';
 
 
 export default function InfoCmp({ data, infoData, dataCallback }) {
@@ -285,14 +286,14 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
   const _renderData = () =>  {
     if (info && Object.keys(info).length > 0) {
         return (<div className={styles.containerTabFlexUl}>
+                    <TableButtons dataType={"INFO"} data={[...info._income, ...info._returns, ...info._balance]} />
                     <Table 
                         title="Income"
                         tableType="INFO"
                         className={tableStyles.infoTable}
                         data={info._income} 
                         columns={getColumns()} 
-                        updateMyData={updateMyData} 
-                        useTableButtons
+                        updateMyData={updateMyData}
                     />
                      <Table
                         title="Returns"
@@ -301,7 +302,6 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                         data={info._returns} 
                         columns={getColumns()} 
                         updateMyData={updateMyData} 
-                        useTableButtons
                     />
                      <Table
                         title="from Balance Sheet"
@@ -310,7 +310,6 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                         data={info._balance} 
                         columns={getColumns()} 
                         updateMyData={updateMyData} 
-                        useTableButtons
                     />
                 </div>);
     } 

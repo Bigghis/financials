@@ -87,7 +87,7 @@ const Table = ({ columns, data, updateMyData, className, useTableButtons, clearC
 
   const renderTop = () => {
     if (title || useTableButtons) {
-      return (<div className={styles.tableTopContainer}>
+      return (<div className={title ? styles.tableTopContainer : styles.tableTopContainerOnly}>
           {title && <div className={styles.tableTitle}>{title}</div>}
           {useTableButtons && <TableButtons dataType={tableType} data={data} clearCallback={clearCallback} />}
       </div>)
