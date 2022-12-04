@@ -69,7 +69,7 @@ function DCF({ data, title }) {
                             calculate DCF
                         </button>
                     </div>
-                    <ReactTooltip />
+                    <ReactTooltip effect="solid" className={styles.tooltipCustom} />
                 <DCFTable data={dcfData} clearCallback={() => setDcfData([])} />
     </div>)
 }

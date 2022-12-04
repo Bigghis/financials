@@ -69,7 +69,7 @@ function DDM({ data, title }) {
                             calculate DDM
                         </button>
                     </div>
-                <ReactTooltip />
+                <ReactTooltip effect="solid" className={styles.tooltipCustom}  />
             </div>)
   }
   

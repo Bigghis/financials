@@ -285,6 +285,13 @@
 .leftMargin {
   margin-left: 0.8em;
 }
+
+
+.tooltipCustom::before {
+  height: 3px!important;
+}
+
+
 /*
 @media (prefers-color-scheme: dark) {
   .card,
