@@ -1,0 +1,74 @@
+{
+    "dcf": {
+        "cashFlow": {
+            "label": "Cash Flow",
+            "tooltip": "free cash flow for last year"
+        },
+        "totalDebt": {
+            "label": "Total Debt",
+            "tooltip": "actual total debt"
+        },
+        "sharesOutstanding": {
+            "label": "Shares Outstanding",
+            "tooltip": "actual number of shares outstanding"
+        },
+        "futureYears": {
+            "label": "Future Years",
+            "tooltip": "future years considered in the calculation"
+        },
+        "discountRate": {
+            "label": "Discount Rate",
+            "tooltip": "annual expected profit for future years considered"
+        },
+        "growthRate": {
+            "label": "Company Growth Rate",
+            "tooltip": "annual company growth rate for future years considered"
+        },
+        "tv": {
+            "label": "Long Term Growth Rate (TV)",
+            "tooltip": "long term company growth rate, after the considered future years (Terrminal Value)"
+        }
+    },
+    "ddm": {
+        "dividend": {
+            "label": "Last Dividend",
+            "tooltip": "last payed dividend"
+        },
+        "eps": {
+            "label": "Last EPS",
+            "tooltip": "last earning per share"
+        },
+        "epsGrowth1": {
+            "label": "EPS growth 1-5 years",
+            "tooltip": "first stage"
+        },
+        "epsGrowth2": {
+            "label": "EPS growth 5-10 years",
+            "tooltip": "second stage"
+        },
+        "epsGrowth3": {
+            "label": "EPS growth 10-20 years",
+            "tooltip": "tirth stage"
+        },
+        "discountRate": {
+            "label": "Discount Rate (expected profit)",
+            "tooltip": "annual expected profit"
+        },
+        "tpe": {
+            "label": "Terminal PE",
+            "tooltip": "expected PE after range years considered (after 20 years)"
+        },
+        "payout1": {
+            "label": "Payout year 10",
+            "tooltip": "payout 10"
+        },
+        "payout2": {
+            "label": "Payout year 20",
+            "tooltip": "payout 20"
+        },
+        "failure": {
+            "label": "Probability of company failure",
+            "tooltip": "probability of company failure"
+        }
+    }
+}

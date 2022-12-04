@@ -1,9 +1,11 @@
 import React from 'react';
 import styles from '../styles/Home.module.css';
+import InfoIcon from './InfoIcon';
 
 function Select({min, max, name, label, tooltip, percentage, subtitle, defaultValue, onChange, items}) {
-
+    const infoIcon = tooltip ? <span data-tip={tooltip}><InfoIcon /></span> : null;
     const options = [];
+
     if (items) {
         for (let i = 0; i < items.length; i++) {
             const elem = items[i];
@@ -21,7 +23,7 @@ function Select({min, max, name, label, tooltip, percentage, subtitle, defaultVa
     let _clsName = subtitle ? styles.inputContainerWithSubtitle : styles.inputContainer;
 
     return (<div className={_clsName}>
-                <label title={tooltip || label} htmlFor={name}>{label}</label>
+                <label htmlFor={name}><span>{label}</span>{infoIcon}</label>
                 {subtitle && <div className={styles.subtitle}>{subtitle}</div>}
                 <select 
                     id={name} 
