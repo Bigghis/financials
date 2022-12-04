@@ -206,6 +206,14 @@
   margin-bottom: 0.2em;
 }
 
+.inputContainer label {
+  display: flex;
+}
+
+.inputContainer label span:first-child {
+  margin-right: 0.4em;
+}
+
 .tableButtons {
   display: flex;
   justify-content: flex-end;
