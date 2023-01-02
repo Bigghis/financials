@@ -74,6 +74,7 @@ function InfoStock({ dataCallback, clearDataCallback }) {
     const beta = commonData && commonData.defaultKeyStatistics && commonData.defaultKeyStatistics.beta ? (commonData.defaultKeyStatistics.beta).toFixed(2) : null;
     const trailingPe = commonData && commonData.summaryDetail && commonData.summaryDetail.trailingPE ? (commonData.summaryDetail.trailingPE ).toFixed(2) : null
     const forwardPe = commonData && commonData.summaryDetail && commonData.summaryDetail.forwardPE ? (commonData.summaryDetail.forwardPE).toFixed(2) : null
+    const lastDividend = commonData && commonData.defaultKeyStatistics && commonData.defaultKeyStatistics.lastDividendValue ? (commonData.defaultKeyStatistics.lastDividendValue).toFixed(2) : ' - ' 
 
     return (<div className={styles.infoStock}>
         <div className={styles.containerflexInfo}> 
@@ -98,9 +99,11 @@ function InfoStock({ dataCallback, clearDataCallback }) {
             <SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} />
             {info && info.summaryProfile && !loading && (<>
                 <div><span>Company Name: </span><span className={styles.bold}>{shortName}</span></div>
-                <div><span>Price: </span><span className={styles.bold}>{`${regularMarketPrice}${currencySymbol}`}</span></div>
                 <div><span>Sector: </span><span className={styles.bold}>{info.summaryProfile.sector}</span></div>
                 <div><span>Industry: </span><span className={styles.bold}>{info.summaryProfile.industry}</span></div>
+                <div><span>Price: </span><span className={styles.bold}>{`${regularMarketPrice}${currencySymbol}`}</span></div>
+                <div><span>Last Dividend: </span><span className={styles.bold}>{`${lastDividend}${currencySymbol}`}</span></div>
+
                 <div>
                     <span>P/E: </span><span className={styles.bold}>{trailingPe}</span>
                     <span className={styles.leftMargin}>forward P/E: </span><span className={styles.bold}>{forwardPe}</span>

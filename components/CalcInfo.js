@@ -8,6 +8,7 @@ import texts from '../info/texts.json';
 
 import styles from '../styles/CalcInfo.module.css';
 import homeStyles from '../styles/Home.module.css';
+import { toPercent } from '../logic/utils';
 
 function getClsColor(value) {
     let _cls = homeStyles.bold;
@@ -35,6 +36,12 @@ function CalcInfo({ data }) {
 
     const trailingPe = commonData && commonData.summaryDetail && commonData.summaryDetail.trailingPE ? (commonData.summaryDetail.trailingPE ).toFixed(2) : null
     const forwardPe = commonData && commonData.summaryDetail && commonData.summaryDetail.forwardPE ? (commonData.summaryDetail.forwardPE).toFixed(2) : null
+    const lastDividend = commonData && commonData.defaultKeyStatistics && commonData.defaultKeyStatistics.lastDividendValue ? (commonData.defaultKeyStatistics.lastDividendValue).toFixed(2) : null 
+
+    const dividendYield = commonData && lastDividend && commonData.price 
+    && commonData.price.regularMarketPrice 
+    ? toPercent((lastDividend) / commonData.price.regularMarketPrice)
+    : null
 
     const { averages: { averageNetIncomeGrowthValue }} = data
 
@@ -56,6 +63,11 @@ function CalcInfo({ data }) {
                             <span className={styles.iconTooltip} data-tip={txt.growthRatePeRatioFwd.tooltip}><InfoIcon /></span>
                             <span>Ratio (avgNetIncomeGrowthRate) / (P/E fwd): </span>
                             <span className={getClsColor(netIncomeGrowthPeFwdRatio)}>{netIncomeGrowthPeFwdRatio.toFixed(2)}</span>
+                        </div>
+                        <div className={styles.row}>
+                            <span className={styles.iconTooltip} data-tip={txt.dividendYield.tooltip}><InfoIcon /></span>
+                            <span>Dividend Yield: </span>
+                            <span>{dividendYield}</span>
                         </div>
                     </div>
                     <ReactTooltip effect="solid" className={homeStyles.tooltipCustom} />

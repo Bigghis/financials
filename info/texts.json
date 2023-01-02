@@ -77,6 +77,9 @@
         },
         "growthRatePeRatioFwd": {
             "tooltip": "Same of above except for P/E forward used in the ratio calculation."
+        },
+        "dividendYield" : {
+            "tooltip": "ratio between last price and last dividend value"
         }
     }
 }
