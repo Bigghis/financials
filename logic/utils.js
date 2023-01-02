@@ -2,8 +2,8 @@ export const toDecimal = (percentString) => {
     return parseFloat(percentString) / 100;
 }
 
-export const toPercent = (num) => {
-    return `${(num * 100).toFixed(0)}%`;
+export const toPercent = (num, dec=0) => {
+    return `${(num * 100).toFixed(dec)}%`;
 }
 
 export const getYear = (isoStringDate) => {

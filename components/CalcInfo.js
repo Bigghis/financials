@@ -10,9 +10,11 @@ import styles from '../styles/CalcInfo.module.css';
 import homeStyles from '../styles/Home.module.css';
 import { toDecimal, toPercent } from '../logic/utils';
 
+const STR_NULL_VALUE = ' - ';
 
 const RANGES = [1,2];
 const RANGES_WITH_DIVIDENDS = [1.5, 2];
+
 
 function getClsColor(value, ranges) {
     let _cls = homeStyles.bold;
@@ -72,7 +74,7 @@ function CalcInfo({ data }) {
                         <div className={styles.row}>
                             <span className={styles.iconTooltip} data-tip={txt.dividendYield.tooltip}><InfoIcon /></span>
                             <span>Dividend Yield: </span>
-                            <span className={homeStyles.bold}>{dividendYield}</span>
+                            <span className={homeStyles.bold}>{dividendYield || STR_NULL_VALUE}</span>
                         </div>
                         <div className={styles.row}>
                             <span className={styles.iconTooltip} data-tip={txt.growthRatePeRatio.tooltip}><InfoIcon /></span>
@@ -87,12 +89,16 @@ function CalcInfo({ data }) {
                         <div className={styles.row}>
                             <span className={styles.iconTooltip} data-tip={txt.growthRatePeRatioDividend.tooltip}><InfoIcon /></span>
                             <span>Ratio (avgNetIncomeGrowthRate + dividendYield) / (P/E fwd): </span>
-                            <span className={getClsColor(netIncomeGrowthPeRatioWithDividends, RANGES_WITH_DIVIDENDS)}>{netIncomeGrowthPeRatioWithDividends ? netIncomeGrowthPeRatioWithDividends.toFixed(2) : ' - '}</span>
+                            <span className={getClsColor(netIncomeGrowthPeRatioWithDividends, RANGES_WITH_DIVIDENDS)}>
+                                {netIncomeGrowthPeRatioWithDividends ? netIncomeGrowthPeRatioWithDividends.toFixed(2) : STR_NULL_VALUE}
+                            </span>
                         </div>
                         <div className={styles.row}>
                             <span className={styles.iconTooltip} data-tip={txt.growthRatePeFwdRatioDividend.tooltip}><InfoIcon /></span>
                             <span>Ratio (avgNetIncomeGrowthRate + dividendYield) / (P/E fwd): </span>
-                            <span className={getClsColor(netIncomeGrowthPeFwddRatioWithDividends, RANGES_WITH_DIVIDENDS)}>{netIncomeGrowthPeFwddRatioWithDividends ? netIncomeGrowthPeFwddRatioWithDividends.toFixed(2) : ' - '}</span>
+                            <span className={getClsColor(netIncomeGrowthPeFwddRatioWithDividends, RANGES_WITH_DIVIDENDS)}>
+                                {netIncomeGrowthPeFwddRatioWithDividends ? netIncomeGrowthPeFwddRatioWithDividends.toFixed(2) : STR_NULL_VALUE}
+                            </span>
                         </div>
                     </div>
                     <ReactTooltip effect="solid" className={homeStyles.tooltipCustom} />
