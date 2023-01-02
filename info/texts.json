@@ -80,6 +80,12 @@
         },
         "dividendYield" : {
             "tooltip": "ratio between last price and last dividend value"
+        },
+        "growthRatePeRatioDividend": {
+            "tooltip": "slightly more complicated: adds dividend yield to the earnings growth rate and divide by P/E, result less than 1 is poor, 1.5 is okay but we looking for 2 or better"
+        },
+        "growthRatePeFwdRatioDividend": {
+            "tooltip": "Same of above except for P/E forward used in the ratio calculation."
         }
     }
 }
