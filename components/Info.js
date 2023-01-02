@@ -63,11 +63,7 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
                 }
             }
             averageValue = toPercent(averageValue / cont)
-          //  _revenueGrowthRate.length = 
-            // get median value 
-    
-            
-    
+
             // gross profits
             const _grossProfits =  {};
             for (let i = 0; i < data.incomeStatementHistory.incomeStatementHistory.length; i++) {
@@ -167,6 +163,7 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
             const _repurchaseOfStock = {}
             const _roe = {}
             const _roa = {}
+            const _netIncome = {}
             let averageRoe = 0
             let averageRoa = 0
             // const _issuanceOfStock = {}
@@ -183,14 +180,34 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
 
                 _roa[y] = toPercent(element.netIncome / _totalAssets[y])
                 averageRoa += toDecimal(_roa[y])
+
+                _netIncome[y] = element.netIncome || null
+
             }
             averageRoa = toPercent(averageRoa / years.length)
             averageRoe = toPercent(averageRoe / years.length)
+
+            const _netIncomeGrowthRate = {}            
+            let averageNetIncomeGrowthValue = 0;
+            let cont1 = 0;
+            for (let i = 0; i < years.length; i++) {
+                const year = years[i];
+                if (i === 0) {
+                    _netIncomeGrowthRate[year] = null;
+                } else {
+                    _netIncomeGrowthRate[year] = toPercent(getGrowthRate(_netIncome[year-1], _netIncome[year]))
+                    averageNetIncomeGrowthValue += toDecimal(_netIncomeGrowthRate[year])
+                    cont1 ++;
+                }
+            }
+            averageNetIncomeGrowthValue = toPercent(averageNetIncomeGrowthValue / cont1)
 
 
             ////////////// compose data /////////////////////
             _income.push({  metricName: 'Total Revenue', ..._revenues });
             _income.push({  metricName: `Revenue Growth Rate (avg: ${averageValue})`, ..._revenueGrowthRate });
+            _income.push({  metricName: 'Net Income', ..._netIncome });
+            _income.push({  metricName: `Net Income Growth Rate (avg: ${averageNetIncomeGrowthValue})`, ..._netIncomeGrowthRate });
             _income.push({  metricName: 'Gross Margin', ..._grossMargin });
             _income.push({  metricName: 'Gross Profits', ..._grossProfits });
             _income.push({  metricName: 'EBIT', ..._ebit });
