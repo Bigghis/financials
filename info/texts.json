@@ -70,5 +70,13 @@
             "label": "Probability of company failure",
             "tooltip": "probability of company failure"
         }
+    },
+    "info": {
+        "growthRatePeRatio": {
+            "tooltip": "Lynch says: in general a P/E ratio that's half the growth rate\nis very positive and one that's twice the growth rate is very negative. Talking about growth rate of earnings (net income), here."
+        },
+        "growthRatePeRatioFwd": {
+            "tooltip": "Same of above except for P/E forward used in the ratio calculation."
+        }
     }
 }

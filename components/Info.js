@@ -20,6 +20,7 @@ import styles from '../styles/Home.module.css'
 import tableStyles from '../styles/Table.module.css';
 import NoData from './NoData';
 import TableButtons from './TableButtons';
+import CalcInfo from './CalcInfo';
 
 
 export default function InfoCmp({ data, infoData, dataCallback }) {
@@ -32,6 +33,7 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
         let _income = [];
         let _returns = [];
         let _balance = [];
+        const _averages = {};
         // create rows
     
     
@@ -228,12 +230,16 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
             _balance.push({ metricName: 'Dividends Paid', ..._dividendsPaid });
             _balance.push({ metricName: 'Repurchase Of Stocks', ..._repurchaseOfStock });
 
-            
+            _averages = {
+                averageRevenueGrowthrate: toDecimal(averageValue),
+                averageNetIncomeGrowthValue: toDecimal(averageNetIncomeGrowthValue)
+            }
         }
         return {
             _income,
             _returns,
-            _balance
+            _balance,
+            _averages
         }
     }
 
@@ -303,6 +309,10 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
   const _renderData = () =>  {
     if (info && Object.keys(info).length > 0) {
         return (<div className={styles.containerTabFlexUl}>
+                    <CalcInfo data={{
+                        income: info._income,
+                        averages: info._averages
+                    }} />
                     <TableButtons dataType={"INFO"} data={[...info._income, ...info._returns, ...info._balance]} />
                     <Table 
                         title="Income"
