@@ -86,6 +86,9 @@
         },
         "growthRatePeFwdRatioDividend": {
             "tooltip": "Same of above except for P/E forward used in the ratio calculation."
+        },
+        "growthRate": {
+            "label": "Earnings growth rate"
         }
     }
 }

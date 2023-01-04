@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import { DataContext } from '../context/DataContext';
 
 import ReactTooltip from 'react-tooltip';
+import Select from './Select';
 import InfoIcon from './InfoIcon';
 
 import texts from '../info/texts.json';
@@ -33,9 +34,12 @@ function getClsColor(value, ranges) {
 }
 
 function CalcInfo({ data }) {
+    const { averages: { averageNetIncomeGrowthValue }} = data
+
     const dataContext = useContext(DataContext);
     const { commonData } = dataContext; 
 
+    const [growthRate, setGrowthRate ] = useState(averageNetIncomeGrowthValue * 100 || 0);
     const txt = texts.info;
 
     const trailingPe = commonData && commonData.summaryDetail && commonData.summaryDetail.trailingPE ? (commonData.summaryDetail.trailingPE ).toFixed(2) : null
@@ -50,17 +54,17 @@ function CalcInfo({ data }) {
 
     
     
-    const { averages: { averageNetIncomeGrowthValue }} = data
+    const adjGrowthRate = growthRate / 100;
     
-    const netIncomeGrowthPeRatio = (averageNetIncomeGrowthValue * 100) / trailingPe
-    const netIncomeGrowthPeFwdRatio = (averageNetIncomeGrowthValue * 100) / forwardPe
+    const netIncomeGrowthPeRatio = (adjGrowthRate * 100) / trailingPe
+    const netIncomeGrowthPeFwdRatio = (adjGrowthRate * 100) / forwardPe
 
     const netIncomeGrowthPeRatioWithDividends = dividendYield 
-    ? ((averageNetIncomeGrowthValue + toDecimal(dividendYield)) / trailingPe) * 100
+    ? ((adjGrowthRate + toDecimal(dividendYield)) / trailingPe) * 100
     : null
 
     const netIncomeGrowthPeFwddRatioWithDividends = dividendYield 
-    ? ((averageNetIncomeGrowthValue + toDecimal(dividendYield)) / forwardPe) * 100
+    ? ((adjGrowthRate + toDecimal(dividendYield)) / forwardPe) * 100
     : null
 
 
@@ -71,6 +75,9 @@ function CalcInfo({ data }) {
                         Calculated Info
                     </h4>
                     <div>
+                        <div className={styles.row}>
+                            <Select name="growthRate" label={txt.growthRate.label} min={-50} max={100} percentage defaultValue={growthRate} onChange={(v)=> setGrowthRate(v)} />
+                        </div>
                         <div className={styles.row}>
                             <span className={styles.iconTooltip} data-tip={txt.dividendYield.tooltip}><InfoIcon /></span>
                             <span>Dividend Yield: </span>
