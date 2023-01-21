@@ -85,24 +85,24 @@ function CalcInfo({ data }) {
                         </div>
                         <div className={styles.row}>
                             <span className={styles.iconTooltip} data-tip={txt.growthRatePeRatio.tooltip}><InfoIcon /></span>
-                            <span>Ratio (avgNetIncomeGrowthRate) / (P/E): </span>
+                            <span>(growthRate) / (P/E): </span>
                             <span className={getClsColor(netIncomeGrowthPeRatio, RANGES)}>{netIncomeGrowthPeRatio.toFixed(2)}</span>
                         </div>
                         <div className={styles.row}>
                             <span className={styles.iconTooltip} data-tip={txt.growthRatePeRatioFwd.tooltip}><InfoIcon /></span>
-                            <span>Ratio (avgNetIncomeGrowthRate) / (P/E fwd): </span>
+                            <span>(growthRate) / (P/E fwd): </span>
                             <span className={getClsColor(netIncomeGrowthPeFwdRatio, RANGES)}>{netIncomeGrowthPeFwdRatio.toFixed(2)}</span>
                         </div>
                         <div className={styles.row}>
                             <span className={styles.iconTooltip} data-tip={txt.growthRatePeRatioDividend.tooltip}><InfoIcon /></span>
-                            <span>Ratio (avgNetIncomeGrowthRate + dividendYield) / (P/E fwd): </span>
+                            <span>(growthRate + dividendYield) / (P/E): </span>
                             <span className={getClsColor(netIncomeGrowthPeRatioWithDividends, RANGES_WITH_DIVIDENDS)}>
                                 {netIncomeGrowthPeRatioWithDividends ? netIncomeGrowthPeRatioWithDividends.toFixed(2) : STR_NULL_VALUE}
                             </span>
                         </div>
                         <div className={styles.row}>
                             <span className={styles.iconTooltip} data-tip={txt.growthRatePeFwdRatioDividend.tooltip}><InfoIcon /></span>
-                            <span>Ratio (avgNetIncomeGrowthRate + dividendYield) / (P/E fwd): </span>
+                            <span>(growthRate + dividendYield) / (P/E fwd): </span>
                             <span className={getClsColor(netIncomeGrowthPeFwddRatioWithDividends, RANGES_WITH_DIVIDENDS)}>
                                 {netIncomeGrowthPeFwddRatioWithDividends ? netIncomeGrowthPeFwddRatioWithDividends.toFixed(2) : STR_NULL_VALUE}
                             </span>

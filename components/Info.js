@@ -209,7 +209,7 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
             _income.push({  metricName: 'Total Revenue', ..._revenues });
             _income.push({  metricName: `Revenue Growth Rate (avg: ${averageValue})`, ..._revenueGrowthRate });
             _income.push({  metricName: 'Net Income', ..._netIncome });
-            _income.push({  metricName: `Net Income Growth Rate (avg: ${averageNetIncomeGrowthValue})`, ..._netIncomeGrowthRate });
+            _income.push({  metricName: `Net Income (earnings) Growth Rate (avg: ${averageNetIncomeGrowthValue})`, ..._netIncomeGrowthRate });
             _income.push({  metricName: 'Gross Margin', ..._grossMargin });
             _income.push({  metricName: 'Gross Profits', ..._grossProfits });
             _income.push({  metricName: 'EBIT', ..._ebit });

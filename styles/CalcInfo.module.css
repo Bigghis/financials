@@ -6,6 +6,11 @@
 .row > span {
     margin-left: .2rem;
 }
+
+.row > div {
+    flex-flow: unset;
+}
+
 .title {
     line-height: 1.60;
     font-size: 1.3rem;
