@@ -1,11 +1,12 @@
 import '../styles/globals.css'
 import { LocalStorage } from "node-localstorage";
-import {DataContextProvider} from '../context/DataContext'
+import { DataContextProvider } from '../context/DataContext'
+import { IndustriesContextProvider } from '../context/IndustriesContext';
 
 function MyApp({ Component, pageProps }) {
 
   // empty cache 
-  if (global.localStorage) { 
+  if (global.localStorage) {
     global.localStorage.clear();
   }
 
@@ -15,11 +16,13 @@ function MyApp({ Component, pageProps }) {
     console.log("initiate cache..")
   }
 
-   const getLayout = Component.getLayout || ((page) => page)
+  const getLayout = Component.getLayout || ((page) => page)
 
-   return getLayout(<DataContextProvider>
-                              <Component {...pageProps} />
-                      </DataContextProvider>)
+  return getLayout(<DataContextProvider>
+    <IndustriesContextProvider>
+      <Component {...pageProps} />
+    </IndustriesContextProvider>
+  </DataContextProvider>)
 }
 
 export default MyApp

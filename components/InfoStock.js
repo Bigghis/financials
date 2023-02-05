@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import axios from 'axios';
 import { SpinnerDotted } from 'spinners-react';
 import { DataContext } from '../context/DataContext';
+import { IndustriesDataContext } from '../context/IndustriesContext';
 
 import styles from '../styles/Home.module.css'
 
@@ -13,6 +14,8 @@ function InfoStock({ dataCallback, clearDataCallback }) {
     //initiaData..
     const dataContext = useContext(DataContext);
     const { commonData, setCommonData } = dataContext; 
+    const industriesContext  = useContext(IndustriesDataContext);
+    const { industriesData, setIndustriesData } = industriesContext; 
 
     const shortName = info && info.price ? info.price.shortName : ''; 
     const regularMarketPrice = info && info.price ? info.price.regularMarketPrice : ''; 
@@ -33,6 +36,16 @@ function InfoStock({ dataCallback, clearDataCallback }) {
       }, []);
 
 
+    const fetcherIndustriesInfo = async () => { 
+        return await axios.get('api/industries', {}).then((res) => {
+            return res.data.industries
+        }).catch(
+             (error) => {
+             setLoading(false)
+             return []
+            });
+    }
+
     const fetcherInfo = async (stock) => { 
         return await axios.post('api/info', { stock }).then((res) => {
             return res.data
@@ -43,7 +56,6 @@ function InfoStock({ dataCallback, clearDataCallback }) {
             });
     }
 
-
     const getData = async () => {
         const v = stockName.current && stockName.current.value ? stockName.current.value : '';
         setCommonData([])
@@ -51,6 +63,11 @@ function InfoStock({ dataCallback, clearDataCallback }) {
         let data = await fetcherInfo(v);
         setCommonData(data);
         setInfo(data);
+        if (industriesData ===null || Object.keys(industriesData).length === 0) {
+            const _industriesData = await fetcherIndustriesInfo();
+            setIndustriesData(_industriesData)
+        }
+
         setLoading(false)
         if (dataCallback) {
           dataCallback(data);

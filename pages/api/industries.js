@@ -24,7 +24,6 @@ const readFiles = async (directoryPath) => {
 export const getData = async () => {
 
     const directoryPath = path.join(process.cwd(), PATH_DATA);
-    console.log("directoryPath", directoryPath)
     await readFiles(directoryPath);
 
     dataFiles.forEach((file) => {
