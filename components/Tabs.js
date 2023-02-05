@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import InfoCmp from "./Info";
+import Qualitative from "./Qualitative";
 import DCF from './DCF';
 import DDM from './DDM';
 import NoData from "./NoData";
@@ -32,9 +33,12 @@ const Tabs = ({ data }) => {
         return 'Info'
       }
       if (tab === 1) {
-        return 'Discounted Cash Flow method'
+        return 'Qualitative Analysis'
       }
       if (tab === 2) {
+        return 'Discounted Cash Flow method'
+      }
+      if (tab === 3) {
         return 'Dividend Discount Model method (three stages)'
       }
     }
@@ -46,9 +50,12 @@ const Tabs = ({ data }) => {
        return hasData ? <InfoCmp title={title} data={data} /> : <NoData title={title}  />
       }
       if (tab === 1) {
-        return hasData ? <DCF  title={title} data={data} /> : <NoData title={title}  />
+        return hasData ? <Qualitative title={title} data={data} /> : <NoData title={title}  />
       }
       if (tab === 2) {
+        return hasData ? <DCF  title={title} data={data} /> : <NoData title={title}  />
+      }
+      if (tab === 3) {
         return hasData ? <DDM  title={title} data={data} /> : <NoData title={title}  />
       }
     }
@@ -60,9 +67,12 @@ const Tabs = ({ data }) => {
               INFO
           </Tab>
           <Tab selected={tab === 1 } onClick={() => setTab(1)}>
-              DCF
+              QUALITATIVE ANALYSIS
           </Tab>
           <Tab selected={tab === 2 } onClick={() => setTab(2)}>
+              DCF
+          </Tab>
+          <Tab selected={tab === 3 } onClick={() => setTab(3)}>
               DDM
           </Tab>
         </TabHead>

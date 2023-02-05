@@ -90,5 +90,10 @@
         "growthRate": {
             "label": "Earnings growth rate"
         }
+    },
+    "qualitative": {
+        "capitalAllocation": {
+            "tooltip": "fss"
+        }
     }
 }

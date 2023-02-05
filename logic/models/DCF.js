@@ -12,6 +12,20 @@ import { queryOptions } from '../info.js';
 // https://www.educba.com/fcff-formula/
 
 // https://studiofazzini.it/ricerche/i-flussi-di-cassa-attesi-il-tempo-e-il-rischio-nel-metodo-dcf/
+// preferiamo usare il FCF (Free Cash Flow) perché è
+// il flusso di cassa disponibile per gli azionisti dopo aver effettuato gli investimenti necessari 
+// per mantenere e espandere l'attività. 
+// Il FCF si calcola come flusso di cassa operativo meno gli investimenti in attività fisse e 
+// gli investimenti in attività correnti. 
+// Il FCF è importante perché indica la quantità di denaro che la società può distribuire agli azionisti 
+// sotto forma di dividendi o utilizzare per acquistare azioni proprie.
+//
+// avremmo anche potuto usare il CFO (Cash Flow operativo) che indica la liquidità generata 
+// dalle attività operative dell'azienda e si calcola come utile netto più gli ammortamenti e 
+// le amortizzazioni, meno gli investimenti in attività operative e le variazioni dei debiti a breve termine. 
+// Il CFO è importante perché indica la capacità dell'azienda di generare liquidità dalle sue attività operative.
+
+
 
 // TASSO DI SCONTO:
 // non uso il WACC e non uso il CAPM!
@@ -33,7 +47,7 @@ class DCF {
       this.data = data;
 
       this.stock = params.stock; // unused
-      this.freeCashFlow = parseInt(params.freeCashFlow);
+      this.freeCashFlow = parseInt(params.freeCashFlow); // si preferisce usare il FCF piuttosto che il CFO
       this.sharesOutstanding = parseInt(params.sharesOutstanding);
       this.totalDebt = parseInt(params.totalDebt);
       this.futureYears = parseInt(params.futureYears)

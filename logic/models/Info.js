@@ -92,6 +92,8 @@ export const getFreeCashFlowNextYear = (ebit, growthRate, taxRate, reinvestmentR
   return isNaN(res) ? null : res;
 }
 
+/*
+
 class Info {
     constructor(data) { 
         this.data = data;
@@ -178,15 +180,10 @@ class Info {
             financials: {
               revenue: this.data.financialData.totalRevenue,
               grossProfits: this.data.financialData.grossProfits
-            },
-           /* metrics: {
-              revenue: this.data.financialData.totalRevenue,
-              cogs: this.cogs,
-              grossMargin: this.getGrossMargin(), //percent
-              averageAgeOfInventory: this.getAverageAgeOfInventory()
-            }*/
+            }
           }
       }
 }
 
 export default Info;
+*/

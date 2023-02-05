@@ -1,5 +1,6 @@
 import yahooFinance from 'yahoo-finance2';
-import Info from '../../logic/models/Info';
+// import Info from '../../logic/models/Info';
+import { queryOptions } from '../../logic/info.js';
 
 const handler = async (req, res) => {
   const { stock } = req.body;
@@ -9,7 +10,7 @@ const handler = async (req, res) => {
       data = global.localStorage.getItem(`INFO_${stock}`);
     }
     if (!data) {
-        data = await yahooFinance.quoteSummary(stock, { modules: Object.keys(Info.getQueryOptions())});
+        data = await yahooFinance.quoteSummary(stock, { modules: Object.keys(queryOptions())});
         // cache data 
         if (global.localStorage) {
           global.localStorage.setItem(`INFO_${stock}`, JSON.stringify(data));
