@@ -15,6 +15,8 @@ import  {
     getEffectiveTaxRate, 
     getReturnOnCapital 
 } from '../logic/models/Info';
+import { getData } from '../logic/models/IndustryDataset'
+
 
 import styles from '../styles/Home.module.css'
 import tableStyles from '../styles/Table.module.css';
@@ -35,7 +37,7 @@ export default function InfoCmp({ data, infoData, dataCallback }) {
         let _balance = [];
         const _averages = {};
         // create rows
-    
+        getData();
     
         // use years as reference
         let years = getYearDataRange(data, ['incomeStatementHistory', 'incomeStatementHistory']);
