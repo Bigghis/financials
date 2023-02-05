@@ -3,8 +3,11 @@
 import XLSX from 'xlsx';
 import fs from "fs"
 import path from "path"
+// https://nextjs.org/docs/api-reference/data-fetching/get-static-props#reading-files-use-processcwd
 
-const PATH_DATA = '../../../../data/damodaran/'
+// const PATH_DATA = '../../../../data/damodaran/'
+// const PATH_DATA = '/'
+const PATH_DATA = './data/damodaran/'
 
 const industries = {};
 let dataFiles = [];
@@ -20,7 +23,8 @@ const readFiles = async (directoryPath) => {
 
 export const getData = async () => {
 
-    const directoryPath = path.join(__dirname, PATH_DATA);
+    const directoryPath = path.join(process.cwd(), PATH_DATA);
+    console.log("directoryPath", directoryPath)
     await readFiles(directoryPath);
 
     dataFiles.forEach((file) => {
