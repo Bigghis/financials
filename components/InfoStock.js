@@ -3,6 +3,7 @@ import axios from 'axios';
 import { SpinnerDotted } from 'spinners-react';
 import { DataContext } from '../context/DataContext';
 import { IndustriesDataContext } from '../context/IndustriesContext';
+import { getIndustryName } from '../logic/models/IndustryDataset';
 
 import styles from '../styles/Home.module.css'
 
@@ -54,7 +55,7 @@ function InfoStock({ dataCallback, clearDataCallback }) {
         setCommonData(data);
         setInfo(data);
 
-        console.log("industries data", industriesData)
+        //console.log("industries data", industriesData)
 
         setLoading(false)
         if (dataCallback) {
@@ -80,6 +81,9 @@ function InfoStock({ dataCallback, clearDataCallback }) {
     const trailingPe = commonData && commonData.summaryDetail && commonData.summaryDetail.trailingPE ? (commonData.summaryDetail.trailingPE ).toFixed(2) : null
     const forwardPe = commonData && commonData.summaryDetail && commonData.summaryDetail.forwardPE ? (commonData.summaryDetail.forwardPE).toFixed(2) : null
     const lastDividend = commonData && commonData.defaultKeyStatistics && commonData.defaultKeyStatistics.lastDividendValue ? (commonData.defaultKeyStatistics.lastDividendValue).toFixed(2) : ' - ' 
+    if (info && shortName) {
+        console.log("match name =", getIndustryName( industriesData, shortName))
+    }
 
     return (<div className={styles.infoStock}>
         <div className={styles.containerflexInfo}> 
