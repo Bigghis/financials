@@ -11,11 +11,12 @@ function InfoStock({ dataCallback, clearDataCallback }) {
     const [info, setInfo] = useState(null);
 
     const stockName = useRef("");
+    const btnGet = useRef("");
     //initiaData..
     const dataContext = useContext(DataContext);
     const { commonData, setCommonData } = dataContext; 
     const industriesContext  = useContext(IndustriesDataContext);
-    const { industriesData, setIndustriesData } = industriesContext; 
+    const { industriesData } = industriesContext;
 
     const shortName = info && info.price ? info.price.shortName : ''; 
     const regularMarketPrice = info && info.price ? info.price.regularMarketPrice : ''; 
@@ -24,7 +25,7 @@ function InfoStock({ dataCallback, clearDataCallback }) {
     useEffect(() => {
         const keypressEnter = (e) => {
             if (e.keyCode === 13) {  // Enter
-                getData();
+                btnGet.current.click();
             }
         };
         document.addEventListener("keypress", keypressEnter);
@@ -34,17 +35,6 @@ function InfoStock({ dataCallback, clearDataCallback }) {
           document.removeEventListener("keypress", keypressEnter);
         };
       }, []);
-
-
-    const fetcherIndustriesInfo = async () => { 
-        return await axios.get('api/industries', {}).then((res) => {
-            return res.data.industries
-        }).catch(
-             (error) => {
-             setLoading(false)
-             return []
-            });
-    }
 
     const fetcherInfo = async (stock) => { 
         return await axios.post('api/info', { stock }).then((res) => {
@@ -63,10 +53,8 @@ function InfoStock({ dataCallback, clearDataCallback }) {
         let data = await fetcherInfo(v);
         setCommonData(data);
         setInfo(data);
-        if (industriesData ===null || Object.keys(industriesData).length === 0) {
-            const _industriesData = await fetcherIndustriesInfo();
-            setIndustriesData(_industriesData)
-        }
+
+        console.log("industries data", industriesData)
 
         setLoading(false)
         if (dataCallback) {
@@ -97,7 +85,7 @@ function InfoStock({ dataCallback, clearDataCallback }) {
         <div className={styles.containerflexInfo}> 
             <label htmlFor="first">Stock Symbol</label>
             <input ref={stockName} placeholder="e.g.: aapl" type="text" id="stock" name="stock" />
-            <button className={styles.formButton} type="button" 
+            <button ref={btnGet} className={styles.formButton} type="button" 
                 onClick={getData}
                 >Get Info</button>
             <button className={styles.formButton} 
