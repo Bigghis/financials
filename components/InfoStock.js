@@ -2,10 +2,9 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import axios from 'axios';
 import { SpinnerDotted } from 'spinners-react';
 import { DataContext } from '../context/DataContext';
-import { IndustriesDataContext } from '../context/IndustriesContext';
-import { getIndustryName } from '../logic/models/IndustryDataset';
 
 import styles from '../styles/Home.module.css'
+import SimpleTable from './SimpleTable';
 
 function InfoStock({ dataCallback, clearDataCallback }) {
     const [loading, setLoading] = useState(false);
@@ -15,12 +14,10 @@ function InfoStock({ dataCallback, clearDataCallback }) {
     const btnGet = useRef("");
     //initiaData..
     const dataContext = useContext(DataContext);
-    const { commonData, setCommonData } = dataContext; 
-    const industriesContext  = useContext(IndustriesDataContext);
-    const { industriesData } = industriesContext;
+    const { commonData, setCommonData } = dataContext;
 
-    const shortName = info && info.price ? info.price.shortName : ''; 
-    const regularMarketPrice = info && info.price ? info.price.regularMarketPrice : ''; 
+    const shortName = info && info.price ? info.price.shortName : '';
+    const regularMarketPrice = info && info.price ? info.price.regularMarketPrice : '';
     const currencySymbol = info && info.price ? info.price.currencySymbol : '';
 
     useEffect(() => {
@@ -30,20 +27,20 @@ function InfoStock({ dataCallback, clearDataCallback }) {
             }
         };
         document.addEventListener("keypress", keypressEnter);
-    
+
         // clean up
         return () => {
-          document.removeEventListener("keypress", keypressEnter);
+            document.removeEventListener("keypress", keypressEnter);
         };
-      }, []);
+    }, []);
 
-    const fetcherInfo = async (stock) => { 
+    const fetcherInfo = async (stock) => {
         return await axios.post('api/info', { stock }).then((res) => {
             return res.data
         }).catch(
-             (error) => {
-             setLoading(false)
-             return []
+            (error) => {
+                setLoading(false)
+                return []
             });
     }
 
@@ -59,72 +56,72 @@ function InfoStock({ dataCallback, clearDataCallback }) {
 
         setLoading(false)
         if (dataCallback) {
-          dataCallback(data);
-    }}
+            dataCallback(data);
+        }
+    }
 
     let _clsPegRatio = styles.bold;
     if (commonData && commonData.defaultKeyStatistics && commonData.defaultKeyStatistics.pegRatio) {
         const pegRatio = commonData.defaultKeyStatistics.pegRatio;
-        if (pegRatio <0) {
+        if (pegRatio < 0) {
             _clsPegRatio = `${styles.bold} ${styles.red}`;
         }
-        else if (pegRatio >= 0 && pegRatio <=1) {
+        else if (pegRatio >= 0 && pegRatio <= 1) {
             _clsPegRatio = `${styles.bold} ${styles.green}`;
-        } else if (pegRatio > 1 && pegRatio <=2) {
+        } else if (pegRatio > 1 && pegRatio <= 2) {
             _clsPegRatio = `${styles.bold} ${styles.yellow}`;
         } else if (pegRatio > 2) {
             _clsPegRatio = `${styles.bold} ${styles.red}`;
         }
-    } 
+    }
 
     const beta = commonData && commonData.defaultKeyStatistics && commonData.defaultKeyStatistics.beta ? (commonData.defaultKeyStatistics.beta).toFixed(2) : null;
-    const trailingPe = commonData && commonData.summaryDetail && commonData.summaryDetail.trailingPE ? (commonData.summaryDetail.trailingPE ).toFixed(2) : null
+    const trailingPe = commonData && commonData.summaryDetail && commonData.summaryDetail.trailingPE ? (commonData.summaryDetail.trailingPE).toFixed(2) : null
     const forwardPe = commonData && commonData.summaryDetail && commonData.summaryDetail.forwardPE ? (commonData.summaryDetail.forwardPE).toFixed(2) : null
-    const lastDividend = commonData && commonData.defaultKeyStatistics && commonData.defaultKeyStatistics.lastDividendValue ? (commonData.defaultKeyStatistics.lastDividendValue).toFixed(2) : ' - ' 
-    if (info && shortName) {
-        console.log("match name =", getIndustryName( industriesData, shortName))
+    const lastDividend = commonData && commonData.defaultKeyStatistics && commonData.defaultKeyStatistics.lastDividendValue ? (commonData.defaultKeyStatistics.lastDividendValue).toFixed(2) : ' - '
+
+    const getInfoData = () => {
+        return {
+            'Company Name': shortName,
+            'Sector': info.summaryProfile.sector,
+            'Industry': info.summaryProfile.industry,
+            'Price': <span className={styles.bold}>{`${regularMarketPrice}${currencySymbol}`}</span>,
+            'Last Dividend': <span className={styles.bold}>{`${lastDividend}${currencySymbol}`}</span>,
+            'P/E': <span><span className={styles.bold}>{trailingPe}</span><span className={styles.leftMargin}>forward P/E: </span><span className={styles.bold}>{forwardPe}</span></span>,
+            'Beta': <span className={styles.bold}>{beta}</span>,
+            'Peg Ratio': <span className={_clsPegRatio}>{commonData.defaultKeyStatistics.pegRatio}</span>
+        }
     }
 
     return (<div className={styles.infoStock}>
-        <div className={styles.containerflexInfo}> 
+        <div className={styles.containerflexInfo}>
             <label htmlFor="first">Stock Symbol</label>
             <input ref={stockName} placeholder="e.g.: aapl" type="text" id="stock" name="stock" />
-            <button ref={btnGet} className={styles.formButton} type="button" 
+            <button ref={btnGet} className={styles.formButton} type="button"
                 onClick={getData}
-                >Get Info</button>
-            <button className={styles.formButton} 
-                onClick={()=> {
+            >Get Info</button>
+            <button className={styles.formButton}
+                onClick={() => {
                     setInfo([]);
                     setCommonData([]);
                     stockName.current.value = "";
                     if (clearDataCallback) {
                         clearDataCallback();
                     }
-                }} 
-                type="button" 
+                }}
+                type="button"
             >Clear Data</button>
-            </div>
+        </div>
         <div className={styles.infoStock}>
             <SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} />
-            {info && info.summaryProfile && !loading && (<>
-                <div><span>Company Name: </span><span className={styles.bold}>{shortName}</span></div>
-                <div><span>Sector: </span><span className={styles.bold}>{info.summaryProfile.sector}</span></div>
-                <div><span>Industry: </span><span className={styles.bold}>{info.summaryProfile.industry}</span></div>
-                <div><span>Price: </span><span className={styles.bold}>{`${regularMarketPrice}${currencySymbol}`}</span></div>
-                <div><span>Last Dividend: </span><span className={styles.bold}>{`${lastDividend}${currencySymbol}`}</span></div>
-
-                <div>
-                    <span>P/E: </span><span className={styles.bold}>{trailingPe}</span>
-                    <span className={styles.leftMargin}>forward P/E: </span><span className={styles.bold}>{forwardPe}</span>
-                </div>
-                <div><span>Beta: </span><span className={styles.bold}>{beta}</span></div>
-
-                <div><span>PEG Ratio: </span><span className={_clsPegRatio}>{commonData.defaultKeyStatistics.pegRatio}</span></div>
-
-               {/* <div>look at https://www.readyratios.com/sec/industry/ for median ratios</div> */} 
-            </>)}
+            {info && info.summaryProfile && !loading && (
+                <SimpleTable
+                    title="Info Data from Yahoo Finance"
+                    data={getInfoData()}
+                />
+            )}
         </div>
     </div>)
-  }
-  
-  export default InfoStock
+}
+
+export default InfoStock
