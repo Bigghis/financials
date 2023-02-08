@@ -12,7 +12,7 @@ function SimpleTable({ title, data }) {
         return (<NoData />)
     }
     const randKeyPart = Math.random()
-    const trows = keys.map(key, index => (<tr key={`simpleTable_tr_${randKeyPart}_${index}`}><td>{key}</td><td>{data[key]}</td></tr>));
+    const trows = keys.map((key, index) => (<tr key={`simpleTable_tr_${randKeyPart}_${index}`}><td>{key}</td><td>{data[key]}</td></tr>));
     return (<table className={styles.simpleTable}>
         {tableHeader}
          {trows}
