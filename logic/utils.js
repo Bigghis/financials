@@ -12,7 +12,10 @@ export const formatCurrency = (num, dec=2, symbol='$') => {
 }
 
 export const formatNumber = (num, dec=2) => {
-    return `${(num).toFixed(dec)}`;
+    if (num && num !== 'NA') {
+        return `${(num).toFixed(dec)}`;
+    }
+    return '-';
 }
 
 export const getYear = (isoStringDate) => {

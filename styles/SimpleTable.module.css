@@ -1,7 +1,22 @@
 .simpleTable {
-    border-radius: 10px;
+  /*  border-radius: 10px; */
     border: 1px solid rgba(184, 184, 184, 1);
-    padding: 0 0.7em;
-    margin: 1em 0;
+   /* padding: 0 0.7em;*/
+    margin: 1em auto;
+    width: 98%;
 }
 
+.simpleTable tr:nth-child(even) {background: #CCC}
+.simpleTable tr:nth-child(odd) {background: #FFF}
+
+.simpleTable tr td {
+    padding: 0;
+}
+.simpleTableHeader {
+    text-align: left;
+    height: 2.5em;
+}
+/*
+.simpleTable tr td:not(:first) {
+    text-align: right;
+}*/

@@ -34,7 +34,7 @@ const Tabs = ({ data }) => {
         return 'Info'
       }
       if (tab === 1) {
-        return 'Industry'
+        return 'Industry (from Aswath Damodaran\'s Dataset)'
       }
       if (tab === 2) {
         return 'Qualitative Analysis'

@@ -102,7 +102,7 @@ export default function Industry({ title, data }) {
             {title}
         </h4>
         <SimpleTable
-            title="Info Data from Aswath Damodaran"
+            title="Info"
             data={matches}
         />
         <SimpleTable
