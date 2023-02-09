@@ -102,8 +102,6 @@ export default function Industry({ title, data }) {
             {title}
         </h4>
         <SimpleTable
-            zebra
-            hoverable
             title="Info"
             data={matches}
         />
