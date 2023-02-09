@@ -23,16 +23,30 @@ export default function Industry({ title, data }) {
     const industriesContext = useContext(IndustriesDataContext);
     const { industriesData } = industriesContext;
 
-    let matches = {}
+    let infos = {}
+    let infos2 = {}
     let margins = {}
     let capex = {}
     let returns = {}
     let multiples = {}
     if (industriesData && commonData && commonData.price && commonData.price.shortName) {
-        matches = {...getIndustryName(industriesData, commonData.price.shortName)};
+        let matches = { ...getIndustryName(industriesData, commonData.price.shortName) };
         if (matches) {
-            matches["Company Name"] = <span className={styles.bold}>{matches["Company Name"]}</span>
+            infos = {
+                "Company Name": <span className={styles.bold}>{matches["Company Name"]}</span>,
+                "Exchange:Ticker": matches["Exchange:Ticker"],
+                "Industry Group": matches["Industry Group"],
+                "Primary Sector": matches["Primary Sector"]
+            }
+            infos2 = {
+                "Country": matches["Country"],
+                "SIC Code": matches["SIC Code"],
+                "Broad Group": matches["Broad Group"],
+                "Sub Group": matches["Sub Group"]
+            }
         }
+
+
 
         const industry = industriesData[matches["Industry Group"]]
         console.log("match name =", industry);
@@ -75,13 +89,9 @@ export default function Industry({ title, data }) {
         }
 
         multiples = {
-            '% of Money Losing firms (Trailing)': toPercent(industry['% of Money Losing firms (Trailing)']),
             'Current PE': formatNumber(industry['Current PE']),
             'Trailing PE': formatNumber(industry['Trailing PE']),
             'Forward PE': formatNumber(industry['Forward PE']),
-            'Aggregate Mkt Cap/ Net Income (all firms)': formatNumber(industry['Aggregate Mkt Cap/ Net Income (all firms)']),
-            'Aggregate Mkt Cap/ Trailing Net Income (only money making firms)': formatNumber(industry['Aggregate Mkt Cap/ Trailing Net Income (only money making firms)']),
-            'Expected growth - next 5 years': toPercent(industry['Expected growth - next 5 years']),
             'PEG Ratio': formatNumber(industry['PEG Ratio']),
             'Price/Sales': formatNumber(industry['Price/Sales']),
             'EV/Sales': formatNumber(industry['EV/Sales']),
@@ -89,7 +99,11 @@ export default function Industry({ title, data }) {
             'Acc Rec/ Sales': toPercent(industry['Acc Rec/ Sales']),
             'Inventory/Sales': toPercent(industry['Inventory/Sales']),
             'Acc Pay/ Sales': toPercent(industry['Acc Pay/ Sales']),
-            'Non-cash WC/ Sales': toPercent(industry['Non-cash WC/ Sales'])
+            'Non-cash WC/ Sales': toPercent(industry['Non-cash WC/ Sales']),
+            '% of Money Losing firms (Trailing)': toPercent(industry['% of Money Losing firms (Trailing)']),
+            'Aggregate Mkt Cap/ Net Income (all firms)': formatNumber(industry['Aggregate Mkt Cap/ Net Income (all firms)']),
+            'Aggregate Mkt Cap/ Trailing Net Income (only money making firms)': formatNumber(industry['Aggregate Mkt Cap/ Trailing Net Income (only money making firms)']),
+            'Expected growth - next 5 years': toPercent(industry['Expected growth - next 5 years'])
         }
 
         /*const m = _multiples.map(m => {
@@ -104,34 +118,44 @@ export default function Industry({ title, data }) {
         <h4 className={styles.subtitle}>
             {title}
         </h4>
-        <SimpleTable
-            title="Info"
-            data={matches}
-        />
-        <SimpleTable
-            zebra
-            hoverable
-            title="Returns"
-            data={returns}
-        />
-        <SimpleTable
-            zebra
-            hoverable
-            title="Multiples"
-            data={multiples}
-        />
-        <SimpleTable
-            zebra
-            hoverable
-            title="Margins"
-            data={margins}
-        />
-        <SimpleTable
-            zebra
-            hoverable
-            title="Capex"
-            data={capex}
-        />
+        <div className={styles.infoStockContainer}>
+            <SimpleTable
+                title="Info"
+                data={infos}
+            />
+            <SimpleTable
+                title="Info"
+                data={infos2}
+            />
+        </div>
+        <div className={styles.infoStockContainer}>
+            <SimpleTable
+                zebra
+                hoverable
+                title="Multiples"
+                data={multiples}
+            />
+            <SimpleTable
+                zebra
+                hoverable
+                title="Margins"
+                data={margins}
+            />
+        </div>
+        <div className={styles.infoStockContainer}>
+            <SimpleTable
+                zebra
+                hoverable
+                title="Returns"
+                data={returns}
+            />
+            <SimpleTable
+                zebra
+                hoverable
+                title="Capex"
+                data={capex}
+            />
+        </div>
         <ReactTooltip effect="solid" className={styles.tooltipCustom} />
     </div>)
 }

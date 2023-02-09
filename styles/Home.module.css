@@ -319,14 +319,10 @@
 
 .tableNames {
   max-width: 600px;
-  /* width: 45%; */
- /*margin: 0; */
 }
 
 .tablePrices {
   max-width: 250px;
-  /*width: 40%; */
-  /*  margin: 0;  */
 }
 
 @media (max-width: 600px) {
