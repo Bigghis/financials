@@ -4,11 +4,17 @@ export const toDecimal = (percentString) => {
 }
 
 export const toPercent = (num, dec=0) => {
-    return `${(num * 100).toFixed(dec)}%`;
+    if (num && num !== 'NA') { 
+        return `${(num * 100).toFixed(dec)}%`;
+    }
+    return '-'
 }
 
 export const formatCurrency = (num, dec=2, symbol='$') => {
-    return `${(num).toFixed(dec)}${symbol}`;
+    if (num && num !== 'NA') { 
+        return `${(num).toFixed(dec)}${symbol}`;
+    }
+    return '-'
 }
 
 export const formatNumber = (num, dec=2) => {

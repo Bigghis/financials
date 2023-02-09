@@ -4,17 +4,27 @@
    /* padding: 0 0.7em;*/
     margin: 1em auto;
     width: 98%;
+    border-collapse:collapse;
+    font-size: 14px;
 }
 
-.simpleTable tr:nth-child(even) {background: #CCC}
-.simpleTable tr:nth-child(odd) {background: #FFF}
+.simpleTableHoverable tr:hover{
+    background-color: aqua;
+}       
 
-.simpleTable tr td {
-    padding: 0;
+.simpleTable tr th{
+    padding: 0.3em 0.5em;
 }
+.simpleTable tr td{
+    padding: 0.3em 0.5em;
+}
+
+.simpleTableZebra tr:nth-child(even) {background: #CCC}
+.simpleTableZebra tr:nth-child(odd) {background: #FFF}
+
 .simpleTableHeader {
     text-align: left;
-    height: 2.5em;
+    height: 2.3em;
 }
 /*
 .simpleTable tr td:not(:first) {

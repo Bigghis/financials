@@ -102,22 +102,32 @@ export default function Industry({ title, data }) {
             {title}
         </h4>
         <SimpleTable
+            zebra
+            hoverable
             title="Info"
             data={matches}
         />
         <SimpleTable
+            zebra
+            hoverable
             title="Returns"
             data={returns}
         />
         <SimpleTable
+            zebra
+            hoverable
             title="Multiples"
             data={multiples}
         />
         <SimpleTable
+            zebra
+            hoverable
             title="Margins"
             data={margins}
         />
         <SimpleTable
+            zebra
+            hoverable
             title="Capex"
             data={capex}
         />
