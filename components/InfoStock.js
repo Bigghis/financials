@@ -80,11 +80,15 @@ function InfoStock({ dataCallback, clearDataCallback }) {
     const forwardPe = commonData && commonData.summaryDetail && commonData.summaryDetail.forwardPE ? (commonData.summaryDetail.forwardPE).toFixed(2) : null
     const lastDividend = commonData && commonData.defaultKeyStatistics && commonData.defaultKeyStatistics.lastDividendValue ? (commonData.defaultKeyStatistics.lastDividendValue).toFixed(2) : ' - '
 
-    const getInfoData = () => {
+    const getNameData = () => {
         return {
-            'Company Name': shortName,
+            'Company Name': <span className={styles.bold}>{shortName}</span>,
             'Sector': info.summaryProfile.sector,
             'Industry': info.summaryProfile.industry,
+        }
+    }
+    const getInfoData = () => {
+        return {
             'Price': <span className={styles.bold}>{`${regularMarketPrice}${currencySymbol}`}</span>,
             'Last Dividend': <span className={styles.bold}>{`${lastDividend}${currencySymbol}`}</span>,
             'P/E': <span><span className={styles.bold}>{trailingPe}</span><span className={styles.leftMargin}>forward P/E: </span><span className={styles.bold}>{forwardPe}</span></span>,
@@ -115,10 +119,18 @@ function InfoStock({ dataCallback, clearDataCallback }) {
         <div className={styles.infoStock}>
             <SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} />
             {info && info.summaryProfile && !loading && (
+                <div className={styles.infoStockContainer}>
                 <SimpleTable
-                    title="Info Data from Yahoo Finance"
+                className={styles.tableName}
+                title="Info Data from Yahoo Finance"
+                data={getNameData()}
+            />
+                <SimpleTable
+                className={styles.tablePrices}
+               //     title="Values"
                     data={getInfoData()}
                 />
+                </div>
             )}
         </div>
     </div>)

@@ -2,9 +2,12 @@ import React from 'react';
 import NoData from './NoData';
 import styles from '../styles/SimpleTable.module.css'
 
-function SimpleTable({ title, data, zebra, hoverable }) {
+function SimpleTable({ className, title, data, zebra, hoverable }) {
 
     const _className = [styles.simpleTable]
+    if (className) {
+        _className.push(className)
+    }
     if (zebra) {
         _className.push(styles.simpleTableZebra)
     }

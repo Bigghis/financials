@@ -5,7 +5,7 @@ import { DataContext } from '../context/DataContext';
 import { IndustriesDataContext } from '../context/IndustriesContext';
 import { getIndustryName } from '../logic/models/IndustryDataset';
 
-import homeStyles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.css'
 
 import texts from '../info/texts.json';
 import SimpleTable from './SimpleTable';
@@ -29,12 +29,15 @@ export default function Industry({ title, data }) {
     let returns = {}
     let multiples = {}
     if (industriesData && commonData && commonData.price && commonData.price.shortName) {
-        matches = getIndustryName(industriesData, commonData.price.shortName);
+        matches = {...getIndustryName(industriesData, commonData.price.shortName)};
+        if (matches) {
+            matches["Company Name"] = <span className={styles.bold}>{matches["Company Name"]}</span>
+        }
 
         const industry = industriesData[matches["Industry Group"]]
         console.log("match name =", industry);
         margins = {
-            'Gross Margin': toPercent(industry['Gross Margin']),
+            'Gross Margin': <span className={styles.bold}>{toPercent(industry['Gross Margin'])}</span>,
             'Net Margin': toPercent(industry['Net Margin']),
             'Pre-tax, Pre-stock compensation Operating Margin': toPercent(industry['Pre-tax, Pre-stock compensation Operating Margin']),
             'Pre-tax Unadjusted Operating Margin': toPercent(industry['Pre-tax Unadjusted Operating Margin']),
@@ -97,8 +100,8 @@ export default function Industry({ title, data }) {
 
     }
     return (<div>
-        {loading && <div className={homeStyles.spinner}><SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} /></div>}
-        <h4 className={homeStyles.subtitle}>
+        {loading && <div className={styles.spinner}><SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} /></div>}
+        <h4 className={styles.subtitle}>
             {title}
         </h4>
         <SimpleTable
@@ -129,6 +132,6 @@ export default function Industry({ title, data }) {
             title="Capex"
             data={capex}
         />
-        <ReactTooltip effect="solid" className={homeStyles.tooltipCustom} />
+        <ReactTooltip effect="solid" className={styles.tooltipCustom} />
     </div>)
 }

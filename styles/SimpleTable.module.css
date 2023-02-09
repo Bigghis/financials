@@ -34,3 +34,9 @@
 .simpleTable tr td:not(:first) {
     text-align: right;
 }*/
+
+@media (max-width: 600px) {
+    .simpleTable {
+        border: none;
+    }
+ }
