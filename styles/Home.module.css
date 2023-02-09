@@ -315,6 +315,7 @@
 .infoStockContainer table {
   width: 45%;
   margin: 1em 0;
+  height: fit-content;
 }
 
 .tableNames {
@@ -322,7 +323,7 @@
 }
 
 .tablePrices {
-  max-width: 250px;
+  max-width: 300px;
 }
 
 @media (max-width: 600px) {
