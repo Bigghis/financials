@@ -44,12 +44,12 @@ function CalcInfo({ data }) {
 
     const trailingPe = commonData && commonData.summaryDetail && commonData.summaryDetail.trailingPE ? (commonData.summaryDetail.trailingPE ).toFixed(2) : null
     const forwardPe = commonData && commonData.summaryDetail && commonData.summaryDetail.forwardPE ? (commonData.summaryDetail.forwardPE).toFixed(2) : null
-    const lastDividend = commonData && commonData.defaultKeyStatistics && commonData.defaultKeyStatistics.lastDividendValue ? (commonData.defaultKeyStatistics.lastDividendValue).toFixed(2) : null 
+    const dividendYield = commonData && commonData.summaryDetail && commonData.summaryDetail.dividendYield ? toPercent((commonData.summaryDetail.dividendYield).toFixed(2)) : null 
 
-    const dividendYield = commonData && lastDividend && commonData.price 
-    && commonData.price.regularMarketPrice 
-    ? toPercent((lastDividend / commonData.price.regularMarketPrice), 2)
-    : null
+//   const dividendYield = commonData && lastDividend && commonData.price 
+   // && commonData.price.regularMarketPrice 
+ //   ? toPercent((lastDividend / commonData.price.regularMarketPrice), 2)
+ //   : null
 
 
     

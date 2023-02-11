@@ -91,7 +91,7 @@ function InfoStock({ dataCallback, clearDataCallback }) {
         return {
             'Price': <span className={styles.bold}>{`${regularMarketPrice}${currencySymbol}`}</span>,
             'Last Dividend': <span className={styles.bold}>{`${lastDividend}${currencySymbol}`}</span>,
-            'P/E': <span><span className={styles.bold}>{trailingPe}</span><span className={styles.leftMargin}>forward P/E: </span><span className={styles.bold}>{forwardPe}</span></span>,
+            'Trailing P/E': <span><span className={styles.bold}>{trailingPe}</span><span className={styles.leftMargin}>forward P/E: </span><span className={styles.bold}>{forwardPe}</span></span>,
             'Beta': <span className={styles.bold}>{beta}</span>,
             'Peg Ratio': <span className={_clsPegRatio}>{commonData.defaultKeyStatistics.pegRatio}</span>
         }

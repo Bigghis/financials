@@ -2,6 +2,8 @@ import React from 'react';
 import NoData from './NoData';
 import styles from '../styles/SimpleTable.module.css'
 
+const noData = '-';
+
 function SimpleTable({ className, title, data, zebra, hoverable }) {
 
     const _className = [styles.simpleTable]
@@ -21,7 +23,7 @@ function SimpleTable({ className, title, data, zebra, hoverable }) {
         return (<NoData />)
     }
     const randKeyPart = Math.random()
-    const trows = keys.map((key, index) => (<tr key={`simpleTable_tr_${randKeyPart}_${index}`}><td>{key}</td><td>{data[key]}</td></tr>));
+    const trows = keys.map((key, index) => (<tr key={`simpleTable_tr_${randKeyPart}_${index}`}><td>{key}</td><td>{data[key] || noData}</td></tr>));
     return (<table className={_className.join(" ")}>
 
         <tbody>

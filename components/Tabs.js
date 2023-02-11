@@ -7,6 +7,7 @@ import DDM from './DDM';
 import NoData from "./NoData";
 
 import styles from '../styles/Tabs.module.css'
+import MultiplesCmp from "./Multiples";
 
 const TabHead = ({ children }) => {
     return (<div className={styles.tabHead}>{children}</div>)
@@ -45,6 +46,10 @@ const Tabs = ({ data }) => {
       if (tab === 4) {
         return 'Dividend Discount Model method (three stages)'
       }
+
+      if (tab === 5) {
+        return 'Multiples'
+      }
     }
 
     const getModule = () => {
@@ -65,6 +70,9 @@ const Tabs = ({ data }) => {
       if (tab === 4) {
         return hasData ? <DDM  title={title} data={data} /> : <NoData title={title}  />
       }
+      if (tab === 5) {
+        return hasData ? <MultiplesCmp  title={title} data={data} /> : <NoData title={title}  />
+      }
     }
     return (
       <TabContainer>
@@ -76,13 +84,16 @@ const Tabs = ({ data }) => {
               INDUSTRY
           </Tab>
           <Tab selected={tab === 2 } onClick={() => setTab(2)}>
-              QUALITATIVE ANALYSIS
+              QUALITATIVE
           </Tab>
           <Tab selected={tab === 3 } onClick={() => setTab(3)}>
               DCF
           </Tab>
           <Tab selected={tab === 4 } onClick={() => setTab(4)}>
               DDM
+          </Tab>
+          <Tab selected={tab === 5 } onClick={() => setTab(5)}>
+              MULTIPLES
           </Tab>
         </TabHead>
         <TabBody>

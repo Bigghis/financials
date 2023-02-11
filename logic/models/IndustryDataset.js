@@ -110,9 +110,9 @@ const errataCorrige = {
 };
 
 
-export const getIndustryName = (industry) => {
+export const getIndustryName = (shortName) => {
   const stocks_industries_array = stocks_industries.map(stock => stock["Company Name"]);
-  const industryName = industry in errataCorrige ? errataCorrige[industry] : industry;
+  const industryName = shortName in errataCorrige ? errataCorrige[shortName] : shortName;
   const matches1 = stringSimilarity.findBestMatch(industryName, stocks_industries_array )
   return stocks_industries[matches1.bestMatchIndex]
 }

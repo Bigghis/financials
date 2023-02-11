@@ -30,7 +30,7 @@ export default function Industry({ title, data }) {
     let returns = {}
     let multiples = {}
     if (industriesData && commonData && commonData.price && commonData.price.shortName) {
-        let matches = { ...getIndustryName(industriesData, commonData.price.shortName) };
+        let matches = { ...getIndustryName(commonData.price.shortName) };
         if (matches) {
             infos = {
                 "Company Name": <span className={styles.bold}>{matches["Company Name"]}</span>,
