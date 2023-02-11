@@ -1,6 +1,9 @@
 import stringSimilarity from 'string-similarity';
 import stocks_industries from '../../data/stocks_industry.json';
 
+// https://pages.stern.nyu.edu/~adamodar/
+// https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/variable.htm
+
 /*
 const industryNames = [
   "Advertising",
@@ -102,8 +105,14 @@ const industryNames = [
 ]
 */
 
-export const getIndustryName = (industriesData, industry) => {
-  const stocks_industries_array = stocks_industries.map(stock => stock["Company Name"])
-  const matches1 = stringSimilarity.findBestMatch(industry, stocks_industries_array )
+const errataCorrige = {
+  'MEDIFAST INC': 'Medifast, Inc. (NYSE:MED)'
+};
+
+
+export const getIndustryName = (industry) => {
+  const stocks_industries_array = stocks_industries.map(stock => stock["Company Name"]);
+  const industryName = industry in errataCorrige ? errataCorrige[industry] : industry;
+  const matches1 = stringSimilarity.findBestMatch(industryName, stocks_industries_array )
   return stocks_industries[matches1.bestMatchIndex]
 }
