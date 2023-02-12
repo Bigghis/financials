@@ -1,6 +1,12 @@
+
+import { useContext } from 'react';
 import { toDecimal, toPercent, getYear } from '../utils.js';
 import { queryOptions } from '../info.js';
 
+import { SettingsContext } from '../../context/SettingsContext';
+import { handleDataWithIndustry } from './IndustryDataset.js';
+
+// https://cryptocointracker.com/yahoo-finance/yahoo-finance-api
 // https://github.com/gadicc/node-yahoo-finance2/blob/f27b9017fd5643932f4067c5d7b2a641f783a7ea/src/modules/quoteSummary-iface.ts
 
 export const getYearDataRange = (data, modules) => {
@@ -21,6 +27,26 @@ export const showAllYearsDataRange = (data) => {
     res[key] = getYearDataRange(data, _queryOptions[key]);
   }
   return res;
+}
+export const getInvestedCapital = (balance, cashFlow) => {
+    // Invested Capital = Current Liabilities + Long-Term Debt + Common Stock +
+  //                     Retained Earnings + Cash from financing + Cash from investing.
+  const investedCapital = balance.totalCurrentLiabilities + balance.longTermDebt +
+                          balance.commonStock + balance.retainedEarnings + 
+                          cashFlow.totalCashFromFinancingActivities + 
+                          cashFlow.totalCashflowsFromInvestingActivities
+  return isNaN(investedCapital) ? null : investedCapital;
+}
+export const getROIC = (investedCapital, taxRate, ebit) => {
+  // https://www.thebalancemoney.com/return-on-invested-capital-393587
+
+  // ROIC = NOPAT / Invested capital
+  // NOPAT = EBIT (1-taxRate)
+  // Invested Capital = Current Liabilities + Long-Term Debt + Common Stock +
+  //                     Retained Earnings + Cash from financing + Cash from investing.
+  const nopat = ebit * (1 - toDecimal(taxRate))  
+  const res = nopat / investedCapital;
+  return isNaN(res) ? null : res;
 }
 
 export const getGrowthRate = (beginValue, endValue) => {
@@ -145,6 +171,9 @@ export const getMarginsData = (data) => {
 }
 
 export const getInitialData = (data) => {
+  const settingsContext = useContext(SettingsContext);
+  const { compareWithIndustry } = settingsContext;
+
   let _income = [];
   let _returns = [];
   let _balance = [];
@@ -282,9 +311,12 @@ export const getInitialData = (data) => {
     const _repurchaseOfStock = {}
     const _roe = {}
     const _roa = {}
+    const _roic = {}
     const _netIncome = {}
+    const _investedCapital = {}
     let averageRoe = 0
     let averageRoa = 0
+    let averageRoic = 0
     // const _issuanceOfStock = {}
     const _dividendsPaid = {}
     for (let i = 0; i < data.cashflowStatementHistory.cashflowStatements.length; i++) {
@@ -302,9 +334,19 @@ export const getInitialData = (data) => {
 
       _netIncome[y] = element.netIncome || null
 
+      _investedCapital[y] = getInvestedCapital(data.balanceSheetHistory.balanceSheetStatements[i], element);
+
+      _roic[y] = toPercent(getROIC(
+        _investedCapital[y] ,
+        _taxRate[y],
+        data.incomeStatementHistory.incomeStatementHistory[i].ebit
+      ))
+      averageRoic += toDecimal(_roic[y])
+
     }
     averageRoa = toPercent(averageRoa / years.length)
     averageRoe = toPercent(averageRoe / years.length)
+    averageRoic = toPercent(averageRoic / years.length)
 
     const _netIncomeGrowthRate = {}
     const _netMargins = {}
@@ -330,7 +372,7 @@ export const getInitialData = (data) => {
     _income.push({ metricName: 'Net Income', ..._netIncome });
     _income.push({ metricName: `Net Income (earnings) Growth Rate (avg: ${averageNetIncomeGrowthValue})`, ..._netIncomeGrowthRate });
     _income.push({ metricName: 'Gross Margin', ..._grossMargin });
-    _income.push({ metricName: 'Operating Margin', ..._operatingMargin });
+    _income.push({ metricName: 'Pre-tax, Pre-stock compensation Operating Margin', ..._operatingMargin });
     _income.push({ metricName: 'Net Margin', ..._netMargins });
     _income.push({ metricName: 'Gross Profits', ..._grossProfits });
 
@@ -338,8 +380,9 @@ export const getInitialData = (data) => {
     _income.push({ metricName: 'COGS', ..._cogs });
     _income.push({ metricName: `Tax Rate (avg: ${averageTaxRate})`, ..._taxRate });
 
-    _returns.push({ metricName: `ROE (avg: ${averageRoe})`, ..._roe });
     _returns.push({ metricName: `ROA (avg: ${averageRoa})`, ..._roa });
+    _returns.push({ metricName: `ROE (avg: ${averageRoe})`, ..._roe });
+    _returns.push({ metricName: `ROIC (avg: ${averageRoic})`, ..._roic });
     _returns.push({ metricName: `Return On Capital (avg: ${averageRoc})`, ..._roc });
     _returns.push({ metricName: 'Reinvestment Rate', ..._reinvestmentRate });
     _returns.push({ metricName: `FCFF (year+1) (avg: ${averageFcf})`, ..._fcf });
@@ -347,6 +390,7 @@ export const getInitialData = (data) => {
     _balance.push({ metricName: 'Inventory', ..._inventory });
     _balance.push({ metricName: 'Age Of Inventory (days)', ..._ageOfInventory });
     _balance.push({ metricName: 'Book Value', ..._bookValue });
+    _balance.push({ metricName: 'Invested Capital', ..._investedCapital });
     _balance.push({ metricName: 'Common Stocks', ..._commonStock });
     _balance.push({ metricName: 'Retained Earnings', ..._retainedEarnings });
     _balance.push({ metricName: 'Dividends Paid', ..._dividendsPaid });
@@ -357,11 +401,23 @@ export const getInitialData = (data) => {
       averageNetIncomeGrowthValue: toDecimal(averageNetIncomeGrowthValue)
     }
   }
-  return {
-    _income,
-    _returns,
-    _balance,
-    _averages
+  if (compareWithIndustry === false) {
+    return {
+      _income,
+      _returns,
+      _balance,
+      _averages
+    }
+  } else {
+    return handleDataWithIndustry({
+      _income,
+      _returns,
+      _balance,
+      _averages
+    }, 
+    data.price.shortName,
+    years[years.length -1] // most recent year available
+    );
   }
 }
 

@@ -22,7 +22,7 @@ export default function Layout({ children }) {
         <div className={styles.footerRow}>
             <div className={styles.infoClaudio}
             >
-                <div className={styles.infoClaudioText}>Powered by a value investor{' '}</div>
+                <div className={styles.infoClaudioText}>Inspired by a value investor{' '}</div>
                 <div className={styles.logo}>
                 <Image src="/a.jpg" alt="Don" width={38} height={60} />
                 </div>

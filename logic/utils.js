@@ -10,6 +10,13 @@ export const toPercent = (num, dec=0) => {
     return '-'
 }
 
+export const isPercent = (value) => {
+    if ( typeof value === 'string' && value.indexOf('%')!== -1) {
+        return true;
+    }
+    return false;
+}
+
 export const formatCurrency = (num, dec=2, symbol='$') => {
     if (num && num !== 'NA') { 
         return `${(num).toFixed(dec)}${symbol}`;

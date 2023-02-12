@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { SpinnerDotted } from 'spinners-react';
 import Table from './Table';
-import { getYear, toDecimal, toPercent } from '../logic/utils';
+import NoData from './NoData';
+import TableButtons from './TableButtons';
 import {
     showAllYearsDataRange,
     getInitialData
@@ -9,8 +10,6 @@ import {
 
 import styles from '../styles/Home.module.css'
 import tableStyles from '../styles/Table.module.css';
-import NoData from './NoData';
-import TableButtons from './TableButtons';
 
 export default function InfoCmp({ data, infoData, dataCallback }) {
     const [loading, setLoading] = useState(false);

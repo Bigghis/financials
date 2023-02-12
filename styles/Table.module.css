@@ -58,6 +58,10 @@ table.reactTable tbody tr td{
     padding: 0.3rem;
 }
 
+.cellIndustryCompare {
+    cursor: help;
+}
+
 .headerMetricName{
     max-width: 30px;
     background-color: red;

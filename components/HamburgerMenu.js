@@ -23,8 +23,7 @@ const HamburgerMenu = () => {
     const [navbarOpen, setNavbarOpen] = useState(false);
 
     const settingsContext = useContext(SettingsContext);
-    const { unit, setUnit } = settingsContext;
-
+    const { unit, setUnit, compareWithIndustry } = settingsContext;
     const handleToggle = () => {
         setNavbarOpen(!navbarOpen)
     }

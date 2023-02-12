@@ -46,8 +46,6 @@ export default function Industry({ title, data }) {
             }
         }
 
-
-
         const industry = industriesData[matches["Industry Group"]]
         console.log("match name =", industry);
         margins = {

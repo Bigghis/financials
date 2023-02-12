@@ -23,9 +23,11 @@ export default function MultiplesCmp({ data }) {
         <div className={styles.infoStockContainer}>
             <SimpleTable
                 title="Multiples"
+                zebra
                 data={getMarginsData(data)}
             />
             <SimpleTable
+                zebra
                 title="Margins"
                 data={getMultiplesData(data)}
             />
