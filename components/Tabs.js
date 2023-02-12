@@ -10,96 +10,90 @@ import styles from '../styles/Tabs.module.css'
 import MultiplesCmp from "./Multiples";
 
 const TabHead = ({ children }) => {
-    return (<div className={styles.tabHead}>{children}</div>)
+  return (<div className={styles.tabHead}>{children}</div>)
 }
 
-const TabContainer = ({ children })  => {
-    return (<div className={styles.tabContainer}>{children}</div>)
+const TabContainer = ({ children }) => {
+  return (<div className={styles.tabContainer}>{children}</div>)
 }
 
-const TabBody = ({ children })  => {
-    return (<div className={styles.tabBody}>{children}</div>)
+const TabBody = ({ children }) => {
+  return (<div className={styles.tabBody}>{children}</div>)
 }
 
 const Tab = ({ children, selected, onClick }) => {
-    const _className = selected ? styles.tabSelected : styles.tab;
-    return (<div className={_className} onClick={onClick}>{children}</div>)
+  const _className = selected ? styles.tabSelected : styles.tab;
+  return (<div className={_className} onClick={onClick}>{children}</div>)
 }
 
 
 const Tabs = ({ data }) => {
-    const [ tab, setTab ] = useState(0);
+  const [tab, setTab] = useState(0);
 
-    const getTitle = () => {
-      if (tab === 0) {
+  const getTitle = () => {
+    switch (tab) {
+      default:
         return 'Info'
-      }
-      if (tab === 1) {
+      case 1:
         return 'Industry (from Aswath Damodaran\'s Dataset)'
-      }
-      if (tab === 2) {
+      case 2:
         return 'Qualitative Analysis'
-      }
-      if (tab === 3) {
+      case 3:
         return 'Discounted Cash Flow method'
-      }
-      if (tab === 4) {
+      case 4:
         return 'Dividend Discount Model method (three stages)'
-      }
-
-      if (tab === 5) {
+      case 5:
         return 'Multiples'
-      }
     }
+  }
 
-    const getModule = () => {
-      const title = getTitle();
-      const hasData = Object.keys(data).length > 0;
-      if (tab === 0) {
-       return hasData ? <InfoCmp title={title} data={data} /> : <NoData title={title}  />
-      }
-      if (tab === 1) {
-        return hasData ? <Industry title={title} data={data} /> : <NoData title={title}  />
-      }
-      if (tab === 2) {
-        return hasData ? <Qualitative title={title} data={data} /> : <NoData title={title}  />
-      }
-      if (tab === 3) {
-        return hasData ? <DCF  title={title} data={data} /> : <NoData title={title}  />
-      }
-      if (tab === 4) {
-        return hasData ? <DDM  title={title} data={data} /> : <NoData title={title}  />
-      }
-      if (tab === 5) {
-        return hasData ? <MultiplesCmp  title={title} data={data} /> : <NoData title={title}  />
-      }
+  const getModule = () => {
+    const title = getTitle();
+    const hasData = Object.keys(data).length > 0;
+    if (!hasData) {
+      return <NoData title={title} />
     }
-    return (
-      <TabContainer>
-        <TabHead>
-        <Tab selected={tab === 0 } onClick={() => setTab(0)}>
-              INFO
-          </Tab>
-          <Tab selected={tab === 1 } onClick={() => setTab(1)}>
-              INDUSTRY
-          </Tab>
-          <Tab selected={tab === 2 } onClick={() => setTab(2)}>
-              QUALITATIVE
-          </Tab>
-          <Tab selected={tab === 3 } onClick={() => setTab(3)}>
-              DCF
-          </Tab>
-          <Tab selected={tab === 4 } onClick={() => setTab(4)}>
-              DDM
-          </Tab>
-          <Tab selected={tab === 5 } onClick={() => setTab(5)}>
-              MULTIPLES
-          </Tab>
-        </TabHead>
-        <TabBody>
-          {getModule()}
-        </TabBody>
-      </TabContainer>
-    )
+    switch (tab) {
+      default:
+        return <InfoCmp title={title} data={data} />
+      case 1:
+        return <Industry title={title} data={data} />
+      case 2:
+        return <Qualitative title={title} data={data} />
+      case 3:
+        return <DCF title={title} data={data} />
+      case 4:
+        return <DDM title={title} data={data} />
+      case 5:
+        return <MultiplesCmp title={title} data={data} />
+    }
+  }
+  return (
+    <TabContainer>
+      <TabHead>
+        <Tab selected={tab === 0} onClick={() => setTab(0)}>
+          INFO
+        </Tab>
+        <Tab selected={tab === 1} onClick={() => setTab(1)}>
+          INDUSTRY
+        </Tab>
+        <Tab selected={tab === 2} onClick={() => setTab(2)}>
+          QUALITATIVE
+        </Tab>
+        <Tab selected={tab === 3} onClick={() => setTab(3)}>
+          DCF
+        </Tab>
+        <Tab selected={tab === 4} onClick={() => setTab(4)}>
+          DDM
+        </Tab>
+        <Tab selected={tab === 5} onClick={() => setTab(5)}>
+          MULTIPLES
+        </Tab>
+      </TabHead>
+      <TabBody>
+        {getModule()}
+      </TabBody>
+    </TabContainer>
+  )
 }
 export default Tabs 

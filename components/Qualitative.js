@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SpinnerDotted } from 'spinners-react';
 import ReactTooltip from 'react-tooltip';
 import { DataContext } from '../context/DataContext';
@@ -15,8 +15,12 @@ import tableStyles from '../styles/Table.module.css';
 import texts from '../info/texts.json';
 
 export default function Qualitative({ title, data }) {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const txt = texts.qualitative;
+
+    useEffect(() => {
+        setLoading(false);
+    }, []);
 
     //initiaData..
     const dataContext = useContext(DataContext);
@@ -24,7 +28,7 @@ export default function Qualitative({ title, data }) {
     const info = getInitialData(data);
 
     return (<div>
-        {loading && <div className={homeStyles.spinner}><SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} /></div>}
+        {loading && <div className={homeStyles.spinnerTab}><SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} /></div>}
         <h4 className={homeStyles.subtitle}>
             {title}
         </h4>

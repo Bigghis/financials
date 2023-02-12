@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SpinnerDotted } from 'spinners-react';
 import ReactTooltip from 'react-tooltip';
 import { DataContext } from '../context/DataContext';
@@ -14,9 +14,12 @@ import { formatCurrency, formatNumber, toPercent } from '../logic/utils';
 const curSymbol = '$';
 
 export default function Industry({ title, data }) {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const txt = texts.qualitative;
 
+    useEffect(() => {
+        setLoading(false);
+    }, []);
     //initiaData..
     const dataContext = useContext(DataContext);
     const { commonData, setCommonData } = dataContext;
@@ -109,10 +112,10 @@ export default function Industry({ title, data }) {
         })
         console.log(m)
         */
-
+        //  setLoading(false)
     }
     return (<div>
-        {loading && <div className={styles.spinner}><SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} /></div>}
+        {loading && <div className={styles.spinnerTab}><SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} /></div>}
         <h4 className={styles.subtitle}>
             {title}
         </h4>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SpinnerDotted } from 'spinners-react';
 import Table from './Table';
 import {
@@ -13,10 +13,13 @@ import TableButtons from './TableButtons';
 import SimpleTable from './SimpleTable';
 
 export default function MultiplesCmp({ data }) {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        setLoading(false);
+    }, []);
 
     return (<div>
-        {loading && <div className={styles.spinner}><SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} /></div>}
+        {loading && <div className={styles.spinnerTab}><SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} /></div>}
         <h4 className={styles.subtitle}>
             Multiples
         </h4>
