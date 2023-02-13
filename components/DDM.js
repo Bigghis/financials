@@ -66,7 +66,7 @@ function DDM({ data, title }) {
                 setLoading(true)
                 const resData = await fetcherDDM();
 
-                console.log('resData=', resData)
+              //  console.log('resData=', resData)
                 // setDcfData([...dcfData, ...resData])
                 // window.scroll(0, document.querySelector(`.${styles.container}`).scrollHeight);
                 setLoading(false)

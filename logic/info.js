@@ -13,7 +13,7 @@ const QUERY_OPTIONS = {
 export const queryOptions = (filterCategories) => {
     if (filterCategories) {
       const filteredOptions = filterCategories.reduce((QUERY_OPTIONS, key) => ({ ...QUERY_OPTIONS, [key]: QUERY_OPTIONS[key] }), {});
-      console.log('filtered = ', filteredOptions)
+      //console.log('filtered = ', filteredOptions)
       return filteredOptions
     }
     return QUERY_OPTIONS;

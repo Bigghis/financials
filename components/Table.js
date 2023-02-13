@@ -8,6 +8,16 @@ import TableButtons from './TableButtons';
 
 const COLORS = ['red', 'limegreen', 'green'];
 const LOCALE = 'it-IT';
+
+const formatValue = (value, divide) => {
+  const _value = parseFloat(value / divide);
+  const retValue = new Intl.NumberFormat(LOCALE).format(parseFloat(_value).toFixed(2));
+  if (_value < 0) {
+    return (<div style={{ color: '#e74c3c' }}>{`(${Math.abs(_value).toFixed(2)})`}</div>)
+  } 
+  return retValue;
+};
+
 // https://codesandbox.io/s/nvndu?file=/src/App.js:1517-1530
 export const EditableCell = ({
   value: initialValue,
@@ -42,13 +52,13 @@ export const EditableCell = ({
     }
     let retValue = initialValue
     if (unit === 'k') {
-      retValue = new Intl.NumberFormat(LOCALE).format(parseFloat((initialValue / 1000).toFixed(2)))
+      retValue = formatValue(initialValue, 1000);
     }
     if (unit === 'm') {
-      retValue = new Intl.NumberFormat(LOCALE).format(parseFloat((initialValue / 1000000).toFixed(2)));
+      retValue = formatValue(initialValue, 1000000);
     }
     if (unit === 'b') {
-      retValue = new Intl.NumberFormat(LOCALE).format(parseFloat((initialValue / 1000000000).toFixed(2)));
+      retValue = formatValue(initialValue, 1000000000);
     }
     if (retValue < 0) {
       return (<div style={{ color: '#e74c3c' }}>{`(${Math.abs(retValue)})`}</div>)
