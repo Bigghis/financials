@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import axios from 'axios';
 import { SpinnerDotted } from 'spinners-react';
+import { IndustriesDataContext } from '../context/IndustriesContext';
 import { DataContext } from '../context/DataContext';
 
 import styles from '../styles/Home.module.css'
@@ -15,6 +16,8 @@ function InfoStock({ dataCallback, clearDataCallback }) {
     //initiaData..
     const dataContext = useContext(DataContext);
     const { commonData, setCommonData } = dataContext;
+    const industriesContext = useContext(IndustriesDataContext);
+    const { setIndustryMatched } = industriesContext;
 
     const shortName = info && info.price ? info.price.shortName : '';
     const regularMarketPrice = info && info.price ? info.price.regularMarketPrice : '';
@@ -47,6 +50,7 @@ function InfoStock({ dataCallback, clearDataCallback }) {
     const getData = async () => {
         const v = stockName.current && stockName.current.value ? stockName.current.value : '';
         setCommonData([])
+        setIndustryMatched(null)
         setLoading(true)
         let data = await fetcherInfo(v);
         setCommonData(data);
@@ -108,6 +112,7 @@ function InfoStock({ dataCallback, clearDataCallback }) {
                 onClick={() => {
                     setInfo([]);
                     setCommonData([]);
+                    setIndustryMatched(null);
                     stockName.current.value = "";
                     if (clearDataCallback) {
                         clearDataCallback();

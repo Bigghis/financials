@@ -1,7 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { SpinnerDotted } from 'spinners-react';
 import ReactTooltip from 'react-tooltip';
+
 import { DataContext } from '../context/DataContext';
+// import { SettingsContext } from '../context/SettingsContext';
+// import { IndustriesDataContext } from '../context/IndustriesContext';
+
 import CalcInfo from './CalcInfo';
 import InfoIcon from './InfoIcon';
 
@@ -25,7 +29,24 @@ export default function Qualitative({ title, data }) {
     //initiaData..
     const dataContext = useContext(DataContext);
     const { commonData, setCommonData } = dataContext;
-    const info = getInitialData(data);
+    /*
+    const industriesContext = useContext(IndustriesDataContext);
+    const { industriesData, setIndustryMatched, industryMatched } = industriesContext;
+    const settingsContext = useContext(SettingsContext);
+    const { compareWithIndustry } = settingsContext;
+    */
+
+    /*const shortName = commonData && commonData.price ? commonData.price.shortName : '';
+    let industryData = null;
+    if (compareWithIndustry && !industryMatched) {
+        const matches = getIndustryName(shortName);
+        console.log(" matches =", matches)
+        setIndustryMatched(industriesData[matches["Industry Group"]]);
+        industryData = industriesData[matches["Industry Group"]]
+    }
+    */
+
+    const info =  getInitialData(data /*, industryData*/);
 
     return (<div>
         {loading && <div className={homeStyles.spinnerTab}><SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} /></div>}

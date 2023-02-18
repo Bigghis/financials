@@ -1,9 +1,6 @@
 
-import { useContext } from 'react';
 import { toDecimal, toPercent, getYear } from '../utils.js';
 import { queryOptions } from '../info.js';
-
-import { SettingsContext } from '../../context/SettingsContext';
 import { handleDataWithIndustry } from './IndustryDataset.js';
 
 // https://cryptocointracker.com/yahoo-finance/yahoo-finance-api
@@ -166,14 +163,10 @@ export const getMarginsData = (data) => {
     margins["COGS / Sales"] = f && cogs ? toPercent(cogs / f.totalRevenue) : null;
     margins["R&D / Sales"] = researchDevelopment && f ? toPercent(researchDevelopment / f.totalRevenue) : null;
   }
-
   return margins;
 }
 
-export const getInitialData = (data) => {
-  const settingsContext = useContext(SettingsContext);
-  const { compareWithIndustry } = settingsContext;
-
+export const getInitialData = (data, industriesData) => {
   let _income = [];
   let _returns = [];
   let _balance = [];
@@ -401,23 +394,24 @@ export const getInitialData = (data) => {
       averageNetIncomeGrowthValue: toDecimal(averageNetIncomeGrowthValue)
     }
   }
-  if (compareWithIndustry === false) {
+  if (industriesData) {
+    return handleDataWithIndustry({
+      _income,
+      _returns,
+      _balance,
+      _averages
+    },
+    industriesData,
+   // data.price.shortName,
+    years[years.length -1] // most recent year available
+    );
+  } else {
     return {
       _income,
       _returns,
       _balance,
       _averages
     }
-  } else {
-    return handleDataWithIndustry({
-      _income,
-      _returns,
-      _balance,
-      _averages
-    }, 
-    data.price.shortName,
-    years[years.length -1] // most recent year available
-    );
   }
 }
 

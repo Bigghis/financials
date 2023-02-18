@@ -7,22 +7,31 @@ import {
     showAllYearsDataRange,
     getInitialData
 } from '../logic/models/Info';
-import { DataContext } from '../context/DataContext';
 
 import styles from '../styles/Home.module.css'
 import tableStyles from '../styles/Table.module.css';
+import { SettingsContext } from '../context/SettingsContext';
+import { IndustriesDataContext } from '../context/IndustriesContext';
+import { getIndustryName } from '../logic/models/IndustryDataset';
 
-export default function InfoCmp({ data, infoDatas, dataCallback }) {
-    const dataContext = useContext(DataContext);
-    const { infoData, setInfoData } = dataContext; 
+export default function InfoCmp({ data /*, infoData, dataCallback */}) {
     const [loading, setLoading] = useState(false);
-    const [info, setInfo] = useState(getInitialData(infoData));
+    const industriesContext = useContext(IndustriesDataContext);
+    const { industriesData, industryMatched, setIndustryMatched } = industriesContext;
+    const settingsContext = useContext(SettingsContext);
+    const { compareWithIndustry } = settingsContext;
+    const [info, setInfo] = useState(getInitialData(data, industryMatched));
 
     useEffect(() => {
-        const _info = getInitialData(data)
-        setInfoData(_info)
-        setInfo(_info);
+        const shortName = data && data.price ? data.price.shortName : '';
+        if (compareWithIndustry && !industryMatched) {
+            const matches = getIndustryName(shortName);
+            console.log(" matches =", matches)
+            setIndustryMatched(industriesData[matches["Industry Group"]]);
+            setInfo(getInitialData(data, industriesData[matches["Industry Group"]] ))
+        }
     }, []);
+
 
     const getColumns = () => {
         let cols = [];
@@ -42,7 +51,6 @@ export default function InfoCmp({ data, infoDatas, dataCallback }) {
 
                 _cols = _cols.reverse();
             }
-
             cols = [{
                 Header: '',
                 accessor: 'metricName',

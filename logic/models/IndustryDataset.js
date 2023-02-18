@@ -1,8 +1,5 @@
-import { useContext } from 'react';
 import stringSimilarity from 'string-similarity';
 import stocks_industries from '../../data/stocks_industry.json';
-
-import { IndustriesDataContext } from '../../context/IndustriesContext';
 import { isPercent, toDecimal, toPercent } from '../utils';
 
 // https://pages.stern.nyu.edu/~adamodar/
@@ -120,12 +117,7 @@ export const getIndustryName = (shortName) => {
   return stocks_industries[matches1.bestMatchIndex]
 }
 
-export const handleDataWithIndustry = (data, shortName, mostRecentYearAvailable) => {
-  const industriesContext = useContext(IndustriesDataContext);
-  const { industriesData, industryMatched, setIndustryMatched } = industriesContext;
-  const matches = getIndustryName(shortName);
-  setIndustryMatched(industriesData[matches["Industry Group"]]);
-  console.log("data=", industryMatched)
+export const handleDataWithIndustry = (data, industryMatched, mostRecentYearAvailable) => {
   if (industryMatched) {
     const industryKeys = Object.keys(industryMatched)
     for (const key in data) {
