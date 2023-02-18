@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SpinnerDotted } from 'spinners-react';
 import Table from './Table';
 import NoData from './NoData';
@@ -7,13 +7,22 @@ import {
     showAllYearsDataRange,
     getInitialData
 } from '../logic/models/Info';
+import { DataContext } from '../context/DataContext';
 
 import styles from '../styles/Home.module.css'
 import tableStyles from '../styles/Table.module.css';
 
 export default function InfoCmp({ data, infoData, dataCallback }) {
+    const dataContext = useContext(DataContext);
+    const { infoData, setInfoData } = dataContext; 
     const [loading, setLoading] = useState(false);
-    const [info, setInfo] = useState(getInitialData(data));
+    const [info, setInfo] = useState(getInitialData(infoData));
+
+    useEffect(() => {
+        const _info = getInitialData(data)
+        setInfoData(_info)
+        setInfo(_info);
+    }, []);
 
     const getColumns = () => {
         let cols = [];
