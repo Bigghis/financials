@@ -12,7 +12,7 @@ import { DataContext } from '../context/DataContext';
 import styles from '../styles/Home.module.css'
 import tableStyles from '../styles/Table.module.css';
 
-export default function InfoCmp({ data, infoData, dataCallback }) {
+export default function InfoCmp({ data, infoDatas, dataCallback }) {
     const dataContext = useContext(DataContext);
     const { infoData, setInfoData } = dataContext; 
     const [loading, setLoading] = useState(false);
