@@ -32,7 +32,7 @@ export default function Industry({ title, data }) {
     let capex = {}
     let returns = {}
     let multiples = {}
-    if (industriesData && commonData && commonData.price && commonData.price.shortName) {
+    if (industriesData && Object.keys(industriesData).length > 0 && commonData && commonData.price && commonData.price.shortName) {
         let matches = { ...getIndustryName(commonData.price.shortName) };
         if (matches) {
             infos = {

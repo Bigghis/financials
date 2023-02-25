@@ -11,7 +11,11 @@ export const IndustriesContextProvider = ({ children }) => {
 
 
     useEffect(() => {
-        axios.get('api/industries', {})
+        axios.get('api/industries', {
+            headers: {
+                'Cache-Control': 'no-cache'
+            }
+        })
             .then((response) => {
                 setIndustriesData(response.data.industries);
             });
