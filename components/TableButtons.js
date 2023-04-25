@@ -24,7 +24,16 @@ function TableButtons({ dataType, data, clearCallback}) {
         csvOptions.filename = _dataType.toLowerCase();
         csvOptions.title = _dataType;
         const csvExporter = new ExportToCsv(csvOptions);
-        csvExporter.generateCsv(data);
+        const _data = data.map(d => {
+            const _d = {...d};
+            Object.keys(_d).forEach(key => {
+                if (typeof _d[key] === 'object' && _d[key] !== null) {
+                    _d[key] = _d[key].industryValue || '';
+                } 
+            })
+            return _d;
+        });
+        csvExporter.generateCsv(_data);
     }
 
     return (<div className={styles.tableButtons}>
