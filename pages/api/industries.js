@@ -10,6 +10,7 @@ import path from "path"
 const PATH_DATA = './data/damodaran/'
 
 const industries = {};
+/*
 let dataFiles = [];
 const readFiles = async (directoryPath) => {
     return await fs.readdir(directoryPath, (err, files) => {
@@ -20,15 +21,15 @@ const readFiles = async (directoryPath) => {
         dataFiles = files;
     });
 }
+*/
 
-export const getData = async () => {
+export const getData = () => {
 
     const directoryPath = path.join(process.cwd(), PATH_DATA);
-    await readFiles(directoryPath);
-
+    const dataFiles = fs.readdirSync(directoryPath); //readFiles(directoryPath);
     dataFiles.forEach((file) => {
         const filePath = path.join(directoryPath, file)
-
+// console.log("filePath =", filePath)
         const workbook = XLSX.readFile(filePath, {/* opts */ });
 
         // we consider second sheet only!
