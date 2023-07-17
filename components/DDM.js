@@ -8,6 +8,7 @@ import styles from '../styles/Home.module.css'
 
 import texts from '../info/texts.json';
 
+
 function DDM({ data, title }) {
     const { defaultKeyStatistics, earningsHistory, financialData, price } = data;
 

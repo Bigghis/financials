@@ -13,7 +13,8 @@ import { formatCurrency, formatNumber, toPercent } from '../logic/utils';
 
 const curSymbol = '$';
 
-export default function Industry({ title, data }) {
+
+export default function Industry({ data }) {
     const [loading, setLoading] = useState(true);
     const txt = texts.qualitative;
 
@@ -120,7 +121,7 @@ export default function Industry({ title, data }) {
     return (<div>
         {loading && <div className={styles.spinnerTab}><SpinnerDotted size={30} thickness={180} speed={180} color="#0070f3" secondaryColor="#fff" enabled={loading} /></div>}
         <h4 className={styles.subtitle}>
-            {title}
+            {'Industry (from Aswath Damodaran\'s Dataset)'}
         </h4>
         <div className={styles.infoStockContainer}>
             <SimpleTable

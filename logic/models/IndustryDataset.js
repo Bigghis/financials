@@ -146,7 +146,6 @@ export const handleDataWithIndustry = (data, industryMatched, mostRecentYearAvai
       }
     }
   }
-  console.log("data=", data)
   return data
 }
 

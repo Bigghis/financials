@@ -9,6 +9,7 @@ import NoData from "./NoData";
 import styles from '../styles/Tabs.module.css'
 import MultiplesCmp from "./Multiples";
 
+
 const TabHead = ({ children }) => {
   return (<div className={styles.tabHead}>{children}</div>)
 }
