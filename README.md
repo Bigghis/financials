@@ -1,4 +1,10 @@
+
+A set of tools used in value investing, to evaluate stocks. Data taken from yahoo finance. 
+Contains some visual experiments with color gradations to compare data with [`Aswath Damodaran`](https://pages.stern.nyu.edu/~adamodar/)'s annual reports. 
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+
 
 ## Getting Started
 
