@@ -20,13 +20,6 @@ export default function Layout({ children }) {
     </div>
     <footer className={styles.footer}>
         <div className={styles.footerRow}>
-            <div className={styles.infoClaudio}
-            >
-                <div className={styles.infoClaudioText}>Inspired by a value investor{' '}</div>
-                <div className={styles.logo}>
-                <Image src="/a.jpg" alt="Don" width={38} height={60} />
-                </div>
-            </div>
         </div>
         <div className={styles.footerSubRow}>
             Data taken from <a target="_blank" rel="noreferrer" href="https://finance.yahoo.com/">Yahoo! Finance</a> and elaborated by Bigghis.

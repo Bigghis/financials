@@ -46,16 +46,6 @@
   text-decoration: underline;
 }
 
-.infoClaudio {
-  display: flex;
-}
-
-.infoClaudioText {
-  height: 60px;
-  margin-right: 1em;
-  line-height: 60px;
-}
-
 .title a {
   color: #0070f3;
   text-decoration: none;
