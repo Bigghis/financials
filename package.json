@@ -22,7 +22,7 @@
     "spinners-react": "^1.0.7",
     "string-similarity": "^4.0.4",
     "xlsx": "^0.18.5",
-    "yahoo-finance2": "^2.4.2"
+    "yahoo-finance2": "^2.11.0"
   },
   "devDependencies": {
     "eslint": "8.20.0",
